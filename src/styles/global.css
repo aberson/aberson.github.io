@@ -39,3 +39,32 @@ body {
   line-height: var(--type-line-height-base);
   -webkit-font-smoothing: antialiased;
 }
+
+/* Single source of truth for the keyboard focus ring: a brand-accent outline on
+ * any interactive element, shown only for keyboard (not mouse) focus. Zero
+ * specificity via :where() so components can override placement if needed. */
+:where(a, button, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-semantic-accent);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* Skip-to-content link: the first focusable element, visually hidden until it
+ * receives keyboard focus, then it slides into the top-left corner. */
+.skip-link {
+  position: absolute;
+  left: var(--space-2);
+  top: -3rem;
+  z-index: 200;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-semantic-accent);
+  color: var(--color-semantic-bg);
+  font-weight: var(--type-weight-semibold);
+  text-decoration: none;
+  transition: top var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+.skip-link:focus {
+  top: var(--space-2);
+}

@@ -293,6 +293,7 @@ UI steps can use `--ui` screenshot evidence without an auth downgrade.
 - **Produces:** `src/consts.ts`, `Header.astro`, `Footer.astro`, `Hero.astro`, `SocialLinks.astro`, wired into `BaseLayout`.
 - **Done when:** the hub renders header + hero + footer; nav anchors scroll to sections; the GitHub link resolves to `github.com/aberson`; layout holds at 375px; nav is keyboard-focusable with a visible focus ring.
 - **Depends on:** 1
+- **Status:** DONE (2026-07-19) — Header/Hero/Footer/SocialLinks + `consts.ts` (single source, `ANCHORS` for anchor ids). Verified in Playwright light/dark @1280 + @375 (no overflow), keyboard focus ring visible on nav, skip-link is first tab stop. LinkedIn/email gated behind `isResolved()` — omitted until the operator provides real values (still `TODO:` in `consts.ts`, resolved at Step 5/6). Reviewers PASS (iter 2). build/check/lint 0.
 
 ### Step 3: Projects content collection + card grid
 - **Problem:** Define the `projects` Content Collection (`src/content/config.ts`, Zod schema per §3); seed all **6** real projects from `../aberson-profile/README.md` (`alpha4gate`, `toybox`, `pta-finance`, `shake-spear`, `applied-learning`, `walkies`) with verbatim blurbs, tech tags, and repo links; build `ProjectCard.astro` + `ProjectGrid.astro` and render the grid on the hub.

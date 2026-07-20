@@ -1,0 +1,103 @@
+---
+// Hero — above-the-fold intro: heading, value proposition, a primary CTA to the
+// work section, plus a secondary row (Resume, Contact, social links). All colors
+// resolve from the brand semantic tokens, so it reads intentionally in BOTH light
+// and dark (the accent CTA uses accent-on-bg, the same high-contrast pairing the
+// Step-1 eyebrow chip used). Text hero — no headshot.
+import SocialLinks from "./SocialLinks.astro";
+import { SITE_NAME, VALUE_PROP, LOCATION, ANCHORS } from "../consts";
+---
+
+<section class="hero" aria-labelledby="hero-heading">
+  <div class="hero-inner">
+    <h1 id="hero-heading">{SITE_NAME}</h1>
+    <p class="hero-lede">{VALUE_PROP}</p>
+    <p class="hero-location">{LOCATION}</p>
+    <div class="hero-actions">
+      <a class="cta-primary" href={`#${ANCHORS.work}`}>See my work</a>
+      <div class="hero-secondary">
+        <a class="cta-secondary" href={`#${ANCHORS.resume}`}>Resume</a>
+        <a class="cta-secondary" href={`#${ANCHORS.contact}`}>Contact</a>
+        <SocialLinks />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding: var(--space-9) var(--space-4) var(--space-8);
+    background-color: var(--color-semantic-bg);
+  }
+
+  .hero-inner {
+    max-width: 48rem;
+    margin-inline: auto;
+  }
+
+  .hero h1 {
+    margin: 0;
+    color: var(--color-semantic-text);
+    font-family: var(--font-heading);
+    font-size: var(--type-scale-step-5);
+    font-weight: var(--type-weight-bold);
+    line-height: var(--type-line-height-tight);
+  }
+
+  .hero-lede {
+    margin: var(--space-5) 0 0;
+    max-width: 42rem;
+    color: var(--color-semantic-text-muted);
+    font-size: var(--type-scale-step-1);
+    line-height: var(--type-line-height-base);
+  }
+
+  .hero-location {
+    margin: var(--space-4) 0 0;
+    color: var(--color-semantic-text-muted);
+    font-size: var(--type-scale-step--1);
+  }
+
+  .hero-actions {
+    margin-top: var(--space-7);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-4) var(--space-6);
+  }
+
+  .cta-primary {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--space-3) var(--space-5);
+    border-radius: var(--radius-md);
+    background-color: var(--color-semantic-accent);
+    color: var(--color-semantic-bg);
+    font-weight: var(--type-weight-semibold);
+    text-decoration: none;
+    box-shadow: var(--shadow-elevation-1);
+    transition: box-shadow var(--motion-duration-fast)
+      var(--motion-easing-standard);
+  }
+
+  .cta-primary:hover {
+    box-shadow: var(--shadow-elevation-2);
+  }
+
+  .hero-secondary {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  .cta-secondary {
+    color: var(--color-semantic-accent);
+    font-weight: var(--type-weight-medium);
+    text-decoration: none;
+  }
+
+  .cta-secondary:hover {
+    text-decoration: underline;
+  }
+</style>

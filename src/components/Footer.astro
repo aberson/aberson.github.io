@@ -1,0 +1,78 @@
+---
+// Footer — repeats the social links, a visible email link, a "last updated"
+// stamp, and a "View source" link back to the repo. All copy/URLs come from
+// consts.ts. Muted text color from the brand tokens.
+import SocialLinks from "./SocialLinks.astro";
+import { CONTACT_EMAIL, REPO_URL, LAST_UPDATED, isResolved } from "../consts";
+
+// Only render the email once the operator supplies a real address — a
+// "TODO:"-placeholder would emit an invalid `mailto:TODO: ...` and leak raw text.
+const showEmail = isResolved(CONTACT_EMAIL);
+---
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <SocialLinks />
+    {
+      showEmail && (
+        <a class="footer-email" href={`mailto:${CONTACT_EMAIL}`}>
+          {CONTACT_EMAIL}
+        </a>
+      )
+    }
+    <p class="footer-meta">
+      <span>
+        Last updated <time datetime={LAST_UPDATED}>{LAST_UPDATED}</time>
+      </span>
+      <span aria-hidden="true">·</span>
+      <a href={REPO_URL} target="_blank" rel="noopener noreferrer">
+        View source
+      </a>
+    </p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--color-semantic-border);
+    background-color: var(--color-semantic-surface);
+  }
+
+  .footer-inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3) var(--space-5);
+    max-width: 72rem;
+    margin-inline: auto;
+    padding: var(--space-6) var(--space-4);
+    color: var(--color-semantic-text-muted);
+    font-size: var(--type-scale-step--1);
+  }
+
+  .footer-email {
+    color: var(--color-semantic-text-muted);
+    text-decoration: none;
+  }
+
+  .footer-email:hover {
+    color: var(--color-semantic-accent);
+  }
+
+  .footer-meta {
+    /* Push the meta line to the far right on a wide row; wraps below on narrow. */
+    margin: 0 0 0 auto;
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .footer-meta a {
+    color: var(--color-semantic-text-muted);
+    text-decoration: none;
+  }
+
+  .footer-meta a:hover {
+    color: var(--color-semantic-accent);
+  }
+</style>

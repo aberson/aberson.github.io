@@ -1,0 +1,102 @@
+---
+// Header — sticky top chrome: brand mark, primary nav, social links.
+// CSS-only responsive layout (no JS): the header row wraps at narrow widths and
+// the nav itself is a nowrap, horizontally-scrollable row so it can never force
+// the page to overflow at 375px. Focus rings come from the global :focus-visible
+// rule in global.css (brand-accent outline).
+import SocialLinks from "./SocialLinks.astro";
+import { SITE_NAME, NAV_ITEMS } from "../consts";
+---
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="/">{SITE_NAME}</a>
+    <nav class="site-nav" aria-label="Primary">
+      <ul class="nav-list">
+        {
+          NAV_ITEMS.map((item) => (
+            <li>
+              <a href={item.href}>{item.label}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+    <SocialLinks />
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: var(--color-semantic-surface);
+    border-bottom: 1px solid var(--color-semantic-border);
+  }
+
+  .header-inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2) var(--space-4);
+    max-width: 72rem;
+    margin-inline: auto;
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .brand {
+    flex: 0 0 auto;
+    /* Push nav + social to the far right on a single wide row. */
+    margin-inline-end: auto;
+    color: var(--color-semantic-text);
+    font-family: var(--font-heading);
+    font-size: var(--type-scale-step-1);
+    font-weight: var(--type-weight-bold);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .site-nav {
+    /* Allow the nav to shrink so its inner row can scroll instead of overflowing. */
+    min-width: 0;
+  }
+
+  .nav-list {
+    list-style: none;
+    margin: 0;
+    display: flex;
+    flex-wrap: nowrap;
+    gap: var(--space-1);
+    overflow-x: auto;
+    scrollbar-width: none;
+    /* overflow-x:auto forces overflow-y to compute to auto, which would clip the
+     * focus ring on nav links (it sits 4px outside the box). Give the scrollport
+     * slack so the ring stays fully visible; cancel only the BLOCK axis with a
+     * negative margin so header height is unchanged (inline padding stays as real
+     * ring room for the first/last link and doesn't overlap the neighbors).
+     * NOTE: the margin-block MUST use the same token as `padding` so they cancel
+     * exactly — keep both at --space-2 if either changes. */
+    padding: var(--space-2);
+    margin-block: calc(-1 * var(--space-2));
+  }
+
+  .nav-list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .nav-list a {
+    display: inline-block;
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-sm);
+    color: var(--color-semantic-text-muted);
+    font-weight: var(--type-weight-medium);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color var(--motion-duration-fast) var(--motion-easing-standard);
+  }
+
+  .nav-list a:hover {
+    color: var(--color-semantic-text);
+  }
+</style>
