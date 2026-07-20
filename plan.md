@@ -283,6 +283,7 @@ UI steps can use `--ui` screenshot evidence without an auth downgrade.
 - **Produces:** `package.json` (scripts: `dev` / `build` / `preview` / `check` = `astro check` / `format` + `lint` = Prettier), `.prettierrc` (with `prettier-plugin-astro`), `astro.config.mjs`, `tailwind.config.mjs`, `tsconfig.json`, `src/layouts/BaseLayout.astro`, `src/styles/global.css`, vendored brand files, placeholder `src/pages/index.astro`.
 - **Done when:** `npm run build` and `npm run astro check` both exit 0; `npm run dev` serves a page whose colors come from the brand tokens in both light and dark schemes.
 - **Depends on:** none
+- **Status:** DONE (2026-07-19) — Astro+TS scaffold, Tailwind v4 via `@tailwindcss/vite` (vendored `theme.tw.css` is a v4 `@theme` block; deviation from `@astrojs/tailwind`), brand tokens vendored + imported, light/dark verified in built CSS. `npm run build`/`check`/`lint` all exit 0.
 
 ### Step 2: Site chrome — header, footer, hero, social links
 - **Problem:** Build the persistent chrome: sticky `Header` (name + nav anchors Work/About/Resume/Contact + persistent GitHub & LinkedIn icon links), `Footer` (repeat links + last-updated stamp + view-source link), `Hero` (value-prop sentence from the profile README + primary CTA "See my work"), and a `SocialLinks` component. Centralize name/URLs/email in `src/consts.ts` with `TODO:` markers for the not-yet-known LinkedIn URL and email. Responsive to 375px.

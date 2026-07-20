@@ -1,0 +1,7 @@
+# Normalize line endings to LF on every platform so a Windows working copy and
+# the Linux CI runner agree — Prettier's default endOfLine is "lf", so a CRLF
+# checkout would fail `npm run lint` locally while passing in CI (and vice versa).
+* text=auto eol=lf
+
+# Generated lockfile — don't diff it in reviews.
+package-lock.json -diff
