@@ -1,0 +1,53 @@
+---
+// BaseHead — the single owner of every <head> meta tag: charset, viewport, the
+// document <title>, the description, a self-canonicalizing <link rel="canonical">,
+// the favicon reference, OpenGraph tags, and the Twitter card. BaseLayout renders
+// this as the FIRST child of <head> so <meta charset> lands within the first
+// 1024 bytes.
+//
+// Canonical + og:url are computed per-page from Astro.site + Astro.url.pathname,
+// so every page self-canonicalizes (the hub -> https://aberson.github.io/, a case
+// study -> https://aberson.github.io/work/<slug>/). No og:image is emitted: the
+// project ships no OG image asset, and a broken og:image URL would fail the link
+// check — omit it rather than point at a nonexistent file.
+import { SITE_NAME, VALUE_PROP } from "../consts";
+
+interface Props {
+  /** Document <title> + og:title. Falls back to the site name. */
+  title?: string;
+  /** Meta + og description. Falls back to the site value proposition. */
+  description?: string;
+}
+
+const { title = SITE_NAME, description = VALUE_PROP } = Astro.props;
+
+// Absolute, per-page canonical URL. Astro.site is the configured production
+// origin (https://aberson.github.io); Astro.url.pathname is this page's path
+// (with its trailing slash, matching the sitemap + directory-format output), so
+// resolving one against the other yields the exact deployed URL for this page.
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+
+// Base-safe favicon path. The collapse guard mirrors ResumeSection's / ProjectCard's
+// BASE_URL-relative asset idiom: BASE_URL always ends in "/", so this yields
+// "/favicon.svg" at the site root and stays correct under a project base path too.
+const faviconHref = `${import.meta.env.BASE_URL}favicon.svg`.replace(
+  /\/{2,}/g,
+  "/",
+);
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+<link rel="icon" type="image/svg+xml" href={faviconHref} />
+
+<!-- OpenGraph -->
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:type" content="website" />
+<meta property="og:url" content={canonical} />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary" />

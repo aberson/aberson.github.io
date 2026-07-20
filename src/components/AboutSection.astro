@@ -1,0 +1,109 @@
+---
+// AboutSection — the #about section body: a short, factual bio (current focus,
+// background + education, how I work) plus a stack line. Content is drawn verbatim
+// from the profile README's bio/background/stack (../aberson-profile/README.md);
+// no invented claims. Owns its own <section> (id + aria-labelledby + sticky-header
+// scroll offset) so the hub page drops it in place of the old stub. All colors,
+// spacing, and type resolve from the brand semantic tokens (light + dark).
+import { ANCHORS } from "../consts";
+
+const STACK = [
+  "Python",
+  "R",
+  "SQL",
+  "PyTorch",
+  "GCP / Vertex AI",
+  "BigQuery",
+  "FastAPI",
+  "React / TypeScript",
+  "Docker",
+];
+---
+
+<section
+  id={ANCHORS.about}
+  class="about-section"
+  aria-labelledby="about-heading"
+>
+  <h2 id="about-heading">About</h2>
+  <div class="about-prose">
+    <p>
+      I'm an applied AI engineer with deep finance roots. I currently build AI
+      and data tooling for private-asset valuation as an Applied AI Scientist
+      (contract) at FEV. Before that I spent 10+ years in quantitative finance —
+      Senior Quantitative Analyst, Treasury at Google; Senior Quantitative
+      Research Analyst at Russell Investments; and earlier work at BlackRock —
+      shipping applied-ML and forecasting systems into large-scale finance
+      operations.
+    </p>
+    <p>
+      The way I work is a pipeline with quality gates: plan one step at a time,
+      build each in isolation, review with independent adversarial passes, and
+      only then ship. Most of what's on this site was built that way —
+      autonomous, judge-gated, cost-aware — and grounded in real financial work.
+    </p>
+    <p>
+      I hold an MA in Economics and a Graduate Certificate in Computational
+      Finance from the University of Washington, plus a BS in Computer Science
+      and a BA in Mathematics. I'm Google Cloud Certified — Generative AI
+      Leader.
+    </p>
+  </div>
+  <ul class="about-stack" role="list" aria-label="Core stack">
+    {STACK.map((item) => <li class="stack-chip">{item}</li>)}
+  </ul>
+</section>
+
+<style>
+  .about-section {
+    max-width: 48rem;
+    margin-inline: auto;
+    padding: var(--space-8) var(--space-4);
+    /* Offset the sticky header so the anchored heading isn't hidden under it. */
+    scroll-margin-top: 5rem;
+    border-top: 1px solid var(--color-semantic-border);
+  }
+
+  .about-section h2 {
+    margin: 0 0 var(--space-4);
+    color: var(--color-semantic-text);
+    font-family: var(--font-heading);
+    font-size: var(--type-scale-step-3);
+    font-weight: var(--type-weight-bold);
+    line-height: var(--type-line-height-tight);
+  }
+
+  .about-prose p {
+    margin: 0 0 var(--space-4);
+    max-width: 42rem;
+    color: var(--color-semantic-text);
+    font-size: var(--type-scale-step-0);
+    line-height: var(--type-line-height-base);
+  }
+
+  .about-prose p:last-child {
+    margin-bottom: 0;
+  }
+
+  .about-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin: var(--space-5) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* Styled DELIBERATELY distinct from ProjectCard's `.tech-chip` (borderless,
+   * code-bg fill, mono font): this is a personal skills list, not project tech
+   * tags, so it reads as a bordered surface-fill sans-serif pill. The visual
+   * difference is intentional — do not "unify" it with .tech-chip by accident. */
+  .stack-chip {
+    padding: var(--space-1) var(--space-3);
+    border: 1px solid var(--color-semantic-border);
+    border-radius: var(--radius-pill);
+    background-color: var(--color-semantic-surface);
+    color: var(--color-semantic-text-muted);
+    font-size: var(--type-scale-step--1);
+  }
+</style>

@@ -3,23 +3,15 @@
 // stamp, and a "View source" link back to the repo. All copy/URLs come from
 // consts.ts. Muted text color from the brand tokens.
 import SocialLinks from "./SocialLinks.astro";
-import { CONTACT_EMAIL, REPO_URL, LAST_UPDATED, isResolved } from "../consts";
-
-// Only render the email once the operator supplies a real address — a
-// "TODO:"-placeholder would emit an invalid `mailto:TODO: ...` and leak raw text.
-const showEmail = isResolved(CONTACT_EMAIL);
+import { CONTACT_EMAIL, REPO_URL, LAST_UPDATED } from "../consts";
 ---
 
 <footer class="site-footer">
   <div class="footer-inner">
     <SocialLinks />
-    {
-      showEmail && (
-        <a class="footer-email" href={`mailto:${CONTACT_EMAIL}`}>
-          {CONTACT_EMAIL}
-        </a>
-      )
-    }
+    <a class="footer-email" href={`mailto:${CONTACT_EMAIL}`}>
+      {CONTACT_EMAIL}
+    </a>
     <p class="footer-meta">
       <span>
         Last updated <time datetime={LAST_UPDATED}>{LAST_UPDATED}</time>

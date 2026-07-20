@@ -1,12 +1,15 @@
 ---
 // Home hub page. The persistent Header/Footer come from BaseLayout; this page
 // owns the <main> landmark, the Hero, and the section targets for each nav anchor
-// (#work, #about, #resume, #contact). #work now renders the ProjectGrid; #about,
-// #resume, and #contact are lightweight stubs later steps fill in. Each section
-// carries scroll-margin-top so the sticky header never covers the anchored heading.
+// (#work, #about, #resume, #contact), each rendered by its own component
+// (ProjectGrid, AboutSection, ResumeSection, ContactSection). Each section carries
+// scroll-margin-top so the sticky header never covers the anchored heading.
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Hero from "../components/Hero.astro";
 import ProjectGrid from "../components/ProjectGrid.astro";
+import AboutSection from "../components/AboutSection.astro";
+import ResumeSection from "../components/ResumeSection.astro";
+import ContactSection from "../components/ContactSection.astro";
 import { ANCHORS } from "../consts";
 ---
 
@@ -25,32 +28,11 @@ import { ANCHORS } from "../consts";
       </div>
     </section>
 
-    <section
-      id={ANCHORS.about}
-      class="section-stub"
-      aria-labelledby="about-heading"
-    >
-      <h2 id="about-heading">About</h2>
-      <p>More about my background is on its way.</p>
-    </section>
+    <AboutSection />
 
-    <section
-      id={ANCHORS.resume}
-      class="section-stub"
-      aria-labelledby="resume-heading"
-    >
-      <h2 id="resume-heading">Resume</h2>
-      <p>A downloadable resume is on its way.</p>
-    </section>
+    <ResumeSection />
 
-    <section
-      id={ANCHORS.contact}
-      class="section-stub"
-      aria-labelledby="contact-heading"
-    >
-      <h2 id="contact-heading">Contact</h2>
-      <p>Ways to get in touch are on their way.</p>
-    </section>
+    <ContactSection />
   </main>
 </BaseLayout>
 
@@ -76,29 +58,5 @@ import { ANCHORS } from "../consts";
     font-size: var(--type-scale-step-3);
     font-weight: var(--type-weight-bold);
     line-height: var(--type-line-height-tight);
-  }
-
-  .section-stub {
-    max-width: 48rem;
-    margin-inline: auto;
-    padding: var(--space-8) var(--space-4);
-    /* Offset the sticky header so an anchored heading isn't hidden under it. */
-    scroll-margin-top: 5rem;
-    border-top: 1px solid var(--color-semantic-border);
-  }
-
-  .section-stub h2 {
-    margin: 0 0 var(--space-3);
-    color: var(--color-semantic-text);
-    font-family: var(--font-heading);
-    font-size: var(--type-scale-step-3);
-    font-weight: var(--type-weight-bold);
-    line-height: var(--type-line-height-tight);
-  }
-
-  .section-stub p {
-    margin: 0;
-    color: var(--color-semantic-text-muted);
-    font-size: var(--type-scale-step-0);
   }
 </style>

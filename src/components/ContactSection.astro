@@ -1,0 +1,105 @@
+---
+// ContactSection — the #contact section body. Reads as the primary contact path:
+// the email address is shown as visible text AND linked via mailto:, weighted as
+// the lead action, with LinkedIn + GitHub as secondary links (new tab, safe rel).
+// Owns its own <section> (id + aria-labelledby + sticky-header scroll offset) so
+// the hub page just drops it in place of the old stub. All colors/spacing/type
+// resolve from the brand semantic tokens — no hard-coded colors — so it reads
+// intentionally in BOTH light and dark.
+import { ANCHORS, CONTACT_EMAIL, LINKEDIN_URL, GITHUB_URL } from "../consts";
+---
+
+<section
+  id={ANCHORS.contact}
+  class="contact-section"
+  aria-labelledby="contact-heading"
+>
+  <h2 id="contact-heading">Contact</h2>
+  <p class="contact-lede">
+    The best way to reach me is email — I read and reply to everything.
+  </p>
+  <a class="contact-email" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+  <ul class="contact-links" role="list">
+    <li>
+      <a
+        href={LINKEDIN_URL}
+        aria-label="LinkedIn profile (opens in a new tab)"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        LinkedIn <span aria-hidden="true">↗</span>
+      </a>
+    </li>
+    <li>
+      <a
+        href={GITHUB_URL}
+        aria-label="GitHub profile (opens in a new tab)"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        GitHub <span aria-hidden="true">↗</span>
+      </a>
+    </li>
+  </ul>
+</section>
+
+<style>
+  .contact-section {
+    max-width: 48rem;
+    margin-inline: auto;
+    padding: var(--space-8) var(--space-4);
+    /* Offset the sticky header so the anchored heading isn't hidden under it. */
+    scroll-margin-top: 5rem;
+    border-top: 1px solid var(--color-semantic-border);
+  }
+
+  .contact-section h2 {
+    margin: 0 0 var(--space-3);
+    color: var(--color-semantic-text);
+    font-family: var(--font-heading);
+    font-size: var(--type-scale-step-3);
+    font-weight: var(--type-weight-bold);
+    line-height: var(--type-line-height-tight);
+  }
+
+  .contact-lede {
+    margin: 0 0 var(--space-4);
+    max-width: 42rem;
+    color: var(--color-semantic-text-muted);
+    font-size: var(--type-scale-step-0);
+    line-height: var(--type-line-height-base);
+  }
+
+  /* The lead action: the email, weighted and accent-colored so it reads first. */
+  .contact-email {
+    display: inline-block;
+    color: var(--color-semantic-accent);
+    font-size: var(--type-scale-step-1);
+    font-weight: var(--type-weight-semibold);
+    text-decoration: none;
+    word-break: break-word;
+  }
+
+  .contact-email:hover {
+    text-decoration: underline;
+  }
+
+  .contact-links {
+    list-style: none;
+    margin: var(--space-5) 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3) var(--space-5);
+  }
+
+  .contact-links a {
+    color: var(--color-semantic-accent);
+    font-weight: var(--type-weight-medium);
+    text-decoration: none;
+  }
+
+  .contact-links a:hover {
+    text-decoration: underline;
+  }
+</style>

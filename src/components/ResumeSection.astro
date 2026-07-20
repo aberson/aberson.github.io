@@ -1,0 +1,89 @@
+---
+// ResumeSection — the #resume section body: a brand-accent "Download résumé"
+// button pointing at the base-safe /resume.pdf, plus a small "last updated" stamp.
+// Owns its own <section> (id + aria-labelledby + sticky-header scroll offset) so
+// the hub page just drops it in place of the old stub. All colors/spacing/type
+// resolve from the brand semantic tokens, so it reads intentionally in BOTH light
+// and dark; the download button reuses the Hero primary-CTA treatment (accent
+// background, bg-colored label, elevation lift on hover).
+import { ANCHORS, LAST_UPDATED } from "../consts";
+
+// Base-safe résumé URL: BASE_URL always ends in "/", so this yields "/resume.pdf"
+// at the site root and stays correct under a project base path too. The collapse
+// guard mirrors ProjectCard's, keeping a single leading slash.
+const resumeHref = `${import.meta.env.BASE_URL}resume.pdf`.replace(
+  /\/{2,}/g,
+  "/",
+);
+---
+
+<section
+  id={ANCHORS.resume}
+  class="resume-section"
+  aria-labelledby="resume-heading"
+>
+  <h2 id="resume-heading">Résumé</h2>
+  <p class="resume-lede">
+    A one-page summary of my background, roles, and the systems I have shipped.
+  </p>
+  <a class="resume-download" href={resumeHref} download>
+    Download résumé (PDF) <span aria-hidden="true">↓</span>
+  </a>
+  <p class="resume-updated">
+    Last updated <time datetime={LAST_UPDATED}>{LAST_UPDATED}</time>
+  </p>
+</section>
+
+<style>
+  .resume-section {
+    max-width: 48rem;
+    margin-inline: auto;
+    padding: var(--space-8) var(--space-4);
+    /* Offset the sticky header so the anchored heading isn't hidden under it. */
+    scroll-margin-top: 5rem;
+    border-top: 1px solid var(--color-semantic-border);
+  }
+
+  .resume-section h2 {
+    margin: 0 0 var(--space-3);
+    color: var(--color-semantic-text);
+    font-family: var(--font-heading);
+    font-size: var(--type-scale-step-3);
+    font-weight: var(--type-weight-bold);
+    line-height: var(--type-line-height-tight);
+  }
+
+  .resume-lede {
+    margin: 0 0 var(--space-5);
+    max-width: 42rem;
+    color: var(--color-semantic-text-muted);
+    font-size: var(--type-scale-step-0);
+    line-height: var(--type-line-height-base);
+  }
+
+  /* Primary-CTA treatment, shared visual language with the Hero's accent button. */
+  .resume-download {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-5);
+    border-radius: var(--radius-md);
+    background-color: var(--color-semantic-accent);
+    color: var(--color-semantic-bg);
+    font-weight: var(--type-weight-semibold);
+    text-decoration: none;
+    box-shadow: var(--shadow-elevation-1);
+    transition: box-shadow var(--motion-duration-fast)
+      var(--motion-easing-standard);
+  }
+
+  .resume-download:hover {
+    box-shadow: var(--shadow-elevation-2);
+  }
+
+  .resume-updated {
+    margin: var(--space-4) 0 0;
+    color: var(--color-semantic-text-muted);
+    font-size: var(--type-scale-step--1);
+  }
+</style>

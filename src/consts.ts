@@ -2,9 +2,7 @@
  * consts.ts — the SINGLE source of truth for site identity.
  *
  * Every component reads name / URLs / copy from here; nothing is hard-coded in a
- * template. Two fields (LinkedIn, email) intentionally ship as literal
- * "TODO:"-prefixed placeholders — a later step's grep gate refuses to launch
- * until the operator resolves them, so DO NOT drop the "TODO:" prefix here.
+ * template. All identity values below are resolved, real values.
  */
 
 /** Display name used for the brand mark, hero heading, and document title. */
@@ -16,17 +14,12 @@ export const GITHUB_URL = "https://github.com/aberson";
 /** This repository — the footer "View source" link. */
 export const REPO_URL = "https://github.com/aberson/aberson.github.io";
 
-/**
- * LinkedIn profile URL. Placeholder until the operator provides it; the literal
- * "TODO:" prefix is load-bearing (a later grep gate enforces resolution).
- */
-export const LINKEDIN_URL = "TODO: operator to provide";
+/** LinkedIn profile URL — drives the SocialLinks + Contact LinkedIn links. */
+export const LINKEDIN_URL =
+  "https://www.linkedin.com/in/abraham-robison-7183982a/";
 
-/**
- * Contact email. Placeholder until the operator provides it; the literal "TODO:"
- * prefix is load-bearing (a later grep gate enforces resolution).
- */
-export const CONTACT_EMAIL = "TODO: operator to provide";
+/** Contact email — the footer email link and the Contact section's mailto. */
+export const CONTACT_EMAIL = "aberobison@gmail.com";
 
 /** One-sentence value proposition — the hero lead paragraph. */
 export const VALUE_PROP =
@@ -61,16 +54,5 @@ export const NAV_ITEMS: readonly NavItem[] = [
   { label: "Contact", href: `#${ANCHORS.contact}` },
 ];
 
-/** ISO date the site content was last updated — the footer stamp. */
+/** ISO date the site content was last updated — the footer + résumé stamp. */
 export const LAST_UPDATED = "2026-07-19";
-
-/**
- * True when a value is a resolved, real value rather than a "TODO:" placeholder.
- * Placeholder-backed links (LinkedIn, email) are gated on this: SocialLinks and
- * Footer omit them entirely while unresolved, so no dead `todo:` / invalid
- * `mailto:` link ever renders. They appear automatically once the operator fills
- * the real values in here.
- */
-export function isResolved(v: string): boolean {
-  return !v.startsWith("TODO:");
-}
