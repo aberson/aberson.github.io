@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="AR">
+  <rect width="32" height="32" rx="7" fill="#3b63a8" />
+  <text
+    x="16"
+    y="21"
+    font-family="Manrope, Inter, 'Segoe UI', system-ui, sans-serif"
+    font-size="15"
+    font-weight="700"
+    text-anchor="middle"
+    fill="#fbfcfe"
+  >AR</text>
+</svg>

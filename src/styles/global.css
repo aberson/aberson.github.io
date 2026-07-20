@@ -1,0 +1,41 @@
+/* Global stylesheet for the portfolio.
+ *
+ * Import order matters:
+ *   1. Tailwind v4 engine.
+ *   2. Vendored brand Tailwind theme. Its `@theme` block registers the brand
+ *      palette/typography as Tailwind theme variables (generating utilities like
+ *      `bg-semantic-bg`, `text-semantic-accent`), and its unlayered dark blocks
+ *      flip those variables. Authored for v4 — must be imported AFTER tailwindcss.
+ *   3. Vendored brand runtime tokens. The raw CSS custom properties plus the
+ *      light/dark flip (via `prefers-color-scheme` AND `[data-theme="dark"]`).
+ *      This is the PRIMARY color source — the site is correctly themed off these
+ *      variables even if the Tailwind convenience layer is stripped.
+ *
+ * Files 2 and 3 are vendored VERBATIM from ../aberson-profile/brand/dist/ and are
+ * listed in .prettierignore so they stay byte-identical to their source. */
+@import "tailwindcss";
+@import "../assets/theme.tw.css";
+@import "../assets/tokens.css";
+
+/* Honor the OS light/dark preference for the default canvas + form controls,
+ * matching the brand tokens' own `prefers-color-scheme` flip. */
+:root {
+  color-scheme: light dark;
+}
+
+/* Base page surface, driven straight from the brand semantic tokens so the
+ * light/dark difference is obvious even before any Tailwind utility applies. */
+html {
+  background-color: var(--color-semantic-bg);
+  font-family: var(--font-sans);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--color-semantic-bg);
+  color: var(--color-semantic-text);
+  font-family: var(--font-sans);
+  line-height: var(--type-line-height-base);
+  -webkit-font-smoothing: antialiased;
+}

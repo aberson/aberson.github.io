@@ -1,0 +1,32 @@
+---
+// BaseLayout — the site's HTML shell.
+// Imports the global stylesheet (which pulls in the vendored brand tokens), sets
+// up head meta, and renders page content through <slot />. Light/dark is handled
+// entirely by the brand tokens' `prefers-color-scheme` flip plus `color-scheme`
+// in global.css, so the shell honors the visitor's OS preference with no JS.
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "Abraham Robison — Applied AI Engineer",
+  description = "Portfolio of Abraham Robison: applied AI engineer with deep finance roots, shipping agentic, judge-gated, cost-aware systems.",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

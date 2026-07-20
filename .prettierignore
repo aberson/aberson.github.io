@@ -1,0 +1,19 @@
+# Dependencies & build output
+node_modules/
+dist/
+.astro/
+package-lock.json
+
+# Vendored, generated brand tokens — keep VERBATIM (see header "DO NOT EDIT").
+# Re-sync from ../aberson-profile/brand/dist/ rather than formatting in place.
+src/assets/tokens.css
+src/assets/theme.tw.css
+src/assets/diagram-palette.json
+
+# Pre-existing workspace docs — not authored in this build step, leave untouched.
+CLAUDE.md
+README.md
+plan.md
+
+# build-step orchestration scratch
+.build-step/

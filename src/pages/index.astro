@@ -1,0 +1,89 @@
+---
+// Placeholder hub page. The real header / hero / work grid land in later steps;
+// for Step 1 this proves the scaffold + brand tokens render, and that the
+// palette visibly flips between light and dark schemes.
+//
+// Colors come from the vendored brand tokens two ways:
+//   • the scoped <style> below reads the CSS custom properties directly
+//     (var(--color-semantic-*)) — the bulletproof, primary path;
+//   • the accent chip uses the Tailwind brand utilities generated from the same
+//     tokens (bg-semantic-accent / text-semantic-bg) — the convenience layer.
+// Both flip automatically with prefers-color-scheme, so no toggle JS is needed.
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout>
+  <main class="hub">
+    <section class="hero">
+      <span class="eyebrow bg-semantic-accent text-semantic-bg">
+        Portfolio · scaffold live
+      </span>
+      <h1>Abraham Robison</h1>
+      <p class="lede">
+        Applied AI engineer with deep finance roots — I design and ship agentic,
+        judge-gated, cost-aware systems, grounded in real financial work.
+      </p>
+      <p class="note">
+        This page is styled entirely from the vendored brand tokens. Switch your
+        OS between light and dark mode and the background, text, and accent
+        shift with it.
+      </p>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  /* Every color here resolves from a brand semantic token, so the whole block
+   * re-themes on the light/dark flip with zero extra rules. */
+  .hub {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-6) var(--space-5);
+    background-color: var(--color-semantic-bg);
+  }
+
+  .hero {
+    width: 100%;
+    max-width: 42rem;
+    padding: var(--space-8) var(--space-7);
+    background-color: var(--color-semantic-surface);
+    border: 1px solid var(--color-semantic-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-elevation-2);
+  }
+
+  .eyebrow {
+    display: inline-block;
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-pill);
+    font-size: var(--type-scale-step--1);
+    font-weight: var(--type-weight-semibold);
+    letter-spacing: 0.02em;
+  }
+
+  h1 {
+    margin: var(--space-4) 0 var(--space-3);
+    color: var(--color-semantic-text);
+    font-family: var(--font-heading);
+    font-size: var(--type-scale-step-4);
+    font-weight: var(--type-weight-bold);
+    line-height: var(--type-line-height-tight);
+  }
+
+  .lede {
+    margin: 0 0 var(--space-4);
+    color: var(--color-semantic-accent);
+    font-size: var(--type-scale-step-1);
+    font-weight: var(--type-weight-medium);
+    line-height: var(--type-line-height-base);
+  }
+
+  .note {
+    margin: 0;
+    color: var(--color-semantic-text-muted);
+    font-size: var(--type-scale-step-0);
+    line-height: var(--type-line-height-loose);
+  }
+</style>

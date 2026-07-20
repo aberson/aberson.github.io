@@ -26,7 +26,7 @@ tokens from `../aberson-profile/brand/dist/`, and case-study source from
 ```powershell
 npm install            # one-time
 npm run dev            # http://localhost:4321, hot reload
-npm run astro check    # validate content + types
+npm run check          # astro check — validate content + types
 npm run build          # production build to dist/
 npm run preview        # serve the built dist/ locally
 ```
