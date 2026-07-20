@@ -67,7 +67,11 @@ change + `CNAME` file with no rebuild.
 **LIVE at https://aberson.github.io** (Steps 1–6 + M1 done). Full site
 (hero/work/about/resume/contact + case studies), GitHub Actions deploy
 (`.github/workflows/deploy.yml`, Pages source = GitHub Actions, Node 24),
-Dependabot, and the `CONTENT.md` update runbook. Remaining operator items: swap
+Dependabot, and the `CONTENT.md` update runbook. Visual identity was refreshed to
+an **indigo brand** (accent `#5d60e3` light / `#9aa6ff` dark, from OKLCH seed
+`#3730a3`) — reseeded in `../aberson-profile/brand/tokens.json` and re-vendored
+into `src/assets/` via `scripts/sync-brand.ps1` (commit `3deec04`). Remaining
+operator items: swap
 the placeholder `public/resume.pdf` for the real export, **M2** account-security
 checklist (#8), optional **M3** custom domain (#9). Update this section via
 `/repo-update` after each phase.
