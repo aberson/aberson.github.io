@@ -3,9 +3,12 @@
 // and outward links (Code → repo, Live → demo). Renders as a self-contained
 // <article> so a grid of cards is a list of discrete items. All colors, spacing,
 // radii, and type resolve from the brand semantic tokens, so it reads
-// intentionally in BOTH light and dark. No thumbnail is set yet (Step 4 adds
-// them + the case-study link for featured projects); the card renders text-only
-// rather than emitting a broken <img>.
+// intentionally in BOTH light and dark. No thumbnail is set yet; the card renders
+// text-only rather than emitting a broken <img>.
+//
+// FEATURED projects additionally expose a "Read case study →" link to their
+// /work/<slug> subpage. Non-featured projects deliberately expose NO such link —
+// only featured projects have a case-study route, so a link there would 404.
 import type { CollectionEntry } from "astro:content";
 
 interface Props {
@@ -13,7 +16,17 @@ interface Props {
 }
 
 const { project } = Astro.props;
-const { title, blurb, tech, repo, demo } = project.data;
+const { title, blurb, tech, repo, demo, featured } = project.data;
+
+// Case-study href only for featured projects (the only slugs [slug].astro emits a
+// page for). BASE_URL always ends in "/", so this yields "/work/<slug>/" at the
+// site root; the collapse guard keeps it safe under a project base path too. The
+// TRAILING slash is load-bearing: Astro emits directory-format output
+// (dist/work/<slug>/index.html) and the sitemap canonical is "/work/<slug>/", so
+// a slash-less href would 301-redirect on GitHub Pages and trip the link-check.
+const caseStudyHref = featured
+  ? `${import.meta.env.BASE_URL}work/${project.id}/`.replace(/\/{2,}/g, "/")
+  : undefined;
 ---
 
 <article class="project-card">
@@ -29,8 +42,17 @@ const { title, blurb, tech, repo, demo } = project.data;
     )
   }
   {
-    (repo || demo) && (
+    (caseStudyHref || repo || demo) && (
       <div class="project-links">
+        {caseStudyHref && (
+          <a
+            class="project-link project-case-study"
+            href={caseStudyHref}
+            aria-label={`Read the ${title} case study`}
+          >
+            Read case study <span aria-hidden="true">→</span>
+          </a>
+        )}
         {repo && (
           <a
             class="project-link"
@@ -131,5 +153,12 @@ const { title, blurb, tech, repo, demo } = project.data;
 
   .project-link:hover {
     text-decoration: underline;
+  }
+
+  /* The featured card's primary CTA — weighted a step heavier than the outward
+   * Code/Live links, and forced to the front of the row so it reads first. */
+  .project-case-study {
+    order: -1;
+    font-weight: var(--type-weight-semibold);
   }
 </style>

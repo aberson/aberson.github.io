@@ -1,0 +1,41 @@
+---
+// /work/[slug] — the case-study subpage for a single FEATURED project.
+//
+// getStaticPaths emits ONE path per project whose frontmatter has
+// `featured: true`; non-featured projects get no route at all (so no dead
+// /work/<slug> URL exists to link into). Each page renders the project entry's
+// markdown body — the long-form Problem/Approach/Outcome prose — through the
+// content-layer `render()` helper, inside CaseStudyLayout, which supplies the
+// single <h1>, the tech/repo meta row, and the reading frame.
+import type { CollectionEntry } from "astro:content";
+import { getCollection, render } from "astro:content";
+import CaseStudyLayout from "../../layouts/CaseStudyLayout.astro";
+
+// Props flow from getStaticPaths below; typing them keeps `entry` (and its
+// `.data` access) a real CollectionEntry<"projects"> rather than implicit `any`,
+// so the same typo-catching that protects every other component applies here.
+interface Props {
+  entry: CollectionEntry<"projects">;
+}
+
+export async function getStaticPaths() {
+  const featured = (await getCollection("projects")).filter(
+    (project) => project.data.featured,
+  );
+  return featured.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { title, tech, repo, blurb } = entry.data;
+// Content-layer render: the compiled <Content /> component renders the entry's
+// markdown body (## and below — never an h1, so the layout's title stays the
+// page's single h1).
+const { Content } = await render(entry);
+---
+
+<CaseStudyLayout title={title} tech={tech} repo={repo} description={blurb}>
+  <Content />
+</CaseStudyLayout>
