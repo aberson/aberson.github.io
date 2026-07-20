@@ -172,12 +172,13 @@ aberson.github.io/
 │   ├── content/
 │   │   ├── config.ts
 │   │   └── projects/
-│   │       ├── alpha4gate.md   # featured
-│   │       ├── toybox.md       # featured
+│   │       ├── alpha4gate.md              # featured
+│   │       ├── void-furnace.md            # featured
+│   │       ├── toybox.md                  # featured
 │   │       ├── pta-finance.md
-│   │       ├── shake-spear.md
-│   │       ├── applied-learning.md
-│   │       └── walkies.md
+│   │       ├── always-best-estimates.md
+│   │       ├── brickomancer.md
+│   │       └── claude-skills.md
 │   ├── layouts/  (BaseLayout, CaseStudyLayout)
 │   ├── components/  (BaseHead, Header, Footer, Hero, SocialLinks, ProjectCard, ProjectGrid, ResumeSection, ContactSection)
 │   ├── styles/global.css
@@ -409,16 +410,17 @@ UI steps can use `--ui` screenshot evidence without an auth downgrade.
 
 ## 12. Appendix
 
-**Projects to seed (from `aberson-profile/README.md`, verbatim source):**
+**Projects shown (revised 2026-07-20 after a card-strength audit across all public repos — dropped the 3 lightest/off-target cards `shake_spear`/`applied_learning`/`walkies` for stronger, on-target public projects):**
 
 | slug | title | featured | tech |
 |---|---|---|---|
 | alpha4gate | Alpha4Gate | yes | Python, PyTorch/SB3, FastAPI, React |
+| void-furnace | void-furnace | yes | Python, Claude Code CLI, SQLite, systemd |
 | toybox | toybox | yes | Python/FastAPI, React/TypeScript |
 | pta-finance | pta_finance | no | Python, `mypy --strict`, GitHub Actions |
-| shake-spear | shake_spear | no | Python |
-| applied-learning | applied_learning | no | Jupyter |
-| walkies | walkies | no | React Native, TypeScript |
+| always-best-estimates | always-best-estimates | no | Python, cvxpy, Black-Litterman, React/FastAPI |
+| brickomancer | brickomancer | no | Python, FastAPI, React, trimesh/networkx |
+| claude-skills | claude-skills | no | Claude Code, Python |
 
 **Identity / links (fill remaining `TODO:` before M1):**
 
