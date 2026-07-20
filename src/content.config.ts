@@ -37,6 +37,9 @@ const projects = defineCollection({
     order: z.number(),
     /** Featured projects get a long-form case study (Step 4). */
     featured: z.boolean().default(false),
+    /** Hidden projects stay in the repo but render nowhere (no card, no case
+     * study) — a saved-but-off toggle. Flip to false to bring a project back. */
+    hidden: z.boolean().default(false),
   }),
 });
 

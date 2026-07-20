@@ -8,9 +8,9 @@
 import { getCollection } from "astro:content";
 import ProjectCard from "./ProjectCard.astro";
 
-const projects = (await getCollection("projects")).sort(
-  (a, b) => a.data.order - b.data.order,
-);
+const projects = (
+  await getCollection("projects", ({ data }) => !data.hidden)
+).sort((a, b) => a.data.order - b.data.order);
 ---
 
 <ul class="project-grid" role="list">

@@ -5,4 +5,5 @@ tech: ["Python", "FastAPI", "React", "trimesh/networkx"]
 repo: "https://github.com/aberson/brickomancer"
 order: 6
 featured: false
+hidden: true
 ---

@@ -20,7 +20,7 @@ interface Props {
 
 export async function getStaticPaths() {
   const featured = (await getCollection("projects")).filter(
-    (project) => project.data.featured,
+    (project) => project.data.featured && !project.data.hidden,
   );
   return featured.map((entry) => ({
     params: { slug: entry.id },

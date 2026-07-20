@@ -45,22 +45,24 @@ demo: "https://example.com/demo" # optional — adds a "Live" link
 thumbnail: "/thumbnails/project.png" # optional — image above the card; omit = text-only
 order: 7 # sort key; grid renders ascending
 featured: false # true => a /work/<slug>/ case-study page
+hidden: false # optional — true keeps the file but renders it nowhere (saved-but-off)
 ---
 ```
 
 Field reference (the Zod schema in `src/content.config.ts` is the source of truth
 and **fails the build loudly** if a file is malformed):
 
-| Field       | Required | Notes                                                                                                 |
-| ----------- | -------- | ----------------------------------------------------------------------------------------------------- |
-| `title`     | yes      | Card heading.                                                                                         |
-| `blurb`     | yes      | One paragraph; shown on the card.                                                                     |
-| `tech`      | yes      | Array of strings, rendered as chips.                                                                  |
-| `repo`      | no       | Must be a full URL; adds the card's "Code" link.                                                      |
-| `demo`      | no       | Must be a full URL; adds the card's "Live" link.                                                      |
-| `thumbnail` | no       | Path under `public/` (e.g. `/thumbnails/x.png`); renders an image above the card. Omit for text-only. |
-| `order`     | yes      | Number; the grid sorts ascending by it.                                                               |
-| `featured`  | no       | Defaults to `false`. `true` generates a case-study page.                                              |
+| Field       | Required | Notes                                                                                                                                     |
+| ----------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `title`     | yes      | Card heading.                                                                                                                             |
+| `blurb`     | yes      | One paragraph; shown on the card.                                                                                                         |
+| `tech`      | yes      | Array of strings, rendered as chips.                                                                                                      |
+| `repo`      | no       | Must be a full URL; adds the card's "Code" link.                                                                                          |
+| `demo`      | no       | Must be a full URL; adds the card's "Live" link.                                                                                          |
+| `thumbnail` | no       | Path under `public/` (e.g. `/thumbnails/x.png`); renders an image above the card. Omit for text-only.                                     |
+| `order`     | yes      | Number; the grid sorts ascending by it.                                                                                                   |
+| `featured`  | no       | Defaults to `false`. `true` generates a case-study page.                                                                                  |
+| `hidden`    | no       | Defaults to `false`. `true` keeps the file in the repo but renders it nowhere — a saved-but-off toggle; flip to `false` to bring it back. |
 
 Thumbnail files live under `public/` — e.g. drop the image at
 `public/thumbnails/x.png` and set `thumbnail: "/thumbnails/x.png"`. It renders
@@ -87,8 +89,9 @@ What you built and the key decisions.
 What shipped and the transferable lesson.
 ```
 
-Current featured case studies: `alpha4gate.md` and `toybox.md`. A non-featured
-project needs no body — the frontmatter alone renders its card.
+Current featured case studies: `alpha4gate.md`, `void-furnace.md`, and
+`toybox.md`. A non-featured project needs no body — the frontmatter alone renders
+its card.
 
 ---
 
