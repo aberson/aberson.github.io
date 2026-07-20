@@ -1,0 +1,38 @@
+---
+// ProjectGrid — the #work section body. Loads the `projects` content collection,
+// orders it ascending by the frontmatter `order` field, and lays the cards out
+// in a responsive auto-fill grid: one column on a 375px phone (a card's min
+// track is capped at 100% so it never forces horizontal overflow), two-to-three
+// across on desktop. Semantic <ul>/<li> so assistive tech announces it as a
+// list of projects.
+import { getCollection } from "astro:content";
+import ProjectCard from "./ProjectCard.astro";
+
+const projects = (await getCollection("projects")).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+---
+
+<ul class="project-grid" role="list">
+  {
+    projects.map((project) => (
+      <li>
+        <ProjectCard project={project} />
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  .project-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-5);
+    /* auto-fill + min(100%, 18rem): 1 col when the row is narrower than ~18rem
+     * (phones), filling to 2–3 tracks as the container widens on desktop. The
+     * min() cap keeps a single card from overflowing a sub-18rem viewport. */
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
+  }
+</style>

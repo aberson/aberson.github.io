@@ -1,0 +1,135 @@
+---
+// ProjectCard — one portfolio project tile: title, blurb, a row of tech chips,
+// and outward links (Code → repo, Live → demo). Renders as a self-contained
+// <article> so a grid of cards is a list of discrete items. All colors, spacing,
+// radii, and type resolve from the brand semantic tokens, so it reads
+// intentionally in BOTH light and dark. No thumbnail is set yet (Step 4 adds
+// them + the case-study link for featured projects); the card renders text-only
+// rather than emitting a broken <img>.
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  project: CollectionEntry<"projects">;
+}
+
+const { project } = Astro.props;
+const { title, blurb, tech, repo, demo } = project.data;
+---
+
+<article class="project-card">
+  <h3 class="project-title">{title}</h3>
+  <p class="project-blurb">{blurb}</p>
+  {
+    tech.length > 0 && (
+      <ul class="project-tech" role="list" aria-label="Tech stack">
+        {tech.map((label) => (
+          <li class="tech-chip">{label}</li>
+        ))}
+      </ul>
+    )
+  }
+  {
+    (repo || demo) && (
+      <div class="project-links">
+        {repo && (
+          <a
+            class="project-link"
+            href={repo}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`${title} source code on GitHub (opens in a new tab)`}
+          >
+            Code <span aria-hidden="true">↗</span>
+          </a>
+        )}
+        {demo && (
+          <a
+            class="project-link"
+            href={demo}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`${title} live demo (opens in a new tab)`}
+          >
+            Live <span aria-hidden="true">↗</span>
+          </a>
+        )}
+      </div>
+    )
+  }
+</article>
+
+<style>
+  .project-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    height: 100%;
+    padding: var(--space-5);
+    background-color: var(--color-semantic-surface);
+    border: 1px solid var(--color-semantic-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-elevation-1);
+    transition: box-shadow var(--motion-duration-fast)
+      var(--motion-easing-standard);
+  }
+
+  .project-card:hover {
+    box-shadow: var(--shadow-elevation-2);
+  }
+
+  .project-title {
+    margin: 0;
+    color: var(--color-semantic-text);
+    font-family: var(--font-heading);
+    font-size: var(--type-scale-step-1);
+    font-weight: var(--type-weight-bold);
+    line-height: var(--type-line-height-tight);
+  }
+
+  .project-blurb {
+    margin: 0;
+    color: var(--color-semantic-text-muted);
+    font-size: var(--type-scale-step-0);
+    line-height: var(--type-line-height-base);
+  }
+
+  .project-tech {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .tech-chip {
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-pill);
+    background-color: var(--color-semantic-code-bg);
+    color: var(--color-semantic-text-muted);
+    font-family: var(--font-mono);
+    font-size: var(--type-scale-step--1);
+    line-height: var(--type-line-height-tight);
+    white-space: nowrap;
+  }
+
+  .project-links {
+    /* Pin links to the card bottom so uneven-height cards align their link rows. */
+    margin-top: auto;
+    padding-top: var(--space-2);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+  }
+
+  .project-link {
+    color: var(--color-semantic-accent);
+    font-size: var(--type-scale-step-0);
+    font-weight: var(--type-weight-medium);
+    text-decoration: none;
+  }
+
+  .project-link:hover {
+    text-decoration: underline;
+  }
+</style>

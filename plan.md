@@ -303,6 +303,7 @@ UI steps can use `--ui` screenshot evidence without an auth downgrade.
 - **Produces:** `src/content/config.ts`, `src/content/projects/*.md` (6 entries), `ProjectCard.astro`, `ProjectGrid.astro`.
 - **Done when:** all 6 cards render with correct blurb/tech/link; **adding a new `.md` in `src/content/projects/` produces a new card after rebuild** (verifies the update loop end-to-end); a frontmatter that violates the schema fails `npm run build`.
 - **Depends on:** 2
+- **Status:** DONE (2026-07-19) — `src/content.config.ts` (Astro 7 content-layer `glob()` loader, 8-field Zod schema per §3, `z.url()`), 6 project `.md` seeds (blurbs/tech/repo verbatim from profile README; all 6 repos verified public via `gh api`), `ProjectCard` + `ProjectGrid` rendered in `#work`. Schema-fail test confirmed (missing `order` → hard build fail). Verified in Playwright: 3-col desktop / 1-col @375, no overflow, light+dark. Reviewers PASS (0 high/med; low forward-risks noted). build/check/lint 0.
 
 ### Step 4: Case-study subpage template + seed 1–2 studies
 - **Problem:** Add the dynamic route `src/pages/work/[slug].astro` + `CaseStudyLayout.astro` that renders a featured project's markdown body as a Problem→Approach→Outcome page at `/work/<slug>`; link featured cards to their study (non-featured cards get no link). Seed the 2 deepest studies (`alpha4gate`, `toybox`) with real content sourced from `../Career/CANDIDATE MASTER PROFILE.md`.

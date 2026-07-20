@@ -1,11 +1,12 @@
 ---
 // Home hub page. The persistent Header/Footer come from BaseLayout; this page
-// owns the <main> landmark, the Hero, and lightweight section stubs for each nav
-// target (#work, #about, #resume, #contact) so the anchors have somewhere to
-// scroll. Later steps fill these sections with real content. Each stub carries
-// scroll-margin-top so the sticky header never covers the anchored heading.
+// owns the <main> landmark, the Hero, and the section targets for each nav anchor
+// (#work, #about, #resume, #contact). #work now renders the ProjectGrid; #about,
+// #resume, and #contact are lightweight stubs later steps fill in. Each section
+// carries scroll-margin-top so the sticky header never covers the anchored heading.
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Hero from "../components/Hero.astro";
+import ProjectGrid from "../components/ProjectGrid.astro";
 import { ANCHORS } from "../consts";
 ---
 
@@ -15,11 +16,13 @@ import { ANCHORS } from "../consts";
 
     <section
       id={ANCHORS.work}
-      class="section-stub"
+      class="work-section"
       aria-labelledby="work-heading"
     >
-      <h2 id="work-heading">Work</h2>
-      <p>Selected projects are on their way.</p>
+      <div class="work-inner">
+        <h2 id="work-heading">Work</h2>
+        <ProjectGrid />
+      </div>
     </section>
 
     <section
@@ -52,6 +55,29 @@ import { ANCHORS } from "../consts";
 </BaseLayout>
 
 <style>
+  /* The work section spans a wider column than the text stubs so the project
+   * grid can reach 3 tracks on desktop, while keeping the same border-top and
+   * sticky-header scroll offset as the other sections. */
+  .work-section {
+    padding: var(--space-8) var(--space-4);
+    scroll-margin-top: 5rem;
+    border-top: 1px solid var(--color-semantic-border);
+  }
+
+  .work-inner {
+    max-width: 72rem;
+    margin-inline: auto;
+  }
+
+  .work-section h2 {
+    margin: 0 0 var(--space-5);
+    color: var(--color-semantic-text);
+    font-family: var(--font-heading);
+    font-size: var(--type-scale-step-3);
+    font-weight: var(--type-weight-bold);
+    line-height: var(--type-line-height-tight);
+  }
+
   .section-stub {
     max-width: 48rem;
     margin-inline: auto;
