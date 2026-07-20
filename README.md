@@ -25,7 +25,7 @@ Projects are markdown files with typed frontmatter; site identity lives in one
 | Quality gates | CI (deploy): `astro check` · Prettier · a no-`TODO` gate · linkinator. Local-only: axe-core a11y (`npm run check:a11y`) |
 | Deps          | Dependabot (npm + github-actions, weekly)                            |
 
-Requires **Node 20+ (LTS)** and npm.
+Requires **Node 22.12+** and npm (Astro 7's minimum; dev + CI run Node 24).
 
 ## Quick start
 

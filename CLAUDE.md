@@ -72,7 +72,7 @@ optional custom domain). Update this section via `/repo-update` after each phase
 
 ## Environment requirements
 
-- Windows 11 + PowerShell. **Node 20+ (LTS)** and npm for Astro.
+- Windows 11 + PowerShell. **Node 22.12+** and npm for Astro (Astro 7 minimum; dev + CI run Node 24).
 - A GitHub account (`aberson`); the repo must be named `aberson.github.io`
   (user-site requirement) and public.
 - No API keys or secrets — a static site needs none; never commit any.

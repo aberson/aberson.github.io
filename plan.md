@@ -235,7 +235,7 @@ aberson.github.io/
 ## 10. How to Run
 
 ```powershell
-# prerequisites: Node 20+ (LTS) and npm  (Astro requires Node >=18.20 / 20.3 / 22)
+# prerequisites: Node 22.12+ and npm  (Astro 7 requires Node >=22.12.0; dev + CI on 24)
 # one-time
 cd C:\Users\abero\dev\aberson.github.io
 npm install
