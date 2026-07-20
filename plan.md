@@ -278,7 +278,7 @@ UI steps can use `--ui` screenshot evidence without an auth downgrade.
 ### Step 1: Scaffold Astro + wire brand tokens + local preview
 - **Problem:** Initialize an Astro + TypeScript project with `@astrojs/tailwind` and `@astrojs/sitemap`; set `astro.config.mjs` `site: 'https://aberson.github.io'`, `base: '/'`; vendor the compiled brand tokens from `../aberson-profile/brand/dist/` (`tokens.css`, `theme.tw.css`) into `src/assets/` and import them in `src/styles/global.css`; map them into `tailwind.config.mjs`; build a minimal `BaseLayout.astro` with light/dark from the brand modes and a placeholder index page.
 - **Type:** code
-- **Issue:** #
+- **Issue:** #1
 - **Flags:** --reviewers code --isolation worktree
 - **Produces:** `package.json` (scripts: `dev` / `build` / `preview` / `check` = `astro check` / `format` + `lint` = Prettier), `.prettierrc` (with `prettier-plugin-astro`), `astro.config.mjs`, `tailwind.config.mjs`, `tsconfig.json`, `src/layouts/BaseLayout.astro`, `src/styles/global.css`, vendored brand files, placeholder `src/pages/index.astro`.
 - **Done when:** `npm run build` and `npm run astro check` both exit 0; `npm run dev` serves a page whose colors come from the brand tokens in both light and dark schemes.
@@ -287,7 +287,7 @@ UI steps can use `--ui` screenshot evidence without an auth downgrade.
 ### Step 2: Site chrome — header, footer, hero, social links
 - **Problem:** Build the persistent chrome: sticky `Header` (name + nav anchors Work/About/Resume/Contact + persistent GitHub & LinkedIn icon links), `Footer` (repeat links + last-updated stamp + view-source link), `Hero` (value-prop sentence from the profile README + primary CTA "See my work"), and a `SocialLinks` component. Centralize name/URLs/email in `src/consts.ts` with `TODO:` markers for the not-yet-known LinkedIn URL and email. Responsive to 375px.
 - **Type:** code
-- **Issue:** #
+- **Issue:** #2
 - **Flags:** --reviewers code --ui --start-cmd "npm run dev" --url http://localhost:4321
 - **Produces:** `src/consts.ts`, `Header.astro`, `Footer.astro`, `Hero.astro`, `SocialLinks.astro`, wired into `BaseLayout`.
 - **Done when:** the hub renders header + hero + footer; nav anchors scroll to sections; the GitHub link resolves to `github.com/aberson`; layout holds at 375px; nav is keyboard-focusable with a visible focus ring.
@@ -296,7 +296,7 @@ UI steps can use `--ui` screenshot evidence without an auth downgrade.
 ### Step 3: Projects content collection + card grid
 - **Problem:** Define the `projects` Content Collection (`src/content/config.ts`, Zod schema per §3); seed all **6** real projects from `../aberson-profile/README.md` (`alpha4gate`, `toybox`, `pta-finance`, `shake-spear`, `applied-learning`, `walkies`) with verbatim blurbs, tech tags, and repo links; build `ProjectCard.astro` + `ProjectGrid.astro` and render the grid on the hub.
 - **Type:** code
-- **Issue:** #
+- **Issue:** #3
 - **Flags:** --reviewers code --ui --start-cmd "npm run dev" --url http://localhost:4321
 - **Produces:** `src/content/config.ts`, `src/content/projects/*.md` (6 entries), `ProjectCard.astro`, `ProjectGrid.astro`.
 - **Done when:** all 6 cards render with correct blurb/tech/link; **adding a new `.md` in `src/content/projects/` produces a new card after rebuild** (verifies the update loop end-to-end); a frontmatter that violates the schema fails `npm run build`.
@@ -305,7 +305,7 @@ UI steps can use `--ui` screenshot evidence without an auth downgrade.
 ### Step 4: Case-study subpage template + seed 1–2 studies
 - **Problem:** Add the dynamic route `src/pages/work/[slug].astro` + `CaseStudyLayout.astro` that renders a featured project's markdown body as a Problem→Approach→Outcome page at `/work/<slug>`; link featured cards to their study (non-featured cards get no link). Seed the 2 deepest studies (`alpha4gate`, `toybox`) with real content sourced from `../Career/CANDIDATE MASTER PROFILE.md`.
 - **Type:** code
-- **Issue:** #
+- **Issue:** #4
 - **Flags:** --reviewers code --ui --start-cmd "npm run dev" --url http://localhost:4321
 - **Produces:** `src/pages/work/[slug].astro`, `CaseStudyLayout.astro`, full bodies for 2 featured entries, "Read case study" links on featured cards.
 - **Done when:** a featured card links to a standalone `/work/<slug>` page that renders its markdown; non-featured cards expose no dead link; each rendered page has exactly one `<h1>`.
@@ -314,7 +314,7 @@ UI steps can use `--ui` screenshot evidence without an auth downgrade.
 ### Step 5: Resume + contact + accessibility, links & SEO pass
 - **Problem:** Add `ResumeSection` (Download-PDF button → `public/resume.pdf` placeholder + last-updated date), `ContactSection` (visible `mailto:` + LinkedIn), and `BaseHead` meta (title/description/OpenGraph/canonical) + favicon + `@astrojs/sitemap`. Accessibility sweep: semantic landmarks, real alt text, 4.5:1 contrast, keyboard nav with visible focus, 200% text resize, `prefers-color-scheme` dark. Run an automated a11y check (pa11y-ci or axe) over the hub + one case-study page, and a link check (linkinator over the built `dist/`) so no dead project / demo / resume link ships.
 - **Type:** code
-- **Issue:** #
+- **Issue:** #5
 - **Flags:** --reviewers code --ui --start-cmd "npm run dev" --url http://localhost:4321
 - **Produces:** `ResumeSection.astro`, `ContactSection.astro`, `BaseHead.astro`, sitemap integration, placeholder `public/resume.pdf`, a `check:links` npm script (linkinator), a11y fixes.
 - **Done when:** the a11y check reports no serious/critical violations on the hub and a case-study page; Lighthouse accessibility ≥ 95; the resume button downloads the PDF; the `mailto:` opens a compose window; `linkinator` reports zero broken links.
@@ -323,7 +323,7 @@ UI steps can use `--ui` screenshot evidence without an auth downgrade.
 ### Step 6: Deploy workflow + Dependabot + content runbook (domain-ready)
 - **Problem:** Add `.github/workflows/deploy.yml` (`withastro/action` → `actions/deploy-pages`, build on push to `main`, running the quality gates — `astro check` + Prettier `--check` + `linkinator` — before deploy); confirm `astro.config` `site`/`base` are correct for the user site; add `.github/dependabot.yml` (npm, weekly); add a repo `README.md` and a `CONTENT.md` update runbook; document (do not yet perform) the custom-domain switch (add `public/CNAME` + change `site`). Add a `TODO:`-grep gate so unresolved placeholders can't ship.
 - **Type:** code
-- **Issue:** #
+- **Issue:** #6
 - **Flags:** --reviewers code --isolation worktree
 - **Produces:** `.github/workflows/deploy.yml`, `.github/dependabot.yml`, `README.md`, `CONTENT.md`.
 - **Done when:** the workflow and dependabot YAML parse and lint (e.g. `actionlint`); a fresh `npm ci && npm run build` reproduces the deployable `dist/`; `grep -r "TODO:" src/` returns nothing (all placeholders resolved). Live deploy is verified in M1.
@@ -334,7 +334,7 @@ UI steps can use `--ui` screenshot evidence without an auth downgrade.
 
 ### Step M1: Enable GitHub Pages + verify the live deploy
 - **Source step:** Step 6
-- **Issue:** #
+- **Issue:** #7
 - **Commands:**
   ```powershell
   cd C:\Users\abero\dev\aberson.github.io
@@ -357,7 +357,7 @@ UI steps can use `--ui` screenshot evidence without an auth downgrade.
 
 ### Step M2: Security checklist — the free-subdomain phase (~15 min)
 - **Source step:** §8 decision 7
-- **Issue:** #
+- **Issue:** #8
 - **Commands:**
   ```powershell
   # Account hardening is done in the GitHub web UI:
@@ -378,7 +378,7 @@ UI steps can use `--ui` screenshot evidence without an auth downgrade.
 
 ### Step M3 (optional, later): Custom-domain + analytics level-up
 - **Source step:** §1 (deferred enhancement)
-- **Issue:** #
+- **Issue:** #9
 - **Commands:**
   ```powershell
   # Operator-only infra (no code):
