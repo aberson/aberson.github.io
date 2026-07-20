@@ -55,7 +55,7 @@ is plain files.
   is a `.md`/`.mdx` file. **ID = slug**, kebab-case, equal to the filename
   (without extension) and to the URL segment (`/work/<slug>`). Slug uniqueness
   is enforced by the filesystem.
-- **Frontmatter schema** (Zod, in `src/content/config.ts`):
+- **Frontmatter schema** (Zod, in `src/content.config.ts` — Astro 7's content-layer config location):
 
   | Field | Type | Notes |
   |---|---|---|
@@ -153,9 +153,9 @@ pre-rendered HTML.
 
 ```
 aberson.github.io/
-├── astro.config.mjs          # site: 'https://aberson.github.io', base: '/', integrations: tailwind, sitemap
-├── tailwind.config.mjs       # theme extended from vendored brand tokens
-├── package.json              # scripts: dev, build, preview, astro check
+├── astro.config.mjs          # site: 'https://aberson.github.io', base: '/', @tailwindcss/vite + sitemap
+│                             # (Tailwind v4: theme is the @theme block in the vendored theme.tw.css — no tailwind.config.mjs)
+├── package.json              # scripts: dev, build, preview, check (astro check), format, lint, check:links, check:a11y
 ├── tsconfig.json
 ├── .github/
 │   ├── workflows/deploy.yml   # withastro/action -> actions/deploy-pages
@@ -457,3 +457,45 @@ append-only; a reversed decision flips `status` to `changed <date>`, never renum
 | D8 | D | 6 auto + 3 operator steps; worktree; code + `--ui` reviewers | stands |
 | D9 | D | Resume = downloadable PDF, not an inline HTML resume page | stands |
 | D10 | D | Repo + local folder named `aberson.github.io` | stands |
+
+---
+
+## Phase — Automated Build + Launch (2026-07-19 / 07-20)
+
+**All 6 automated steps (issues #1–#6) shipped and the site is LIVE at
+[https://aberson.github.io](https://aberson.github.io) (HTTP 200, HTTPS enforced).**
+Gates green: `astro check` 0/0/0 · Prettier 0 · `astro build` 0 · axe-core 0
+serious/0 critical (hub + case study) · linkinator 0 broken (15 links).
+
+### What was built
+- **Step 1** — Astro 7 + TypeScript scaffold; brand tokens vendored from
+  `aberson-profile/brand/dist/`; **Tailwind v4 via `@tailwindcss/vite`** (the vendored
+  `theme.tw.css` is a v4 `@theme` block — deviation from the plan's `@astrojs/tailwind`);
+  `.gitattributes` (LF) to keep Windows-local and Linux-CI line endings in sync.
+- **Step 2** — persistent chrome (Header/Hero/Footer/SocialLinks); `consts.ts` single
+  source of identity with an `ANCHORS` map (nav hrefs, section ids, hero CTAs all derive
+  from it); skip-link; CSS-only responsive nav.
+- **Step 3** — `projects` content collection (content-layer `glob()` loader, 8-field Zod
+  schema, `z.url()`); 6 project seeds (blurbs/tech/repo verbatim from the profile README);
+  `ProjectCard` + `ProjectGrid`. Malformed frontmatter fails the build.
+- **Step 4** — `CaseStudyLayout` + `work/[slug].astro` (featured-only `getStaticPaths`);
+  Alpha4Gate + toybox case studies (~1070w each) sourced from the Career master profile,
+  honesty-reviewed (verbatim metrics, finance-by-analogy framing).
+- **Step 5** — `BaseHead` (per-page canonical + OpenGraph + favicon), `ResumeSection`
+  (Download-PDF + placeholder `public/resume.pdf`), `ContactSection`; identity resolved
+  (LinkedIn + email, no `TODO:`); `check:links` + `check:a11y` gate scripts. Bonus: About
+  section filled from the profile README.
+- **Step 6** — `deploy.yml` (gates-before-deploy → `upload-pages-artifact` → `deploy-pages`),
+  Dependabot (npm + github-actions), `CONTENT.md` runbook, `scripts/sync-brand.ps1`;
+  `thumbnail` field wired into `ProjectCard`.
+
+### M1 launch (operator step, completed)
+Switched GitHub Pages from the auto-created **legacy** branch-build to **GitHub Actions**
+mode and deployed. **CI fix required:** the first deploy failed at `astro check` because the
+workflow pinned **Node 20** but Astro 7.1.1 needs **≥22.12.0** — it passed locally only
+because dev runs Node 24 (a local-vs-CI env drift; the "Node 20+" prerequisite note was
+wrong). Fixed to `node-version: 24`; deploy then green.
+
+### Remaining (operator)
+- Swap the placeholder `public/resume.pdf` for the real export (edit → push → redeploys).
+- **M2** (#8) account security checklist; **M3** (#9) optional custom-domain level-up.

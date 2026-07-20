@@ -64,11 +64,13 @@ change + `CNAME` file with no rebuild.
 
 ## Current state
 
-**Automated build complete (Steps 1–6):** full site (hero/work/about/resume/
-contact + case studies), GitHub Actions deploy (`.github/workflows/deploy.yml`),
-Dependabot, and the `CONTENT.md` update runbook. Operator milestones **M1–M3**
-remain (enable Pages source = GitHub Actions, drop the real `public/resume.pdf`,
-optional custom domain). Update this section via `/repo-update` after each phase.
+**LIVE at https://aberson.github.io** (Steps 1–6 + M1 done). Full site
+(hero/work/about/resume/contact + case studies), GitHub Actions deploy
+(`.github/workflows/deploy.yml`, Pages source = GitHub Actions, Node 24),
+Dependabot, and the `CONTENT.md` update runbook. Remaining operator items: swap
+the placeholder `public/resume.pdf` for the real export, **M2** account-security
+checklist (#8), optional **M3** custom domain (#9). Update this section via
+`/repo-update` after each phase.
 
 ## Environment requirements
 
@@ -77,5 +79,6 @@ optional custom domain). Update this section via `/repo-update` after each phase
   (user-site requirement) and public.
 - No API keys or secrets — a static site needs none; never commit any.
 - Identity (LinkedIn, contact email, value prop) is resolved in `src/consts.ts`
-  (no `TODO:` remains — a CI no-`TODO` gate now enforces this). Before launch
-  (M1): export a real `public/resume.pdf` (currently a placeholder).
+  (no `TODO:` remains — a CI no-`TODO` gate now enforces this). The one content
+  placeholder still live is `public/resume.pdf` — swap it for the real export
+  (edit → commit → push → the Action redeploys).
