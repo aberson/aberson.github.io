@@ -1,10 +1,11 @@
 ---
-// ProjectCard — one portfolio project tile: title, blurb, a row of tech chips,
-// and outward links (Code → repo, Live → demo). Renders as a self-contained
-// <article> so a grid of cards is a list of discrete items. All colors, spacing,
-// radii, and type resolve from the brand semantic tokens, so it reads
-// intentionally in BOTH light and dark. No thumbnail is set yet; the card renders
-// text-only rather than emitting a broken <img>.
+// ProjectCard — one portfolio project tile: an optional thumbnail image, then
+// title, blurb, a row of tech chips, and outward links (Code → repo, Live →
+// demo). Renders as a self-contained <article> so a grid of cards is a list of
+// discrete items. All colors, spacing, radii, and type resolve from the brand
+// semantic tokens, so it reads intentionally in BOTH light and dark. When the
+// frontmatter sets `thumbnail`, a lazy <img> renders above the title; when it is
+// unset the card is text-only (no broken <img>).
 //
 // FEATURED projects additionally expose a "Read case study →" link to their
 // /work/<slug> subpage. Non-featured projects deliberately expose NO such link —
@@ -16,7 +17,19 @@ interface Props {
 }
 
 const { project } = Astro.props;
-const { title, blurb, tech, repo, demo, featured } = project.data;
+const { title, blurb, tech, repo, demo, thumbnail, featured } = project.data;
+
+// Base-safe thumbnail URL. The frontmatter path lives under public/ (served at
+// the site root), e.g. "/thumbnails/x.png". Strip any leading slash, prepend
+// BASE_URL (always ends in "/"), then collapse duplicate slashes — the same
+// idiom ResumeSection/caseStudyHref use — so it stays correct at the site root
+// and under a project base path. Unset thumbnail → no <img> at all.
+const thumbnailHref = thumbnail
+  ? `${import.meta.env.BASE_URL}${thumbnail.replace(/^\/+/, "")}`.replace(
+      /\/{2,}/g,
+      "/",
+    )
+  : undefined;
 
 // Case-study href only for featured projects (the only slugs [slug].astro emits a
 // page for). BASE_URL always ends in "/", so this yields "/work/<slug>/" at the
@@ -30,6 +43,17 @@ const caseStudyHref = featured
 ---
 
 <article class="project-card">
+  {
+    thumbnailHref && (
+      <img
+        class="project-thumbnail"
+        src={thumbnailHref}
+        alt={`Preview of ${title}`}
+        loading="lazy"
+        decoding="async"
+      />
+    )
+  }
   <h3 class="project-title">{title}</h3>
   <p class="project-blurb">{blurb}</p>
   {
@@ -97,6 +121,19 @@ const caseStudyHref = featured
 
   .project-card:hover {
     box-shadow: var(--shadow-elevation-2);
+  }
+
+  /* Thumbnail: full card width, fixed 16:9 box so the reserved space is claimed
+   * before the lazy image loads (no layout shift). The border + muted fill read
+   * as an intentional placeholder while loading, in both light and dark. */
+  .project-thumbnail {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-semantic-border);
+    background-color: var(--color-semantic-code-bg);
   }
 
   .project-title {

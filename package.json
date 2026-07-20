@@ -10,7 +10,7 @@
     "check": "astro check",
     "format": "prettier --write .",
     "lint": "prettier --check .",
-    "check:links": "linkinator ./dist --recurse --skip \"linkedin\\.com|^https://aberson\\.github\\.io/\"",
+    "check:links": "linkinator ./dist --recurse --timeout 20000 --retry --retry-errors --retry-errors-count 3 --skip \"linkedin\\.com|^https://aberson\\.github\\.io/\"",
     "check:a11y": "node scripts/a11y-check.mjs"
   },
   "dependencies": {

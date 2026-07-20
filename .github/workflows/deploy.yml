@@ -1,0 +1,90 @@
+name: Deploy to GitHub Pages
+
+# Build the Astro site and publish it to GitHub Pages.
+# Triggers: every push to `main`, plus a manual run from the Actions tab.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Least-privilege token: read the repo, write Pages, mint the OIDC id-token
+# that actions/deploy-pages exchanges for a deployment.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One Pages deploy at a time. Do NOT cancel an in-flight deploy — let it finish
+# and queue the next, so a rapid succession of pushes can't strand a half-publish.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    # Cap the whole build (link-check included) so a slow external host honoring a
+    # large 429 Retry-After can't stall the deploy for the platform-default 6h.
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Install dependencies
+        run: npm ci
+
+      # Quality gates run BEFORE the build, each failing the job on error, in order.
+      - name: Check (types + content schema)
+        run: npm run check
+
+      - name: Lint (prettier --check)
+        run: npm run lint
+
+      # Fail the deploy if any unresolved `TODO:` remains in src/, EXCLUDING the
+      # vendored brand tokens under src/assets/. The exclusion is path-scoped via
+      # --exclude-dir=assets (only the src/assets/ directory is skipped), not a
+      # line-substring filter, so a TODO whose text merely mentions "assets/" in a
+      # non-vendored file still fails the gate. grep exits 1 when it finds nothing,
+      # which is the SUCCESS case: "no matches" = pass, "matches found" = print +
+      # fail. See CONTENT.md for the shipping-gate rationale.
+      - name: No unresolved TODO in src/
+        run: |
+          if grep -rn "TODO:" src/ --exclude-dir=assets; then
+            echo "Unresolved TODO in src/ (see above) - resolve the placeholder before shipping."
+            exit 1
+          fi
+
+      - name: Build (astro build -> dist/)
+        run: npm run build
+
+      # Dead-link check over the built dist/. The npm script skips linkedin.com
+      # (bot-gated) and the pre-deploy aberson.github.io origin, and adds --retry
+      # /--retry-errors so a transient CI rate-limit (429) or 5xx from an external
+      # host does not fail the deploy. Internal links + resume.pdf are still checked.
+      - name: Link check (dist/)
+        run: npm run check:links
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

@@ -333,6 +333,7 @@ UI steps can use `--ui` screenshot evidence without an auth downgrade.
 - **Produces:** `.github/workflows/deploy.yml`, `.github/dependabot.yml`, `README.md`, `CONTENT.md`.
 - **Done when:** the workflow and dependabot YAML parse and lint (e.g. `actionlint`); a fresh `npm ci && npm run build` reproduces the deployable `dist/`; `grep -r "TODO:" src/` returns nothing (all placeholders resolved). Live deploy is verified in M1.
 - **Depends on:** 5
+- **Status:** DONE (2026-07-19) — `.github/workflows/deploy.yml` (push-to-main + dispatch; gates run BEFORE deploy: astro check → prettier --check → path-scoped no-`TODO` gate → build → linkinator; then `upload-pages-artifact` → `deploy-pages`; least-privilege Pages OIDC perms, no-cancel concurrency), `.github/dependabot.yml` (npm + github-actions weekly), `CONTENT.md` update runbook (PowerShell-5.1-correct; add-a-project template matches the Zod schema; custom-domain switch documented-not-performed — no `public/CNAME` created), `scripts/sync-brand.ps1`, updated `README.md`. Wired the `thumbnail` field into `ProjectCard` so the runbook is truthful. Both YAML parse; fresh `npm ci && npm run build` reproduces `dist/`; `grep -r "TODO:" src/` empty; a11y 0/0; linkinator 0 broken (15 links). Reviewers PASS (iter 2). check/lint/build 0. Live deploy = operator M1.
 
 ### Manual Steps
 (These run after `/build-phase` completes and the repo is created via `/repo-init`. Operator drives.)

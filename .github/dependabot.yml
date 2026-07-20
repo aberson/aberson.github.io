@@ -1,0 +1,22 @@
+# Dependabot keeps two ecosystems current with weekly PRs:
+#   - npm: the site's Astro/Tailwind toolchain (package.json / package-lock.json)
+#   - github-actions: the action versions pinned in .github/workflows/deploy.yml
+# Docs: https://docs.github.com/code-security/dependabot/dependabot-version-updates
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "github-actions"

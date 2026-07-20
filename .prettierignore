@@ -10,7 +10,9 @@ src/assets/tokens.css
 src/assets/theme.tw.css
 src/assets/diagram-palette.json
 
-# Pre-existing workspace docs — not authored in this build step, leave untouched.
+# Docs with hand-aligned markdown tables Prettier would reformat on every run
+# (README.md), plus workspace docs maintained outside the build pipeline
+# (CLAUDE.md via /repo-update, plan.md). Kept off the Prettier gate to avoid churn.
 CLAUDE.md
 README.md
 plan.md

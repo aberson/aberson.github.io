@@ -15,11 +15,11 @@ tokens from `../aberson-profile/brand/dist/`, and case-study source from
 | Layer | Tool |
 |---|---|
 | Generator | Astro (TypeScript) + Content Collections |
-| Styling | Tailwind (`@astrojs/tailwind`) + vendored brand tokens |
+| Styling | Tailwind v4 (`@tailwindcss/vite`) + vendored brand tokens |
 | Content | Markdown/MDX in `src/content/projects/` (Zod-typed frontmatter) |
 | Hosting | GitHub Pages — user site, repo `aberson.github.io` |
-| Deploy | GitHub Actions (`withastro/action` → `actions/deploy-pages`) |
-| Deps | Dependabot (npm) |
+| Deploy | GitHub Actions (hand-written build gates → `upload-pages-artifact` → `deploy-pages`) |
+| Deps | Dependabot (npm + github-actions, weekly) |
 
 ## Key commands
 
@@ -64,9 +64,11 @@ change + `CNAME` file with no rebuild.
 
 ## Current state
 
-**Plan written, no code yet.** Build via `/build-phase --plan plan.md` (Steps
-1–6 automated; M1–M3 operator). Update this section via `/repo-update` after
-each phase.
+**Automated build complete (Steps 1–6):** full site (hero/work/about/resume/
+contact + case studies), GitHub Actions deploy (`.github/workflows/deploy.yml`),
+Dependabot, and the `CONTENT.md` update runbook. Operator milestones **M1–M3**
+remain (enable Pages source = GitHub Actions, drop the real `public/resume.pdf`,
+optional custom domain). Update this section via `/repo-update` after each phase.
 
 ## Environment requirements
 
@@ -74,5 +76,6 @@ each phase.
 - A GitHub account (`aberson`); the repo must be named `aberson.github.io`
   (user-site requirement) and public.
 - No API keys or secrets — a static site needs none; never commit any.
-- Before launch (M1): provide the real **LinkedIn URL** and **contact email**
-  (currently `TODO:` in `src/consts.ts`) and export a real `public/resume.pdf`.
+- Identity (LinkedIn, contact email, value prop) is resolved in `src/consts.ts`
+  (no `TODO:` remains — a CI no-`TODO` gate now enforces this). Before launch
+  (M1): export a real `public/resume.pdf` (currently a placeholder).
