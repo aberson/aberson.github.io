@@ -70,9 +70,10 @@ change + `CNAME` file with no rebuild.
 Dependabot, and the `CONTENT.md` update runbook. Visual identity was refreshed to
 an **indigo brand** (accent `#5d60e3` light / `#9aa6ff` dark, from OKLCH seed
 `#3730a3`) — reseeded in `../aberson-profile/brand/tokens.json` and re-vendored
-into `src/assets/` via `scripts/sync-brand.ps1` (commit `3deec04`). Remaining
-operator items: swap
-the placeholder `public/resume.pdf` for the real export, **M2** account-security
+into `src/assets/` via `scripts/sync-brand.ps1` (commit `3deec04`). The real
+résumé PDF is live (`public/resume.pdf`, generated 2026-07-21 from the
+career-ops CV pipeline — regenerate there and re-copy to update). Remaining
+operator items: **M2** account-security
 checklist (#8), optional **M3** custom domain (#9). Update this section via
 `/repo-update` after each phase.
 
@@ -83,6 +84,6 @@ checklist (#8), optional **M3** custom domain (#9). Update this section via
   (user-site requirement) and public.
 - No API keys or secrets — a static site needs none; never commit any.
 - Identity (LinkedIn, contact email, value prop) is resolved in `src/consts.ts`
-  (no `TODO:` remains — a CI no-`TODO` gate now enforces this). The one content
-  placeholder still live is `public/resume.pdf` — swap it for the real export
-  (edit → commit → push → the Action redeploys).
+  (no `TODO:` remains — a CI no-`TODO` gate now enforces this). `public/resume.pdf`
+  is the real export (source: career-ops `output/cv-abraham-robison-general-*.pdf`);
+  to update it, regenerate in career-ops, re-copy, bump `LAST_UPDATED`, and push.
