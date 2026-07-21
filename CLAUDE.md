@@ -56,9 +56,10 @@ Static, fully pre-rendered. A single-page **hub** (`/`) — header, hero, projec
 grid, about, resume, contact, footer — plus **case-study subpages**
 (`/work/<slug>`) generated only for `featured: true` projects. Content is one
 Astro Content Collection (`projects`) whose Zod schema fails the build loudly on
-malformed frontmatter. Visual identity comes from brand tokens vendored from the
-`aberson-profile` repo (not the starter theme — the theme is adapted to the
-brand, per plan §8.3). GitHub + LinkedIn links are persistent in header and
+malformed frontmatter. Visual identity comes from the site's OWN vendored brand
+tokens (`brand/` source built with `onbrand build .`, re-vendored into
+`src/assets/` by `scripts/sync-brand.ps1` — no cross-repo dependency; not the
+starter theme, per plan §8.3). GitHub + LinkedIn links are persistent in header and
 footer. Built domain-ready (`base: '/'`) so a later custom domain is a `site`
 change + `CNAME` file with no rebuild.
 
@@ -67,10 +68,12 @@ change + `CNAME` file with no rebuild.
 **LIVE at https://aberson.github.io** (Steps 1–6 + M1 done). Full site
 (hero/work/about/resume/contact + case studies), GitHub Actions deploy
 (`.github/workflows/deploy.yml`, Pages source = GitHub Actions, Node 24),
-Dependabot, and the `CONTENT.md` update runbook. Visual identity was refreshed to
-an **indigo brand** (accent `#5d60e3` light / `#9aa6ff` dark, from OKLCH seed
-`#3730a3`) — reseeded in `../aberson-profile/brand/tokens.json` and re-vendored
-into `src/assets/` via `scripts/sync-brand.ps1` (commit `3deec04`). The real
+Dependabot, and the `CONTENT.md` update runbook. Visual identity is a **warm-gold
+brand** (accent `#b8762b` light / `#e89f53` dark — on-brand monet-san-giorgio with a
+mode-consistent warm-gold dark), forced to **light mode** (`html data-theme="light"`),
+and now **self-contained**: the site owns `brand/{tokens.json,modes.dark.json}` (build
+with `onbrand build .`) and `scripts/sync-brand.ps1` re-vendors from `./brand/dist`, not
+the sibling aberson-profile repo (commit `edfabeb`). The real
 résumé PDF is live (`public/resume.pdf`, generated 2026-07-21 from the
 career-ops CV pipeline — regenerate there and re-copy to update). Remaining
 operator items: **M2** account-security
