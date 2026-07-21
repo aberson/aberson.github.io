@@ -1,0 +1,108 @@
+{
+  "$description": "dev-observatory dark-mode overlay — corrected from the monet-san-giorgio preset. The preset's shipped dark overlay deliberately flips the warm-gold light identity into blue-violet night (a benchmark mood anchor, on-brand issue #33) — appropriate for that benchmark fixture, wrong for a real brand, where a mode flip should read as ONE site. This overlay keeps the SAME warm-gold hue family (seed #b8762b, OKLCH hue ~65 deg) across both modes: the brand + neutral ramps below are regenerated for dark surfaces via on-brand's buildBrandRamp/buildNeutralRamp (src/extract/ramps.ts, dark lightness profile) from that exact seed, not hand-tuned hex guesses. Overrides COLOR values only (plan.md §4 convention). Status colors (success/warning/danger/info) are kept as the preset shipped them — conventional, hue-independent semantic colors, warm-friendly, and info's blue-violet mirrors the (unchanged) light mode's own info convention rather than reintroducing the brand-identity violet.",
+  "$extensions": {
+    "onbrand": {
+      "schemaVersion": 1
+    }
+  },
+  "color": {
+    "$type": "color",
+    "primitive": {
+      "brand": {
+        "1": { "$value": "#191714" },
+        "2": { "$value": "#231e1a" },
+        "3": { "$value": "#312820" },
+        "4": { "$value": "#423325" },
+        "5": { "$value": "#58412a" },
+        "6": { "$value": "#73502b" },
+        "7": { "$value": "#95622b" },
+        "8": { "$value": "#b9772c" },
+        "9": { "$value": "#d68b38" },
+        "10": { "$value": "#e89f53" },
+        "11": { "$value": "#fcbc7d" },
+        "12": { "$value": "#ffe7ce" }
+      },
+      "neutral": {
+        "1": { "$value": "#181715" },
+        "2": { "$value": "#211f1d" },
+        "3": { "$value": "#2c2a27" },
+        "4": { "$value": "#393633" },
+        "5": { "$value": "#494642" },
+        "6": { "$value": "#5c5753" },
+        "7": { "$value": "#736e69" },
+        "8": { "$value": "#8c8681" },
+        "9": { "$value": "#a49d97" },
+        "10": { "$value": "#b7b0a9" },
+        "11": { "$value": "#d0c9c3" },
+        "12": { "$value": "#f1ece7" }
+      }
+    },
+    "semantic": {
+      "bg": { "$value": "#181715" },
+      "surface": { "$value": "#2c2a27" },
+      "text": { "$value": "#f1ece7" },
+      "text-muted": { "$value": "#d0c9c3" },
+      "border": { "$value": "#5c5753" },
+      "accent": { "$value": "#e89f53" },
+      "code-bg": { "$value": "#393633" },
+      "shadow-color": { "$value": "#00000080" }
+    },
+    "status": {
+      "success": {
+        "fg": { "$value": "#9cdea7" },
+        "bg": { "$value": "#15321a" }
+      },
+      "warning": {
+        "fg": { "$value": "#f2cb88" },
+        "bg": { "$value": "#3b2811" }
+      },
+      "danger": {
+        "fg": { "$value": "#efaea4" },
+        "bg": { "$value": "#3f1812" }
+      },
+      "info": {
+        "fg": { "$value": "#bbabed" },
+        "bg": { "$value": "#211641" }
+      }
+    },
+    "chart": {
+      "categorical": {
+        "$description": "8 distinguishable warm (amber/orange/rust/ochre/brown) series colors for the dark background — re-based off the gold identity, no violet/teal/blue member.",
+        "1": { "$value": "#eda382" },
+        "2": { "$value": "#e57255" },
+        "3": { "$value": "#c74b47" },
+        "4": { "$value": "#e3ae28" },
+        "5": { "$value": "#b07661" },
+        "6": { "$value": "#fcc270" },
+        "7": { "$value": "#8e3b1c" },
+        "8": { "$value": "#dc8748" }
+      },
+      "sequential": {
+        "$description": "7-step dark-to-light sequential ramp derived from the brand hue (~65deg), dark variant.",
+        "1": { "$value": "#2f1a02" },
+        "2": { "$value": "#532d00" },
+        "3": { "$value": "#794300" },
+        "4": { "$value": "#a05c00" },
+        "5": { "$value": "#c87f2c" },
+        "6": { "$value": "#e4aa71" },
+        "7": { "$value": "#fbd7b5" }
+      },
+      "chrome": {
+        "grid": { "$value": "#494642" },
+        "axis": { "$value": "#b7b0a9" },
+        "label": { "$value": "#d0c9c3" },
+        "tooltip-bg": { "$value": "#2c2a27" }
+      }
+    },
+    "diagram": {
+      "canvas": { "$value": "#231e1a" },
+      "node-fill": { "$value": "#2c2a27" },
+      "node-stroke": { "$value": "#e89f53" },
+      "link": { "$value": "#8c8681" },
+      "spine-accent": { "$value": "#e89f53" },
+      "label": { "$value": "#f1ece7" },
+      "chip-highlight": { "$value": "#312820" },
+      "warning": { "$value": "#f2cb88" }
+    }
+  }
+}

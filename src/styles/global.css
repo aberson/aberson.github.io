@@ -17,10 +17,11 @@
 @import "../assets/theme.tw.css";
 @import "../assets/tokens.css";
 
-/* Honor the OS light/dark preference for the default canvas + form controls,
- * matching the brand tokens' own `prefers-color-scheme` flip. */
+/* Light mode is forced (see BaseLayout's `data-theme="light"`), so pin the
+ * canvas + form controls to light as well — otherwise scrollbars/native
+ * controls would still follow the OS preference while the tokens stay light. */
 :root {
-  color-scheme: light dark;
+  color-scheme: light;
 }
 
 /* Base page surface, driven straight from the brand semantic tokens so the

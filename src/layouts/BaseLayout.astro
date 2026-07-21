@@ -1,9 +1,10 @@
 ---
 // BaseLayout — the site's HTML shell.
 // Imports the global stylesheet (which pulls in the vendored brand tokens), sets
-// up head meta, and renders page content through <slot />. Light/dark is handled
-// entirely by the brand tokens' `prefers-color-scheme` flip plus `color-scheme`
-// in global.css, so the shell honors the visitor's OS preference with no JS.
+// up head meta, and renders page content through <slot />. Light mode is forced
+// via `data-theme="light"` below (the brand tokens' `[data-theme="light"]` block
+// overrides the `prefers-color-scheme` flip by specificity), matched by
+// `color-scheme: light` in global.css so scrollbars/form controls stay light too.
 //
 // The persistent site chrome (sticky Header above the page slot, Footer below)
 // lives here so every page inherits it. Page-specific content flows through the
@@ -27,7 +28,7 @@ const {
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="light">
   <head>
     <BaseHead title={title} description={description} />
   </head>
