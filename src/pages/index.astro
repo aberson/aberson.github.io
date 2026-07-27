@@ -7,7 +7,9 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Hero from "../components/Hero.astro";
 import ProjectGrid from "../components/ProjectGrid.astro";
+import EcosystemSection from "../components/EcosystemSection.astro";
 import AboutSection from "../components/AboutSection.astro";
+import WritingSection from "../components/WritingSection.astro";
 import ResumeSection from "../components/ResumeSection.astro";
 import ContactSection from "../components/ContactSection.astro";
 import { ANCHORS } from "../consts";
@@ -28,7 +30,11 @@ import { ANCHORS } from "../consts";
       </div>
     </section>
 
+    <EcosystemSection />
+
     <AboutSection />
+
+    <WritingSection />
 
     <ResumeSection />
 

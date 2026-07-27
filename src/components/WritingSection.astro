@@ -1,0 +1,160 @@
+---
+// WritingSection — the #writing section body: a short list of essays about the
+// engineering behind the projects on this site. Each entry is title + one-line
+// summary + a status. A PUBLISHED entry links out (new tab, safe rel); a DRAFT
+// entry shows an "In draft" marker and no link (nothing to link to yet). Owns its
+// <section> (id + aria-labelledby + sticky-header scroll offset); all
+// colors/spacing/type resolve from the brand semantic tokens (light + dark).
+//
+// TO PUBLISH a draft: set `status: "published"` and add the `url`. That's the
+// only change — the marker becomes a "Read →" link automatically.
+import { ANCHORS } from "../consts";
+
+interface WritingEntry {
+  readonly title: string;
+  readonly blurb: string;
+  readonly status: "published" | "draft";
+  /** Required when status is "published"; omit for drafts. */
+  readonly url?: string;
+  /** Optional venue label for a published piece, e.g. "Medium". */
+  readonly venue?: string;
+}
+
+const WRITING: readonly WritingEntry[] = [
+  {
+    title:
+      "My Bot Won Its First Game Ever. Its Own Evaluator Called It a Crash.",
+    blurb:
+      "The first time my StarCraft bot beat the game's AI, the pipeline built to detect wins flagged it — and eleven other games — as crashed. A story about producer-consumer drift: the bug class that lives in the relationship between two correct components, invisible to 682 passing tests.",
+    status: "draft",
+  },
+];
+---
+
+<section
+  id={ANCHORS.writing}
+  class="writing-section"
+  aria-labelledby="writing-heading"
+>
+  <h2 id="writing-heading">Writing</h2>
+  <p class="writing-lede">
+    Essays on the engineering behind these systems — self-improving loops,
+    honest measurement, and the failures that taught me the rules.
+  </p>
+  <ul class="writing-list" role="list">
+    {
+      WRITING.map((entry) => (
+        <li class="writing-entry">
+          <h3 class="writing-title">
+            {entry.status === "published" && entry.url ? (
+              <a
+                href={entry.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Read “${entry.title}” (opens in a new tab)`}
+              >
+                {entry.title} <span aria-hidden="true">↗</span>
+              </a>
+            ) : (
+              entry.title
+            )}
+          </h3>
+          <p class="writing-blurb">{entry.blurb}</p>
+          <p class="writing-status">
+            {entry.status === "published" ? (
+              <span class="status-published">
+                Published{entry.venue ? ` · ${entry.venue}` : ""}
+              </span>
+            ) : (
+              <span class="status-draft">In draft</span>
+            )}
+          </p>
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<style>
+  .writing-section {
+    max-width: 48rem;
+    margin-inline: auto;
+    padding: var(--space-8) var(--space-4);
+    /* Offset the sticky header so the anchored heading isn't hidden under it. */
+    scroll-margin-top: 5rem;
+    border-top: 1px solid var(--color-semantic-border);
+  }
+
+  .writing-section h2 {
+    margin: 0 0 var(--space-3);
+    color: var(--color-semantic-text);
+    font-family: var(--font-heading);
+    font-size: var(--type-scale-step-3);
+    font-weight: var(--type-weight-bold);
+    line-height: var(--type-line-height-tight);
+  }
+
+  .writing-lede {
+    margin: 0 0 var(--space-6);
+    max-width: 42rem;
+    color: var(--color-semantic-text-muted);
+    font-size: var(--type-scale-step-0);
+    line-height: var(--type-line-height-base);
+  }
+
+  .writing-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+  }
+
+  .writing-title {
+    margin: 0 0 var(--space-2);
+    color: var(--color-semantic-text);
+    font-family: var(--font-heading);
+    font-size: var(--type-scale-step-1);
+    font-weight: var(--type-weight-semibold);
+    line-height: var(--type-line-height-tight);
+  }
+
+  .writing-title a {
+    color: var(--color-semantic-accent);
+    text-decoration: none;
+  }
+
+  .writing-title a:hover {
+    text-decoration: underline;
+  }
+
+  .writing-blurb {
+    margin: 0 0 var(--space-2);
+    max-width: 42rem;
+    color: var(--color-semantic-text);
+    font-size: var(--type-scale-step-0);
+    line-height: var(--type-line-height-base);
+  }
+
+  .writing-status {
+    margin: 0;
+    font-size: var(--type-scale-step--1);
+  }
+
+  /* Draft marker: a muted pill so an in-progress piece reads as intentional, not
+   * broken. The published marker uses the accent color to signal a live link. */
+  .status-draft {
+    display: inline-block;
+    padding: var(--space-1) var(--space-3);
+    border: 1px solid var(--color-semantic-border);
+    border-radius: var(--radius-pill);
+    background-color: var(--color-semantic-code-bg);
+    color: var(--color-semantic-text-muted);
+    font-family: var(--font-mono);
+  }
+
+  .status-published {
+    color: var(--color-semantic-text-muted);
+  }
+</style>

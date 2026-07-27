@@ -35,7 +35,9 @@ export const LOCATION = "Bay Area · open to remote and relocation";
  */
 export const ANCHORS = {
   work: "work",
+  ecosystem: "ecosystem",
   about: "about",
+  writing: "writing",
   resume: "resume",
   contact: "contact",
 } as const;
@@ -49,7 +51,9 @@ export interface NavItem {
 /** Primary navigation — one entry per on-page section stub. Hrefs derive from ANCHORS. */
 export const NAV_ITEMS: readonly NavItem[] = [
   { label: "Work", href: `#${ANCHORS.work}` },
+  { label: "Ecosystem", href: `#${ANCHORS.ecosystem}` },
   { label: "About", href: `#${ANCHORS.about}` },
+  { label: "Writing", href: `#${ANCHORS.writing}` },
   { label: "Resume", href: `#${ANCHORS.resume}` },
   { label: "Contact", href: `#${ANCHORS.contact}` },
 ];

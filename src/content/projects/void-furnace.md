@@ -38,13 +38,14 @@ That boundary cannot just be a convention, because conventions erode — a later
 refactor threads the coder's context into the critic "just to give it more
 information," and the objectivity is gone with no failing test to notice. So I
 enforced it structurally, at the level of which data each role is even allowed to
-receive, and locked it with an **AST guard in CI**: a check that parses the source
-and fails the build if the critic's inputs ever grow to include the coder's
-narration. The invariant is defended by the same suite that defends the features.
+receive, and locked it with a **signature-reflection guard in CI**: a regression
+test that inspects the critic prompt-builder's own signature and fails the build if
+it ever grows a parameter that could carry the coder's narration. The invariant is
+defended by the same suite that defends the features.
 
 ### The loop
 
-A **systemd timer** wakes the factory every ten minutes, pulls any newly filed
+A **systemd timer** wakes the factory on a periodic tick, pulls any newly filed
 GitHub issues, and runs planner → coder → critic. Tests and the critic gate the
 merge; nothing lands that a fresh, isolated critic would not approve on the
 evidence alone.

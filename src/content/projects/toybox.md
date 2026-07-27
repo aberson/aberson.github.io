@@ -5,6 +5,7 @@ tech: ["Python/FastAPI", "React/TypeScript"]
 repo: "https://github.com/aberson/toybox"
 order: 3
 featured: true
+hidden: true
 ---
 
 ## Problem

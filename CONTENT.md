@@ -89,9 +89,10 @@ What you built and the key decisions.
 What shipped and the transferable lesson.
 ```
 
-Current featured case studies: `alpha4gate.md`, `void-furnace.md`, and
-`toybox.md`. A non-featured project needs no body — the frontmatter alone renders
-its card.
+Current featured case studies: `alpha4gate.md` and `void-furnace.md`. A
+non-featured project needs no body — the frontmatter alone renders its card.
+(`toybox.md` keeps its case-study body but is currently `hidden: true`, so no card
+or `/work/toybox/` page renders until it's flipped back.)
 
 ---
 

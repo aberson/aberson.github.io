@@ -36,7 +36,7 @@ impossible to debug and impossible to believe. When the bot promotes a new
 version at 3am, I need to be able to reconstruct exactly what changed, what
 evidence justified it, and what the alternative was.
 
-Alpha4Gate is my answer to all three, built solo over roughly eight months.
+Alpha4Gate is my answer to all three, built solo over roughly four months.
 
 ## Approach
 
@@ -100,8 +100,8 @@ project matters to me beyond the game.
 
 ## Outcome
 
-The system works as a closed loop. Over roughly **eight months and about 630
-commits**, it grew through **14 shipped phases** into a platform that trains,
+The system works as a closed loop. Over roughly **four months and about 640
+commits**, it grew through **eleven shipped phases** into a platform that trains,
 diagnoses, repairs, and promotes itself, backed by around **1,800 tests** that
 the repair loop must clear before any self-authored change is allowed to land.
 The self-play arena auto-promoted a lineage of versions from **v0 through v13**,

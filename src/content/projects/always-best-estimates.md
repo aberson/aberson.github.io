@@ -5,4 +5,5 @@ tech: ["Python", "cvxpy", "Black-Litterman", "React/FastAPI"]
 repo: "https://github.com/aberson/always-best-estimates"
 order: 5
 featured: false
+hidden: true
 ---

@@ -178,7 +178,7 @@ aberson.github.io/
 │   │       ├── pta-finance.md
 │   │       ├── always-best-estimates.md
 │   │       ├── brickomancer.md
-│   │       └── claude-skills.md
+│   │       └── skill-mesh.md
 │   ├── layouts/  (BaseLayout, CaseStudyLayout)
 │   ├── components/  (BaseHead, Header, Footer, Hero, SocialLinks, ProjectCard, ProjectGrid, ResumeSection, ContactSection)
 │   ├── styles/global.css
@@ -420,7 +420,7 @@ UI steps can use `--ui` screenshot evidence without an auth downgrade.
 | pta-finance | pta_finance | no | Python, `mypy --strict`, GitHub Actions |
 | always-best-estimates | always-best-estimates | no | Python, cvxpy, Black-Litterman, React/FastAPI |
 | brickomancer | brickomancer | no | Python, FastAPI, React, trimesh/networkx |
-| claude-skills | claude-skills | no | Claude Code, Python |
+| skill-mesh | skill-mesh | no | Claude Code, GitHub Copilot, PowerShell, Python |
 
 **Identity / links (fill remaining `TODO:` before M1):**
 

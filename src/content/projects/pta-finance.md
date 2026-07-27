@@ -5,4 +5,5 @@ tech: ["Python", "mypy --strict", "GitHub Actions"]
 repo: "https://github.com/aberson/pta_finance"
 order: 4
 featured: false
+hidden: true
 ---
