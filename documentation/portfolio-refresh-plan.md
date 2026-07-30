@@ -82,6 +82,7 @@ Restructures the site's Work section into the operator's new categorization — 
 - **Produces:** `src/data/portfolio.ts`, sample `src/data/portfolio.json`
 - **Done when:** `npm run build` (astro build) passes with the sample; corrupting a field provably fails the build
 - **Depends on:** none
+- **Status:** DONE (2026-07-30) — used the REAL observatory export as the committed generated `portfolio.json` (producer companion Steps 26+28 done), not a throwaway sample. Zod §5d schema + fail-loud `.parse()` + `byGroup()` in `portfolio.ts`; astro check 0 errors; corrupt-field build proven red (ZodError). Deep review PASS.
 
 ### Step 8: Work section restructure
 - **Problem:** Rebuild the Work section per §5: Flagship full cards (Alpha4Gate, void-furnace, skill-mesh — NO void_furnace_calc card; void-furnace's card/case study reference it per redline D11; keep featured case-study links), Utility table, Fun section, Professional section, Third-party table; hide switchboard/measure-twice/citation-needed collection cards (`hidden: true` — content now flows from the JSON); all non-flagship content read from `portfolio.ts`; table/card Names render as plain text (no link) when `repo_url` is null (private repos — the companion `repo_public` gate exports null for them). Preserve semantics (list roles, heading hierarchy) and the existing responsive behavior.
