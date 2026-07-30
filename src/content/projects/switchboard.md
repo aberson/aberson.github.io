@@ -4,4 +4,7 @@ blurb: "A zero-dependency Python core that routes the cheap judgment calls insid
 tech: ["Python", "stdlib-only", "llama.cpp / llama-swap", "mypy --strict"]
 order: 4
 featured: false
+# Demoted to a Utility-table row (Step 8): its card/description now flow from
+# portfolio.json. Kept in the collection (body preserved) but rendered nowhere.
+hidden: true
 ---

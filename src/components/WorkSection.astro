@@ -1,0 +1,337 @@
+---
+// WorkSection — the #work section body, restructured into the operator's five
+// groupings, every row/card fed from `src/data/portfolio.json` (the observatory
+// export) via `portfolio.ts`. Layout, top to bottom:
+//   1. Flagship   — full hero cards (the `card` paragraph); featured ones link a case study
+//   2. Utilities  — a Category | Name | Description table (13 rows)
+//   3. Fun        — a compact card grid
+//   4. Professional — a compact card grid, a separate headed section
+//   5. Third-party — a two-row Project | Description table, links to the UPSTREAM repos
+// The content collection is no longer read for cards — it survives ONLY to emit
+// the featured case-study routes (/work/<slug>) and their long-form bodies. This
+// section owns its <section> landmark (id + aria-labelledby + sticky-header scroll
+// offset), matching the other home-page sections. All colours/spacing/type resolve
+// from the brand semantic tokens, so it reads intentionally in light and dark.
+import { getCollection } from "astro:content";
+import { ANCHORS } from "../consts";
+import { byGroup, type PortfolioProject } from "../data/portfolio.ts";
+import PortfolioCard from "./PortfolioCard.astro";
+
+// --- Flagship case-study link resolution -------------------------------------
+// The portfolio.json slug ("Alpha4Gate", "void_furnace") and the content-collection
+// id ("alpha4gate", "void-furnace") differ in case and separator. Normalising the
+// portfolio slug (lowercase, "_"→"-") bridges the two so a flagship card can find
+// its case-study route. Only featured + non-hidden entries get a /work/<slug>
+// route (see work/[slug].astro), so only they land in this map — skill-mesh
+// (featured: false) correctly resolves to no case study.
+const normalizeSlug = (slug: string): string =>
+  slug.toLowerCase().replace(/_/g, "-");
+
+const caseStudyEntries = (await getCollection("projects")).filter(
+  (project) => project.data.featured && !project.data.hidden,
+);
+const caseStudyById = new Map(
+  caseStudyEntries.map((entry) => [
+    entry.id,
+    `${import.meta.env.BASE_URL}work/${entry.id}/`.replace(/\/{2,}/g, "/"),
+  ]),
+);
+const caseStudyHrefFor = (slug: string): string | undefined =>
+  caseStudyById.get(normalizeSlug(slug));
+
+// --- Group data --------------------------------------------------------------
+// Flagship is the hero band, so its three cards follow the operator's curated
+// order (the two case-study projects first); any flagship not listed sorts last,
+// preserving export order, so adding one never drops it silently.
+const FLAGSHIP_ORDER = ["Alpha4Gate", "void_furnace", "skill-mesh"];
+const flagshipRank = (slug: string): number => {
+  const i = FLAGSHIP_ORDER.indexOf(slug);
+  return i === -1 ? Number.POSITIVE_INFINITY : i;
+};
+const flagship = byGroup("flagship").sort(
+  (a, b) => flagshipRank(a.slug) - flagshipRank(b.slug),
+);
+
+// The remaining groups render in export order (alphabetical) — the observatory is
+// the single source of ordering truth, so the consumer stays dumb here.
+const utility = byGroup("utility");
+const fun = byGroup("fun");
+const professional = byGroup("professional");
+const thirdParty = byGroup("third-party");
+
+// Clean repo-page href (strip a clone-URL ".git" suffix); null → no link.
+const repoHref = (project: PortfolioProject): string | undefined =>
+  project.repo_url ? project.repo_url.replace(/\.git$/, "") : undefined;
+---
+
+<section id={ANCHORS.work} class="work-section" aria-labelledby="work-heading">
+  <div class="work-inner">
+    <h2 id="work-heading">Work</h2>
+
+    <!-- 1. Flagship -->
+    <div class="work-block">
+      <h3 class="work-block__heading">Flagship</h3>
+      <ul class="card-grid card-grid--flagship" role="list">
+        {
+          flagship.map((project) => (
+            <li>
+              <PortfolioCard
+                project={project}
+                variant="flagship"
+                caseStudyHref={caseStudyHrefFor(project.slug)}
+              />
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <!-- 2. Utilities -->
+    <div class="work-block">
+      <h3 class="work-block__heading">Utilities</h3>
+      <div class="table-scroll">
+        <table class="work-table">
+          <thead>
+            <tr>
+              <th scope="col">Category</th>
+              <th scope="col">Name</th>
+              <th scope="col">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              utility.map((project) => (
+                <tr>
+                  <td class="work-table__tag">{project.tag}</td>
+                  <td class="work-table__name">
+                    {repoHref(project) ? (
+                      <a
+                        href={repoHref(project)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`${project.name} source code on GitHub (opens in a new tab)`}
+                      >
+                        {project.name}
+                      </a>
+                    ) : (
+                      project.name
+                    )}
+                    {project.live_url && (
+                      <>
+                        {" "}
+                        <a
+                          class="work-table__live"
+                          href={project.live_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`${project.name} live demo (opens in a new tab)`}
+                        >
+                          Live <span aria-hidden="true">↗</span>
+                        </a>
+                      </>
+                    )}
+                  </td>
+                  <td>{project.blurb}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 3. Fun -->
+    <div class="work-block">
+      <h3 class="work-block__heading">Fun</h3>
+      <ul class="card-grid" role="list">
+        {
+          fun.map((project) => (
+            <li>
+              <PortfolioCard project={project} />
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <!-- 4. Professional -->
+    <div class="work-block">
+      <h3 class="work-block__heading">Professional</h3>
+      <ul class="card-grid" role="list">
+        {
+          professional.map((project) => (
+            <li>
+              <PortfolioCard project={project} />
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <!-- 5. Third-party contributions -->
+    <div class="work-block">
+      <h3 class="work-block__heading">Third-party contributions</h3>
+      <div class="table-scroll">
+        <table class="work-table">
+          <thead>
+            <tr>
+              <th scope="col">Project</th>
+              <th scope="col">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              thirdParty.map((project) => (
+                <tr>
+                  <td class="work-table__name">
+                    {repoHref(project) ? (
+                      <a
+                        href={repoHref(project)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`${project.name} source code on GitHub (opens in a new tab)`}
+                      >
+                        {project.name}
+                      </a>
+                    ) : (
+                      project.name
+                    )}
+                  </td>
+                  <td>
+                    {project.blurb}
+                    {project.contribution && (
+                      <span class="work-table__contribution">
+                        {" "}
+                        {project.contribution}
+                      </span>
+                    )}
+                  </td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* The work section spans a wider column than the text stubs so the card grids
+   * can reach 3 tracks on desktop, while keeping the same border-top and
+   * sticky-header scroll offset as the other sections. */
+  .work-section {
+    padding: var(--space-8) var(--space-4);
+    scroll-margin-top: 5rem;
+    border-top: 1px solid var(--color-semantic-border);
+  }
+
+  .work-inner {
+    max-width: 72rem;
+    margin-inline: auto;
+  }
+
+  .work-section h2 {
+    margin: 0 0 var(--space-6);
+    color: var(--color-semantic-text);
+    font-family: var(--font-heading);
+    font-size: var(--type-scale-step-3);
+    font-weight: var(--type-weight-bold);
+    line-height: var(--type-line-height-tight);
+  }
+
+  .work-block + .work-block {
+    margin-top: var(--space-8);
+  }
+
+  .work-block__heading {
+    margin: 0 0 var(--space-5);
+    color: var(--color-semantic-text);
+    font-family: var(--font-heading);
+    font-size: var(--type-scale-step-2);
+    font-weight: var(--type-weight-semibold);
+    line-height: var(--type-line-height-tight);
+  }
+
+  .card-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-5);
+    /* auto-fill + min(100%, 18rem): 1 col below ~18rem (phones), filling to 2–3
+     * tracks as the container widens. The min() cap stops a single card from
+     * overflowing a sub-18rem viewport. */
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
+  }
+
+  /* Flagship cards carry more text, so give them a wider minimum track (fewer,
+   * larger tracks) than the compact Fun/Professional grids. */
+  .card-grid--flagship {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr));
+  }
+
+  /* Tables scroll inside their own container so 3 columns never force the page
+   * body to scroll horizontally on a phone (utility-table density mitigation). */
+  .table-scroll {
+    overflow-x: auto;
+  }
+
+  .work-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--type-scale-step-0);
+    line-height: var(--type-line-height-base);
+  }
+
+  .work-table th,
+  .work-table td {
+    padding: var(--space-3) var(--space-4);
+    text-align: start;
+    vertical-align: top;
+    border-bottom: 1px solid var(--color-semantic-border);
+  }
+
+  .work-table th {
+    color: var(--color-semantic-text);
+    font-family: var(--font-heading);
+    font-weight: var(--type-weight-semibold);
+    white-space: nowrap;
+  }
+
+  .work-table td {
+    color: var(--color-semantic-text-muted);
+  }
+
+  .work-table__tag {
+    color: var(--color-semantic-accent);
+    font-family: var(--font-mono);
+    font-size: var(--type-scale-step--1);
+    white-space: nowrap;
+  }
+
+  .work-table__name {
+    color: var(--color-semantic-text);
+    font-weight: var(--type-weight-medium);
+    white-space: nowrap;
+  }
+
+  .work-table__name a {
+    color: var(--color-semantic-accent);
+    text-decoration: none;
+  }
+
+  .work-table__name a:hover {
+    text-decoration: underline;
+  }
+
+  .work-table__live {
+    font-family: var(--font-mono);
+    font-size: var(--type-scale-step--1);
+    font-weight: var(--type-weight-medium);
+  }
+
+  .work-table__contribution {
+    color: var(--color-semantic-text);
+  }
+</style>

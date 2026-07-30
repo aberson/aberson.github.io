@@ -94,3 +94,34 @@ export const PROJECTS: PortfolioProject[] = portfolio.projects;
 export function byGroup(group: Group): PortfolioProject[] {
   return PROJECTS.filter((project) => project.group === group);
 }
+
+/**
+ * Per-group counts PINNED to the operator's curated portfolio list (plan §9). A
+ * mismatch means the observatory export changed the display set — intentionally
+ * (a project added/removed/re-tagged, or a `public` flip) or as a regression. In
+ * BOTH cases the build fails LOUDLY here so a human confirms the new shape before
+ * the site ships, rather than the Work section silently gaining or losing a card.
+ *
+ * To legitimately change the set: update these pins in the SAME commit as the
+ * registry change that moved a project in or out of the public export.
+ */
+export const EXPECTED_GROUP_COUNTS: Record<Group, number> = {
+  flagship: 3,
+  utility: 13,
+  fun: 6,
+  professional: 3,
+  "third-party": 2,
+};
+
+for (const group of GROUPS) {
+  const actual = byGroup(group).length;
+  const expected = EXPECTED_GROUP_COUNTS[group];
+  if (actual !== expected) {
+    throw new Error(
+      `portfolio.json group "${group}" has ${actual} project(s), expected ${expected}. ` +
+        `The observatory export changed the display set. If intentional, update ` +
+        `EXPECTED_GROUP_COUNTS in src/data/portfolio.ts in the same commit; ` +
+        `otherwise re-run \`observatory export --portfolio\` and investigate.`,
+    );
+  }
+}

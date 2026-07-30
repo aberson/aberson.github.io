@@ -1,0 +1,160 @@
+---
+// PortfolioCard — one Work-section project tile, fed by a `portfolio.json` row
+// (NOT the content collection). Two variants share one component:
+//   - "flagship": the hero cards. Body is the long `card` paragraph (falls back to
+//     `blurb` if a flagship somehow lacks one) and, for the two featured flagships
+//     with a case study, a "Read case study →" link.
+//   - "compact": the Fun / Professional grids. Body is the one-line `blurb`.
+// A category `tag` chip leads the card; outward links (Code → repo, Live → demo)
+// sit at the bottom. When `repo_url` is null (a private repo the exporter refused
+// to link), NO Code link renders — the name stays present but linkless, matching
+// the utility table's linkless-name rule. All colours/spacing/type resolve from
+// the brand semantic tokens, so it reads intentionally in BOTH light and dark.
+import type { PortfolioProject } from "../data/portfolio.ts";
+
+interface Props {
+  project: PortfolioProject;
+  variant?: "flagship" | "compact";
+  /** Case-study route, resolved by the caller for featured flagships only. */
+  caseStudyHref?: string;
+}
+
+const { project, variant = "compact", caseStudyHref } = Astro.props;
+const { name, tag, blurb, card, repo_url, live_url } = project;
+
+// Flagship cards show the long `card` paragraph; everything else shows the blurb.
+const body = variant === "flagship" ? (card ?? blurb) : blurb;
+
+// GitHub `.git` clone URLs redirect in a browser but read as clone URLs and can
+// trip the link checker — strip a trailing `.git` for a clean repo-page href.
+const repoHref = repo_url ? repo_url.replace(/\.git$/, "") : undefined;
+---
+
+<article class:list={["portfolio-card", `portfolio-card--${variant}`]}>
+  <p class="portfolio-card__tag">{tag}</p>
+  <h4 class="portfolio-card__name">{name}</h4>
+  <p class="portfolio-card__body">{body}</p>
+  {
+    (caseStudyHref || repoHref || live_url) && (
+      <div class="portfolio-card__links">
+        {caseStudyHref && (
+          <a
+            class="portfolio-card__link portfolio-card__link--primary"
+            href={caseStudyHref}
+            aria-label={`Read the ${name} case study`}
+          >
+            Read case study <span aria-hidden="true">→</span>
+          </a>
+        )}
+        {repoHref && (
+          <a
+            class="portfolio-card__link"
+            href={repoHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`${name} source code on GitHub (opens in a new tab)`}
+          >
+            Code <span aria-hidden="true">↗</span>
+          </a>
+        )}
+        {live_url && (
+          <a
+            class="portfolio-card__link"
+            href={live_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`${name} live demo (opens in a new tab)`}
+          >
+            Live <span aria-hidden="true">↗</span>
+          </a>
+        )}
+      </div>
+    )
+  }
+</article>
+
+<style>
+  .portfolio-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    height: 100%;
+    padding: var(--space-5);
+    background-color: var(--color-semantic-surface);
+    border: 1px solid var(--color-semantic-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-elevation-1);
+    transition: box-shadow var(--motion-duration-fast)
+      var(--motion-easing-standard);
+  }
+
+  .portfolio-card:hover {
+    box-shadow: var(--shadow-elevation-2);
+  }
+
+  /* Category chip — a single accented pill leading the card (the proposal's
+   * "tag chip → name → blurb" rhythm). Distinct from a tech-stack chip: it names
+   * the project's role, not its tools. */
+  .portfolio-card__tag {
+    align-self: flex-start;
+    margin: 0;
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-pill);
+    background-color: var(--color-semantic-code-bg);
+    color: var(--color-semantic-accent);
+    font-family: var(--font-mono);
+    font-size: var(--type-scale-step--1);
+    font-weight: var(--type-weight-medium);
+    line-height: var(--type-line-height-tight);
+    white-space: nowrap;
+  }
+
+  .portfolio-card__name {
+    margin: 0;
+    color: var(--color-semantic-text);
+    font-family: var(--font-heading);
+    font-size: var(--type-scale-step-1);
+    font-weight: var(--type-weight-bold);
+    line-height: var(--type-line-height-tight);
+  }
+
+  .portfolio-card__body {
+    margin: 0;
+    color: var(--color-semantic-text-muted);
+    font-size: var(--type-scale-step-0);
+    line-height: var(--type-line-height-base);
+  }
+
+  /* Flagship cards carry a full paragraph, so their body reads at full text
+   * colour (not muted) to match the hero weight of the section. */
+  .portfolio-card--flagship .portfolio-card__body {
+    color: var(--color-semantic-text);
+  }
+
+  .portfolio-card__links {
+    /* Pin links to the card bottom so uneven-height cards align their link rows. */
+    margin-top: auto;
+    padding-top: var(--space-2);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+  }
+
+  .portfolio-card__link {
+    color: var(--color-semantic-accent);
+    font-size: var(--type-scale-step-0);
+    font-weight: var(--type-weight-medium);
+    text-decoration: none;
+  }
+
+  .portfolio-card__link:hover {
+    text-decoration: underline;
+  }
+
+  /* The case-study CTA — weighted heavier than the outward links, and forced to
+   * the front of the row so it reads first. */
+  .portfolio-card__link--primary {
+    order: -1;
+    font-weight: var(--type-weight-semibold);
+  }
+</style>

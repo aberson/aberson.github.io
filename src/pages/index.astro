@@ -2,33 +2,23 @@
 // Home hub page. The persistent Header/Footer come from BaseLayout; this page
 // owns the <main> landmark, the Hero, and the section targets for each nav anchor
 // (#work, #about, #resume, #contact), each rendered by its own component
-// (ProjectGrid, AboutSection, ResumeSection, ContactSection). Each section carries
-// scroll-margin-top so the sticky header never covers the anchored heading.
+// (WorkSection, AboutSection, ResumeSection, ContactSection). Each section owns
+// its own scroll-margin-top so the sticky header never covers the anchored heading.
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Hero from "../components/Hero.astro";
-import ProjectGrid from "../components/ProjectGrid.astro";
+import WorkSection from "../components/WorkSection.astro";
 import EcosystemSection from "../components/EcosystemSection.astro";
 import AboutSection from "../components/AboutSection.astro";
 import WritingSection from "../components/WritingSection.astro";
 import ResumeSection from "../components/ResumeSection.astro";
 import ContactSection from "../components/ContactSection.astro";
-import { ANCHORS } from "../consts";
 ---
 
 <BaseLayout>
   <main id="main">
     <Hero />
 
-    <section
-      id={ANCHORS.work}
-      class="work-section"
-      aria-labelledby="work-heading"
-    >
-      <div class="work-inner">
-        <h2 id="work-heading">Work</h2>
-        <ProjectGrid />
-      </div>
-    </section>
+    <WorkSection />
 
     <EcosystemSection />
 
@@ -41,28 +31,3 @@ import { ANCHORS } from "../consts";
     <ContactSection />
   </main>
 </BaseLayout>
-
-<style>
-  /* The work section spans a wider column than the text stubs so the project
-   * grid can reach 3 tracks on desktop, while keeping the same border-top and
-   * sticky-header scroll offset as the other sections. */
-  .work-section {
-    padding: var(--space-8) var(--space-4);
-    scroll-margin-top: 5rem;
-    border-top: 1px solid var(--color-semantic-border);
-  }
-
-  .work-inner {
-    max-width: 72rem;
-    margin-inline: auto;
-  }
-
-  .work-section h2 {
-    margin: 0 0 var(--space-5);
-    color: var(--color-semantic-text);
-    font-family: var(--font-heading);
-    font-size: var(--type-scale-step-3);
-    font-weight: var(--type-weight-bold);
-    line-height: var(--type-line-height-tight);
-  }
-</style>

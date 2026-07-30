@@ -94,6 +94,7 @@ Restructures the site's Work section into the operator's new categorization — 
 - **Produces:** refactored `ProjectGrid.astro` (or WorkSection + subcomponents), `ProjectCard.astro` updates, content-collection edits
 - **Done when:** local build renders all five blocks with the REAL exported `portfolio.json` (companion Steps 26+28 done) and zero astro-check/prettier findings
 - **Depends on:** 7; companion plan Steps 26+28
+- **Status:** DONE (2026-07-30) — new `WorkSection.astro` + `PortfolioCard.astro` render all 5 blocks from `portfolio.ts` (flagship 3 / utility 13 / fun 6 / professional 3 / third-party 2, count-pin asserted). Featured flagships (Alpha4Gate, void-furnace) get case-study links via slug-normalization; skill-mesh none. Private-repo names linkless; `.git` stripped from hrefs; tinstar links upstream + shows contribution, agora neutral/linkless. ProjectGrid/ProjectCard removed; switchboard/measure-twice/citation-needed hidden. `portfolio.json` + this plan added to `.prettierignore` (generated / hand-aligned-tables). astro check + prettier + build green; headless render verified; code review PASS. D11 satisfied (void-furnace card/case study already name the calc). Deferred to repo-update: CLAUDE.md component-list doc-drift.
 
 ### Step 9: "How it all fits together" rewrite
 - **Problem:** Replace the `LOOPS` array in `EcosystemSection.astro` with the three-beat tools narrative (§5), written in the house voice; remove the career-ops loop; leave About and everything below untouched.

@@ -5,4 +5,7 @@ tech: ["Python", "SQLite (FTS5)", "httpx", "pytest"]
 repo: "https://github.com/aberson/citation-needed"
 order: 6
 featured: false
+# Demoted to a Utility-table row (Step 8): its card/description now flow from
+# portfolio.json. Kept in the collection (body preserved) but rendered nowhere.
+hidden: true
 ---
