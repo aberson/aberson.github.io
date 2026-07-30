@@ -106,6 +106,7 @@ Restructures the site's Work section into the operator's new categorization — 
 - **Produces:** rewritten `EcosystemSection.astro`
 - **Done when:** section renders the new narrative; grep confirms career-ops no longer referenced in the Work/Ecosystem components; About+below diffs are empty
 - **Depends on:** 8
+- **Status:** DONE (2026-07-30) — `LOOPS` (4 loops) → `BEATS` (3 beats: flagships / utilities / range beyond); career-ops loop removed (grep in src/ = 0). All claims traced to real project data; code review PASS after softening "first product" → "the product it builds" (match the observatory card). Only `EcosystemSection.astro` changed; About+below untouched. Gates green.
 
 ### Step 10: Proposal brand tokens on the site
 - **Problem:** Update the site's own `brand/{tokens.json,modes.dark.json}` to the five-var cream/gold palette (per CLAUDE.md the site is self-contained: `onbrand build .` then `scripts/sync-brand.ps1` re-vendors `src/assets/`); wire `color-scheme: light dark` with auto dark, remove forced light in `BaseLayout.astro`; verify tag chips/cards/tables in the new Work section and the existing case-study pages render correctly in both modes.
