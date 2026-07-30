@@ -139,6 +139,7 @@ Restructures the site's Work section into the operator's new categorization — 
 - **Produces:** green deploy; docs updates
 - **Done when:** live site serves the restructured Work section; linkinator green (incl. the new xmarks Live link)
 - **Depends on:** 9, 10, 11
+- **Status:** DONE (2026-07-30) — all 5 CI gates green LOCALLY (astro check 0 errors; prettier clean; no-`TODO:` in src/; `npm run build` green; linkinator 24 links all 200, xmarks Live link correctly skipped by the `^https://aberson.github.io/` pattern). `CONTENT.md` updated with the observatory-fed content flow (edit registry → `observatory export --portfolio` → review diff → commit; never hand-edit the JSON; Zod + count-pin fail-loud); `plan.md` §11 pointer added. Code review PASS (all gates independently re-verified; docs accurate; E2E: 5 blocks render, xmarks Live link present, no null/undefined leaks). **Repo is deploy-ready.** Per this session's goal, the production `git push origin main` (go-live) + live-bytes verification are the operator's handoff, coupled to the M4 visual UAT — deliberately NOT auto-deployed (the goal scoped success to LOCAL gates + carved out the live/visual pass as M4).
 
 ### Step M4: Operator visual UAT
 - **Problem:** Operator loads the live site: checks all five Work blocks, both themes (OS toggle), the utility table on mobile width, the xmarks Live link, case-study pages under the new palette, and reads the new "How it all fits together" for story fit.

@@ -29,11 +29,53 @@ ships. Fix the reported problem and push again.
 
 ---
 
-## Add a project
+## The Work section is observatory-fed
 
-Each project is one markdown file under `src/content/projects/`. **The filename is
-the slug** (`x-marks-the-spot.md` → slug `x-marks-the-spot`). Create the file and
-fill the frontmatter:
+The **Work** section (Flagship cards, the Utility and Third-party tables, and the
+Fun/Professional card grids) is generated from `src/data/portfolio.json` — a file
+**exported by the dev-observatory control plane**, not hand-authored here.
+dev-observatory is the single place a project's blurb, card paragraph, tag, group,
+and repo/live links are edited, so the site and the control plane can't drift apart.
+
+**To change a project's card, table row, blurb, tag, group, or links, do NOT edit
+`src/data/portfolio.json` by hand** — it opens with a `do-not-hand-edit` marker and
+is Prettier-ignored. Instead:
+
+1. Edit the project's `[project.portfolio]` block in the observatory registry
+   (`dev/.claude/observatory/registry.toml`) — or draft one with `/build-observer <slug>`.
+2. Regenerate the export:
+
+   ```powershell
+   uv run --project dev-observatory observatory export --portfolio
+   ```
+
+   It writes `aberson.github.io/src/data/portfolio.json` (owned-gated on this repo).
+
+3. Review the diff (`git diff src/data/portfolio.json`), then commit and push it with
+   the rest of the change.
+
+The build **Zod-validates** the JSON against the §5d contract in `src/data/portfolio.ts`
+and **fails loudly** on any drift, so a stale or malformed export turns the deploy red
+instead of shipping a broken card. A build-time count-pin also fails if a group's project
+count changes — when you intentionally add or remove a display project, update
+`EXPECTED_GROUP_COUNTS` in `src/data/portfolio.ts` in the same commit.
+
+Re-publishing the x-marks-the-spot **Live** link (its dossier at
+`https://aberson.github.io/x-marks-the-spot/`) is a separate one-liner documented in that
+repo's README (`pwsh -File scripts/publish-pages.ps1`).
+
+What still lives in this repo: the **flagship case-study bodies** (the long-form
+`/work/<slug>` prose) stay as markdown under `src/content/projects/` — see below.
+Only the card/table/one-liner _content_ moved to the observatory.
+
+---
+
+## Add or edit a case-study body
+
+A flagship project's long-form case study (`/work/<slug>`) is one markdown file under
+`src/content/projects/`. **The filename is the slug** (`void-furnace.md` → slug
+`void-furnace`). Its card text on the home page comes from the observatory export (above);
+the markdown **body** is the case study. Create/edit the file and fill the frontmatter:
 
 ```markdown
 ---

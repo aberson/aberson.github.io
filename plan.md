@@ -273,6 +273,14 @@ folded into Step 3's `Done when`. Isolation: `worktree` (default). The local
 Astro dev server (`npm run dev`, `http://localhost:4321`) is unauthenticated, so
 UI steps can use `--ui` screenshot evidence without an auth downgrade.
 
+> **Feature continuation (Steps 7–12 + M4).** The Work-section refresh — the site's
+> Work section is now fed from `src/data/portfolio.json` (exported by dev-observatory)
+> and rendered as five groupings, with cream/gold auto light/dark and an
+> x-marks-the-spot Live link — lives in
+> [`documentation/portfolio-refresh-plan.md`](documentation/portfolio-refresh-plan.md).
+> Steps 7–12 (automated) are DONE; **M4** (operator visual UAT of the live site) is the
+> remaining operator handoff. That plan continues this §11 numbering (Step 1–6 + M1–M3 here).
+
 ### Automated Steps
 (These run unattended via `/build-phase`.)
 
