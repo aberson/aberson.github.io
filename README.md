@@ -7,11 +7,14 @@ show my work to hiring managers and updated by editing a markdown file and pushi
 
 ## What it is
 
-A single-page **hub** (`/`) — hero, project grid, about, resume, contact — plus
-per-project **case-study pages** (`/work/<slug>/`) generated for featured projects.
-Projects are markdown files with typed frontmatter; site identity lives in one
-`src/consts.ts`. Visual identity comes from brand tokens vendored from my
-`aberson-profile` repo. No backend, no database, no accounts.
+A single-page **hub** (`/`) — hero, a five-group **Work section**, "how it all fits
+together", about, resume, contact — plus per-project **case-study pages**
+(`/work/<slug>/`) for featured projects. The Work section (Flagship cards, a Utility
+table, Fun + Professional card grids, a Third-party table) is generated from
+`src/data/portfolio.json`, exported by the **dev-observatory** control plane; flagship
+case studies are Markdown under `src/content/projects/`. Site identity lives in one
+`src/consts.ts`. Visual identity is the site's own **cream/gold** brand tokens with auto
+light/dark (`prefers-color-scheme`). No backend, no database, no accounts.
 
 ## Stack
 
@@ -19,7 +22,7 @@ Projects are markdown files with typed frontmatter; site identity lives in one
 | ------------- | -------------------------------------------------------------------- |
 | Generator     | Astro (TypeScript) + Content Collections (Zod-typed frontmatter)     |
 | Styling       | Tailwind v4 (`@tailwindcss/vite`) + vendored brand tokens            |
-| Content       | Markdown in `src/content/projects/` (one file per project)           |
+| Content       | Work section from `src/data/portfolio.json` (dev-observatory export, Zod §5d); case studies in `src/content/projects/` |
 | Hosting       | GitHub Pages — user site, repo `aberson.github.io`                   |
 | Deploy        | GitHub Actions (build gates → `upload-pages-artifact` → `deploy-pages`) |
 | Quality gates | CI (deploy): `astro check` · Prettier · a no-`TODO` gate · linkinator. Local-only: axe-core a11y (`npm run check:a11y`) |
@@ -66,9 +69,10 @@ scripts/                      # sync-brand.ps1, a11y-check.mjs
 public/                       # resume.pdf, favicon
 src/
   pages/                      # index.astro (hub), work/[slug].astro (case studies)
-  content/projects/           # one markdown file per project
-  layouts/ components/        # BaseLayout + section components
-  assets/                     # vendored brand tokens
+  data/                       # portfolio.ts (Zod §5d gate) + portfolio.json (observatory export)
+  content/projects/           # markdown case-study bodies (flagship projects)
+  layouts/ components/        # BaseLayout + section components (WorkSection, PortfolioCard, …)
+  assets/                     # vendored cream/gold brand tokens
   consts.ts                   # identity: name, links, value prop (single source)
 ```
 

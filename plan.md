@@ -129,15 +129,19 @@ Career master profile.
 
 - **`src/pages/`** — `index.astro` (the hub), `work/[slug].astro` (dynamic
   case-study route, generated from featured projects), `404.astro`.
-- **`src/content/`** — `config.ts` (collection schema, §3), `projects/*.md`
-  (the 6 project entries).
+- **`src/content/`** — `content.config.ts` (collection schema, §3), `projects/*.md`
+  (flagship case-study bodies; card/table content is now observatory-fed — see the
+  "## Phase — Work-Section Refresh" section below).
+- **`src/data/`** — `portfolio.ts` (Zod §5d contract gate, fail-loud at build) +
+  `portfolio.json` (the dev-observatory export that drives the five-group Work section).
 - **`src/layouts/`** — `BaseLayout.astro` (html shell, `<BaseHead>`, header +
-  footer, brand-token CSS, light/dark), `CaseStudyLayout.astro` (case-study
+  footer, brand-token CSS, auto light/dark), `CaseStudyLayout.astro` (case-study
   page frame).
 - **`src/components/`** — `BaseHead.astro` (title/description/OG/canonical meta),
   `Header.astro`, `Footer.astro`, `Hero.astro`, `SocialLinks.astro`,
-  `ProjectCard.astro`, `ProjectGrid.astro`, `ResumeSection.astro`,
-  `ContactSection.astro`.
+  `WorkSection.astro` + `PortfolioCard.astro` (the five-group Work section),
+  `EcosystemSection.astro`, `AboutSection.astro`, `WritingSection.astro`,
+  `ResumeSection.astro`, `ContactSection.astro`.
 - **`src/styles/`** — `global.css` (imports the vendored brand `tokens.css`;
   maps tokens to Tailwind theme via `theme.tw.css`).
 - **`src/assets/`** — brand token files vendored from `aberson-profile/brand/dist/`
@@ -170,19 +174,13 @@ aberson.github.io/
 │   │   ├── work/[slug].astro
 │   │   └── 404.astro
 │   ├── content/
-│   │   ├── config.ts
-│   │   └── projects/
-│   │       ├── alpha4gate.md              # featured
-│   │       ├── void-furnace.md            # featured
-│   │       ├── toybox.md                  # featured
-│   │       ├── pta-finance.md
-│   │       ├── always-best-estimates.md
-│   │       ├── brickomancer.md
-│   │       └── skill-mesh.md
+│   │   ├── content.config.ts
+│   │   └── projects/*.md              # flagship case-study bodies (alpha4gate, void-furnace featured)
+│   ├── data/  (portfolio.ts [Zod §5d gate] + portfolio.json [observatory export])
 │   ├── layouts/  (BaseLayout, CaseStudyLayout)
-│   ├── components/  (BaseHead, Header, Footer, Hero, SocialLinks, ProjectCard, ProjectGrid, ResumeSection, ContactSection)
+│   ├── components/  (BaseHead, Header, Footer, Hero, SocialLinks, WorkSection, PortfolioCard, EcosystemSection, AboutSection, WritingSection, ResumeSection, ContactSection)
 │   ├── styles/global.css
-│   └── assets/  (vendored brand tokens.css / theme.tw.css)
+│   └── assets/  (vendored cream/gold brand tokens.css / theme.tw.css)
 ├── CONTENT.md                # how-to-update runbook
 ├── CLAUDE.md
 ├── README.md
@@ -509,3 +507,61 @@ wrong). Fixed to `node-version: 24`; deploy then green.
 ### Remaining (operator)
 - Swap the placeholder `public/resume.pdf` for the real export (edit → push → redeploys).
 - **M2** (#8) account security checklist; **M3** (#9) optional custom-domain level-up.
+
+---
+
+## Phase — Work-Section Refresh, Observatory-Fed (2026-07-30)
+
+**Steps 7–12 (issues #23–#28) shipped, deployed, and LIVE.** Full plan:
+[`documentation/portfolio-refresh-plan.md`](documentation/portfolio-refresh-plan.md).
+Gates green locally + in CI: `astro check` 0/0/0 · Prettier 0 · no-`TODO` · `astro build` 0 ·
+linkinator 24 links 0 broken. **M4** (operator visual UAT, #29) is the remaining handoff.
+
+### What was built
+- **Step 7** — `src/data/portfolio.ts`: Zod schema mirroring the dev-observatory §5d
+  `portfolio.json` contract, fail-loud `.parse()` at module load, `byGroup()` accessors;
+  committed the real `observatory export --portfolio` output (27 projects) as the generated
+  data file. Corrupting a field provably reddens the build.
+- **Step 8** — replaced the flat `ProjectGrid`/`ProjectCard` with `WorkSection.astro` +
+  `PortfolioCard.astro` rendering five groupings from `portfolio.ts`: Flagship full cards
+  (featured → case-study links via slug-normalization), a 13-row Utility table (private-repo
+  names linkless), Fun + Professional card grids, and a Third-party table (upstream links +
+  tinstar contribution). Group-count pin (3/13/6/3/2) asserted at build.
+  `switchboard`/`measure-twice`/`citation-needed` collection cards hidden.
+- **Step 9** — `EcosystemSection` "How it all fits together" rewritten from 4 self-improving
+  loops to a 3-beat tools narrative (Flagship proof systems → Utilities leverage layer → the
+  range beyond); the career-ops loop removed.
+- **Step 10** — the 7 semantic brand tokens re-skinned to the five-var **cream/gold** palette
+  (light + dark) across `brand/{tokens.json,modes.dark.json}` + the vendored CSS; `color-scheme:
+  light dark` with auto dark via `prefers-color-scheme`; forced light removed. All text/bg pairs
+  pass WCAG 2 AA in both modes.
+- **Step 11** — deployed **x-marks-the-spot** to GitHub Pages (its own `gh-pages` branch,
+  `scripts/publish-pages.ps1`); recorded its `live_url` in the observatory registry and
+  regenerated `portfolio.json`, so the Fun-section card shows a live `Live ↗` link to
+  `https://aberson.github.io/x-marks-the-spot/`.
+- **Step 12** — ran the CI gate suite locally + documented the observatory-fed content flow in
+  `CONTENT.md` (edit registry → `observatory export --portfolio` → review diff → commit; never
+  hand-edit the JSON) and this §11 pointer.
+
+### Files changed
+
+| File | Change |
+|---|---|
+| `src/data/portfolio.ts`, `src/data/portfolio.json` | new — Zod §5d contract gate + generated export |
+| `src/components/WorkSection.astro`, `PortfolioCard.astro` | new — five-group Work layout |
+| `src/components/ProjectGrid.astro`, `ProjectCard.astro` | removed (superseded) |
+| `src/components/EcosystemSection.astro` | rewritten — 3-beat tools narrative |
+| `src/pages/index.astro` | renders `<WorkSection />` |
+| `src/content/projects/{citation-needed,measure-twice,switchboard}.md` | `hidden: true` (now table rows) |
+| `brand/{tokens.json,modes.dark.json}`, `src/assets/{tokens,theme.tw}.css` | cream/gold palette, light+dark |
+| `src/layouts/BaseLayout.astro`, `src/styles/global.css` | auto light/dark; forced light removed |
+| `.prettierignore` | ignore generated `portfolio.json` + this feature plan |
+| `CONTENT.md` | observatory-fed content-flow runbook |
+
+### Fresh context notes
+
+| Issue | Detail |
+|---|---|
+| Content source of truth | Work-section card/table content is edited in `dev/.claude/observatory/registry.toml` `[project.portfolio]`, exported via `observatory export --portfolio`. NEVER hand-edit `src/data/portfolio.json` — the Zod §5d gate + `EXPECTED_GROUP_COUNTS` pin fail the build on drift. |
+| Slug mapping | `portfolio.json` slugs (`Alpha4Gate`, `void_furnace`) differ from content-collection ids (`alpha4gate`, `void-furnace`); `WorkSection` normalizes (lowercase, `_`→`-`) to resolve flagship case-study links. |
+| x-marks-the-spot Live link | Served from that repo's `gh-pages` branch, not this one; re-publish with `pwsh -File scripts/publish-pages.ps1` there after re-exporting. |
