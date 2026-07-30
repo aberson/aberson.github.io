@@ -38,13 +38,13 @@
       }
     },
     "semantic": {
-      "bg": { "$value": "#181715" },
-      "surface": { "$value": "#2c2a27" },
-      "text": { "$value": "#f1ece7" },
-      "text-muted": { "$value": "#d0c9c3" },
-      "border": { "$value": "#5c5753" },
-      "accent": { "$value": "#e89f53" },
-      "code-bg": { "$value": "#393633" },
+      "bg": { "$value": "#1d1b17" },
+      "surface": { "$value": "#28251f" },
+      "text": { "$value": "#eee7d6" },
+      "text-muted": { "$value": "#c9bfa8" },
+      "border": { "$value": "#665b40" },
+      "accent": { "$value": "#e0bd62" },
+      "code-bg": { "$value": "#322e26" },
       "shadow-color": { "$value": "#00000080" }
     },
     "status": {

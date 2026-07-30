@@ -118,6 +118,7 @@ Restructures the site's Work section into the operator's new categorization — 
 - **Produces:** token css + BaseLayout changes
 - **Done when:** build green; homepage + one case-study page visually verified in light and dark (headless screenshot or operator glance at M4)
 - **Depends on:** 8
+- **Status:** DONE (2026-07-30) — 7 semantic tokens re-skinned to the five-var cream/gold palette (light + dark) across all 4 blocks in `tokens.css`/`theme.tw.css`; `brand/{tokens.json,modes.dark.json}` semantic values updated to match (onbrand not runnable in-session → hand-edited semantic layer, headers note it; primitive/chart/diagram ramps left warm-gold, unused by the site). `color-scheme: light dark` + forced light removed (`data-theme` off `<html>`). Playwright colorScheme screenshots confirm homepage + void-furnace case study render correctly in BOTH modes; all 13 text/bg pairs pass WCAG 2 AA (≥4.5:1). Code review PASS (28/28 semantic values byte-consistent across both vendored files + JSON sources). Follow-up (out of scope): re-skin diagram/primitive ramps if a case study ever renders a diagram.
 
 <!-- autofix-applied: 2026-07-28 -->
 ### Step 11: Deploy x-marks-the-spot to GitHub Pages
