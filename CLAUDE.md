@@ -85,6 +85,10 @@ three-beat tools narrative (Flagship → Utilities → the range beyond). The pa
 **cream/gold with auto light/dark** (`prefers-color-scheme`; forced light removed; all
 text/bg pairs pass WCAG 2 AA). The x-marks-the-spot card links a live dossier at
 `https://aberson.github.io/x-marks-the-spot/` (that project's own `gh-pages` deploy).
+The **7 utility CLI repos** (tripwire, paper-trail, changed-check, heads-up, find-again,
+same-page, mesh-lens) flipped **public 2026-07-31**, so the Utility table now links each
+to its GitHub repo — set at the source (registry `repo_public=true` + `repo_url`) and
+re-exported, never by hand-editing `portfolio.json`.
 GitHub Actions deploy (`.github/workflows/deploy.yml`, Node 24), Dependabot, and the real
 résumé PDF (`public/resume.pdf`, from the career-ops CV pipeline) remain in place.
 Remaining operator items: **M4** visual UAT of the live refresh (#29), **M2**
