@@ -59,4 +59,4 @@ export const NAV_ITEMS: readonly NavItem[] = [
 ];
 
 /** ISO date the site content was last updated — the footer + résumé stamp. */
-export const LAST_UPDATED = "2026-07-21";
+export const LAST_UPDATED = "2026-08-06";
