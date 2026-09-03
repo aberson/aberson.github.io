@@ -1,9 +1,13 @@
 # aberson.github.io
 
+[![Deploy to GitHub Pages](https://github.com/aberson/aberson.github.io/actions/workflows/deploy.yml/badge.svg)](https://github.com/aberson/aberson.github.io/actions/workflows/deploy.yml)
+
 Personal portfolio site for **Abraham Robison** — an applied AI engineer with deep
 finance roots. A fast, zero-JS static [Astro](https://astro.build) site published
 free via GitHub Pages at [`aberson.github.io`](https://aberson.github.io), built to
 show my work to hiring managers and updated by editing a markdown file and pushing.
+
+![The aberson.github.io hub — header, hero, and the top of the Work section in the site's cream and gold identity](.github/screenshot.png)
 
 ## What it is
 
