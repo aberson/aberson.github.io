@@ -24,7 +24,7 @@
     "@axe-core/playwright": "^4.12.1",
     "linkinator": "^7.6.1",
     "playwright": "^1.61.1",
-    "prettier": "^3.9.5",
+    "prettier": "^3.9.6",
     "prettier-plugin-astro": "^0.14.1",
     "typescript": "^6.0.3"
   }
