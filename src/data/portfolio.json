@@ -9,7 +9,7 @@
       "group": "flagship",
       "tag": "Autonomy",
       "blurb": "A StarCraft II Protoss bot that writes and validates its own code fixes to raise its win rate, streamed live on a React dashboard.",
-      "card": "Alpha4Gate plays ranked StarCraft II as a rule-based + PPO-policy Protoss bot with a Claude advisor riding shotgun, then closes the loop on itself: it drafts, tests, and validates its own code fixes to raise its own win rate. A themed two-pane self-play viewer streams two bot generations battling live; a 6-tab React dashboard shows the same game over the network.",
+      "card": "Alpha4Gate plays StarCraft II against the game's built-in AI and its own earlier versions as a rule-based Protoss bot (with an optional PPO policy) and a Claude advisor riding shotgun, then closes the loop on itself: it drafts, tests, and validates its own code fixes to raise its own win rate. A themed two-pane self-play viewer streams two bot generations battling live; a 7-tab React dashboard shows the same game over the network. A second player, Jev, tests whether a hosted decision model can make strategic calls fast enough for a live match while its local decision graph issues every command.",
       "proofs": [
         "Layered strategy/tactics/coherence/micro modules, each testable in isolation",
         "Async Claude advisor -- the bot never blocks waiting on AI advice",

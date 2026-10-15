@@ -36,7 +36,7 @@ impossible to debug and impossible to believe. When the bot promotes a new
 version at 3am, I need to be able to reconstruct exactly what changed, what
 evidence justified it, and what the alternative was.
 
-Alpha4Gate is my answer to all three, built solo over roughly four months.
+Alpha4Gate is my answer to all three, built solo since March 2026.
 
 ## Approach
 
@@ -49,11 +49,13 @@ load-bearing for both correctness and strength.
 The first loop treats the bot's own telemetry as a bug report. After a batch of
 games, an advisor built on the Claude CLI reads the structured game logs,
 diagnoses a concrete failure mode, and proposes a code change to address it. The
-key decision here is what happens _next_: nothing the advisor writes reaches the
-main branch until it has **passed the full test suite and then won a gate of five
-validation games**. Tests catch the change that is merely broken; the validation
-games catch the change that compiles, passes unit tests, and still makes the bot
-play worse. A fix has to survive both to be auto-committed.
+key decision here is what happens _next_: nothing the advisor writes is
+auto-committed until it has **passed the test suite and quality checks, then a
+batch of validation games** (ten by default) in which the win rate must not drop
+by more than a set threshold, followed by a 20-game Elo check against the prior
+version. Tests catch the change that is merely broken; the validation games catch
+the change that compiles, passes unit tests, and still makes the bot play clearly
+worse. A fix has to survive both to be auto-committed.
 
 The reason this matters is that unit tests and live play measure different
 things. A change can be perfectly correct in isolation and still be a regression
@@ -63,22 +65,26 @@ conflate them.
 
 ### Loop 2 — the self-play arena
 
-The second loop answers a different question: given several viable versions of
-the bot, which is actually strongest? Here versions compete **head-to-head in a
-self-play arena**, gated by fitness and regression checks, with an **Elo ladder**
-that auto-promotes winners. Elo is the right instrument because it aggregates
-many noisy match outcomes into a stable strength estimate — exactly the reliable
-signal that a single game can't give you. A version only earns promotion by
-beating the incumbents repeatedly, so promotion tracks real strength rather than
-a lucky streak.
+The second loop, evolve, answers a different question: does a new version of
+the bot beat the one it replaces? Claude proposes about ten changes as text; each
+candidate plays the current version **head-to-head in a self-play arena** (a
+short fitness match, five games by default), the winners are re-written onto a
+new numbered copy of the bot, and that copy must then win a strict majority of a
+regression match against its parent — or the loop reverts its own promotion with
+`git revert`. Versions also carry ratings on an **Elo ladder** I built for my own
+versions. A short majority match is a noisy instrument, though: I later found
+that it rolls back a change that does nothing about half the time, which is why
+I've since built a different decision rule (still off by default and not yet
+tested in a soak).
 
-Underneath both loops, the policy itself is a PyTorch model trained with Stable
-Baselines 3 — PPO with an LSTM so the agent carries memory across a match, warm-
-started with imitation pretraining so it doesn't begin from noise. Training runs
-inside a Docker substrate so a run is reproducible and isolated from my
-workstation. Match and evaluation state persists in SQLite, which becomes the
-audit trail: every promotion, every validation result, every Elo update is a row
-I can query after the fact.
+Underneath both loops, the bot plays through a coded rules engine by default. An
+optional PPO policy — a small PyTorch network trained with Stable Baselines 3,
+about 48,000 parameters — can pick among the rules engine's six strategic states in neural
+or hybrid games; the checkpoint currently marked best was trained to imitate the
+rules engine. Long runs can go to headless StarCraft II on Linux (the eight-hour
+v4-to-v7 run used WSL), and the repo ships a Dockerfile for the same substrate.
+Training data persists in SQLite, and every evolve promotion and rollback lands as a
+git commit, which together become the audit trail I can query after the fact.
 
 ### Making the loop observable
 
@@ -100,19 +106,31 @@ project matters to me beyond the game.
 
 ## Outcome
 
-The system works as a closed loop. Over roughly **four months and about 640
+The system works as a closed loop. In its **first four months and about 640
 commits**, it grew through **eleven shipped phases** into a platform that trains,
-diagnoses, repairs, and promotes itself, backed by around **1,800 tests** that
-the repair loop must clear before any self-authored change is allowed to land.
-The self-play arena auto-promoted a lineage of versions from **v0 through v13**,
-each one having earned its place on the Elo ladder rather than being hand-picked
-by me.
+diagnoses, repairs, and promotes itself, backed by a Python test suite (3,310
+passing tests as of 10 October 2026) that the repair loop must clear before any
+self-authored change is allowed to land. The lineage of versions grew from
+**v0 to v13** (v13 on 7 May 2026); eleven of the thirteen versions after v0
+came through the full evolve loop, each tested against its immediate
+parent rather than hand-picked by me. I have no recorded games of v13 against v0, so I
+don't claim the latest version is the strongest; against the built-in AI, v13
+beat the VeryHard (level 7) opponent in 4 of 10 games on 14 October 2026.
 
-What I'm proudest of isn't any single win rate — it's that the guardrails held.
-The five-validation-game gate and the Elo-gated promotion meant the bot could
-change its own code overnight without me babysitting it and without silently
-regressing, and the SQLite audit trail plus the live dashboard meant I could
-always answer "why did it do that?" after the fact.
+What I'm proudest of isn't any single win rate — it's that the loop ran on its
+own and could undo itself. Overnight on 1 May 2026 the evolve loop promoted
+three versions and reverted two attempts that lost to their parent, and the git
+history, the training database and the live
+dashboard meant I could always answer "why did it do that?" after the fact. The
+gates also taught me their limits: a five-game majority check is close to a coin
+flip for a change that does nothing.
+
+I've written up two parts of the project in more detail:
+[What My StarCraft II Bot Taught Me About Contract Drift](https://medium.com/@aberobison/what-my-starcraft-ii-bot-taught-me-about-contract-drift-9e3b368152cf),
+a postmortem on the day the evaluator logged a win as a crash, and
+[A StarCraft II bot, now with more Jev](https://medium.com/@aberobison/my-starcraft-ii-bot-now-with-more-jev-5581c1ff03d2),
+on a second player in the same repo whose local decision graph issues every
+command while a hosted model makes a few strategic calls in real time.
 
 The transferable lesson is the one I set out to prove: a system can improve itself
 safely if — and only if — every self-authored change is forced through a gate
