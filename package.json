@@ -22,7 +22,7 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.9",
     "@axe-core/playwright": "^4.12.1",
-    "linkinator": "^7.6.1",
+    "linkinator": "^8.0.2",
     "playwright": "^1.61.1",
     "prettier": "^3.9.5",
     "prettier-plugin-astro": "^0.14.1",
