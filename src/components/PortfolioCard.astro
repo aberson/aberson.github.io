@@ -32,50 +32,96 @@ const repoHref = repo_url ? repo_url.replace(/\.git$/, "") : undefined;
 ---
 
 <article class:list={["portfolio-card", `portfolio-card--${variant}`]}>
-  <p class="portfolio-card__tag">{tag}</p>
-  <h4 class="portfolio-card__name">{name}</h4>
+  <div class="portfolio-card__copy">
+    <p class="portfolio-card__tag">{tag}</p>
+    <h4 class="portfolio-card__name">{name}</h4>
+    <p class="portfolio-card__body">{variant === "flagship" ? blurb : body}</p>
+    {
+      variant === "flagship" && card && (
+        <details>
+          <>
+            <summary>More about the project</summary>
+            <p class="portfolio-card__body">{card}</p>
+          </>
+        </details>
+      )
+    }
+    {
+      (caseStudyHref || repoHref || live_url) && (
+        <div class="portfolio-card__links">
+          {caseStudyHref && (
+            <a
+              class="portfolio-card__link portfolio-card__link--primary"
+              href={caseStudyHref}
+              aria-label={`Read the ${name} case study`}
+            >
+              Read case study <span aria-hidden="true">→</span>
+            </a>
+          )}
+          {repoHref && (
+            <a
+              class="portfolio-card__link"
+              href={repoHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${name} source code on GitHub (opens in a new tab)`}
+            >
+              Code <span aria-hidden="true">↗</span>
+            </a>
+          )}
+          {live_url && (
+            <a
+              class="portfolio-card__link"
+              href={live_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${name} live demo (opens in a new tab)`}
+            >
+              Live <span aria-hidden="true">↗</span>
+            </a>
+          )}
+        </div>
+      )
+    }
+  </div>
   {variant === "flagship" && <ProjectVisual slug={project.slug} name={name} />}
-  <p class="portfolio-card__body">{body}</p>
-  {
-    (caseStudyHref || repoHref || live_url) && (
-      <div class="portfolio-card__links">
-        {caseStudyHref && (
-          <a
-            class="portfolio-card__link portfolio-card__link--primary"
-            href={caseStudyHref}
-            aria-label={`Read the ${name} case study`}
-          >
-            Read case study <span aria-hidden="true">→</span>
-          </a>
-        )}
-        {repoHref && (
-          <a
-            class="portfolio-card__link"
-            href={repoHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={`${name} source code on GitHub (opens in a new tab)`}
-          >
-            Code <span aria-hidden="true">↗</span>
-          </a>
-        )}
-        {live_url && (
-          <a
-            class="portfolio-card__link"
-            href={live_url}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={`${name} live demo (opens in a new tab)`}
-          >
-            Live <span aria-hidden="true">↗</span>
-          </a>
-        )}
-      </div>
-    )
-  }
 </article>
 
 <style>
+  .portfolio-card__copy {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    min-width: 0;
+    flex: 1;
+  }
+  .portfolio-card.portfolio-card--flagship {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.4fr);
+    align-items: center;
+    gap: var(--space-6);
+    padding: clamp(20px, 3vw, 36px);
+  }
+  .portfolio-card--flagship .portfolio-card__name {
+    font-size: var(--type-scale-step-2);
+  }
+  .portfolio-card--flagship .portfolio-card__links {
+    margin-top: var(--space-2);
+  }
+  summary {
+    cursor: pointer;
+    color: var(--color-semantic-accent);
+    font-size: var(--type-scale-step--1);
+  }
+  details p {
+    margin-top: var(--space-3) !important;
+  }
+  @media (max-width: 760px) {
+    .portfolio-card.portfolio-card--flagship {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
   .portfolio-card {
     display: flex;
     flex-direction: column;

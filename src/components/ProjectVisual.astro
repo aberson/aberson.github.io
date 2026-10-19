@@ -6,128 +6,292 @@ interface Props {
 const { slug, name } = Astro.props;
 const visuals: Record<
   string,
-  { steps: string[]; caption: string; loop?: boolean }
+  {
+    file: string;
+    caption: string;
+    alt: string;
+    width: number;
+    height: number;
+    kind?: string;
+  }
 > = {
   Alpha4Gate: {
-    steps: ["Play", "Learn", "Validate"],
-    caption: "Game telemetry becomes tested improvements.",
-    loop: true,
-  },
-  void_furnace: {
-    steps: ["Plan", "Build", "Review"],
-    caption: "An issue becomes code, checked by a held-out critic.",
-  },
-  "skill-mesh": {
-    steps: ["Plan", "Build", "Review", "Ship"],
-    caption: "Reusable skills connect the steps, with quality gates.",
+    file: "alpha4gate-gameplay.jpg",
+    caption: "Gameplay alongside the agent's decision graph.",
+    alt: "StarCraft II gameplay on the left and a colorful branching decision graph on the right.",
+    width: 1080,
+    height: 600,
   },
   pta_finance: {
-    steps: ["Ledger", "Normalize", "Report"],
-    caption: "One Google Sheet becomes repeatable finance reports.",
+    file: "pta-finance-snapshot.png",
+    caption: "A financial snapshot for a treasurer. Fictional example data.",
+    alt: "Example treasurer report showing cash balances, fundraising, spending and budget progress.",
+    width: 1600,
+    height: 900,
+  },
+  void_furnace: {
+    file: "void-furnace-state.png",
+    caption:
+      "Captured factory state: issues move through implementation, review and merge.",
+    alt: "Factory interface showing issue states and transitions, including review, fixes and merge.",
+    width: 707,
+    height: 889,
+    kind: "factory",
   },
   "dev-observatory": {
-    steps: ["Projects", "Snapshot", "Dashboard"],
-    caption: "Project status comes together in one workspace view.",
+    file: "observatory-timeline.png",
+    caption:
+      "Historical execution observations. Expand for the full dashboard, including its separate planning views.",
+    alt: "Observed timeline section of a saved workspace dashboard, with horizontal bars for recorded processes.",
+    width: 1440,
+    height: 3819,
+    kind: "timeline",
   },
 };
 const visual = visuals[slug];
+const src = visual ? `${import.meta.env.BASE_URL}projects/${visual.file}` : "";
 ---
 
 {
-  visual && (
-    <figure class="project-visual">
-      <svg
-        viewBox="0 0 480 150"
-        role="img"
-        aria-label={`${name}: ${visual.steps.join(" to ")}. ${visual.caption}`}
-      >
-        <defs>
-          <pattern
-            id={`grid-${slug}`}
-            width="24"
-            height="24"
-            patternUnits="userSpaceOnUse"
-          >
-            <circle cx="1" cy="1" r="1" class="grid-dot" />
-          </pattern>
-        </defs>
-        <rect width="480" height="150" fill={`url(#grid-${slug})`} />
-        {visual.steps.map((step, i) => {
-          const width = 420 / visual.steps.length;
-          const x = 30 + i * width;
-          return (
-            <g>
-              {i < visual.steps.length - 1 && (
-                <path
-                  d={`M ${x + width - 14} 70 h 22 l -5 -5 m 5 5 l -5 5`}
-                  class="connector"
-                />
-              )}
-              <rect
-                x={x}
-                y="40"
-                width={width - 22}
-                height="60"
-                rx="12"
-                class="node"
-              />
-              <text x={x + (width - 22) / 2} y="76" text-anchor="middle">
-                {step}
-              </text>
-            </g>
-          );
-        })}
-        {visual.loop && (
-          <path
-            d="M 379 105 v 20 H 89 v -16 m -5 5 l 5 -5 l 5 5"
-            class="connector return-path"
-          />
-        )}
-      </svg>
-      <figcaption>{visual.caption}</figcaption>
+  slug === "skill-mesh" ? (
+    <figure class="review-example">
+      <p class="review-example__label">Actual plan review / PR #55</p>
+      <div class="review-example__finding">
+        <>
+          <span>01 / Finding</span>
+          <p>
+            The plan backed up untouched private files without helping rollback.
+          </p>
+        </>
+      </div>
+      <div class="review-example__revision">
+        <>
+          <span>02 / Revision</span>
+          <p>
+            Back up only files the transaction changes. Record untouched files
+            by path and hash.
+          </p>
+        </>
+      </div>
+      <p class="review-example__verdict">Re-review: RESOLVED</p>
+      <figcaption>
+        Paraphrased from the public change record. Planning change, before
+        implementation.{" "}
+        <a
+          href="https://github.com/aberson/skill-mesh/commit/8631486bfb7939b1ab58234b2ca972fb06496e47"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Read the review record
+        </a>
+      </figcaption>
     </figure>
+  ) : (
+    visual && (
+      <figure class="project-visual">
+        <a
+          class:list={["project-visual__preview", visual.kind]}
+          href={src}
+          data-image-viewer
+          aria-label={`View full ${name} screenshot`}
+        >
+          <img
+            src={src}
+            alt={visual.alt}
+            width={visual.width}
+            height={visual.height}
+            loading="lazy"
+            decoding="async"
+          />
+          <span class="project-visual__expand">View full screenshot</span>
+        </a>
+        <figcaption>{visual.caption}</figcaption>
+        <dialog aria-label={`${name} screenshot`}>
+          <div class="viewer-toolbar">
+            <>
+              <a href={src} target="_blank" rel="noopener noreferrer">
+                Open original
+              </a>
+              <button type="button" data-close-viewer>
+                Close
+              </button>
+            </>
+          </div>
+          <p class="viewer-caption">{visual.caption}</p>
+          <div class="viewer-image">
+            <img
+              src={src}
+              alt={visual.alt}
+              width={visual.width}
+              height={visual.height}
+              loading="lazy"
+            />
+          </div>
+        </dialog>
+      </figure>
+    )
   )
 }
 
+<script>
+  document
+    .querySelectorAll<HTMLAnchorElement>("[data-image-viewer]")
+    .forEach((link) => {
+      const dialog = link.closest("figure")?.querySelector("dialog");
+      if (!dialog) return;
+      link.addEventListener("click", (event) => {
+        if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey)
+          return;
+        event.preventDefault();
+        dialog.showModal();
+      });
+      dialog
+        .querySelector("[data-close-viewer]")
+        ?.addEventListener("click", () => dialog.close());
+      dialog.addEventListener("click", (event) => {
+        if (event.target === dialog) dialog.close();
+      });
+    });
+</script>
+
 <style>
-  .project-visual {
+  figure {
     margin: 0;
+    min-width: 0;
+  }
+  .project-visual__preview {
+    display: block;
+    position: relative;
     overflow: hidden;
     border: 1px solid var(--color-semantic-border);
     border-radius: var(--radius-lg);
-    background: var(--color-semantic-code-bg);
+    background: #101318;
+    aspect-ratio: 16 / 9;
   }
-  svg {
+  .project-visual__preview img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  .project-visual__preview.factory {
+    aspect-ratio: 707 / 485;
+  }
+  .project-visual__preview.factory img {
+    height: auto;
+  }
+  .project-visual__preview.timeline {
+    aspect-ratio: 16 / 6.2;
+  }
+  .project-visual__preview.timeline img {
+    height: auto;
+    transform: translateY(-63%);
+  }
+  .project-visual__expand {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    padding: 7px 12px;
+    border-radius: 6px;
+    background: #101318;
+    color: #fff;
+    font-size: 12px;
+  }
+  figcaption {
+    margin-top: var(--space-3);
+    color: var(--color-semantic-text-muted);
+    font-size: var(--type-scale-step--1);
+    line-height: var(--type-line-height-base);
+  }
+  dialog {
+    padding: var(--space-4);
+    width: min(94vw, 1440px);
+    max-width: 96vw;
+    max-height: 92vh;
+    border: 1px solid var(--color-semantic-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-semantic-surface);
+    color: var(--color-semantic-text);
+  }
+  dialog::backdrop {
+    background: rgb(0 0 0 / 75%);
+  }
+  .viewer-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-3);
+  }
+  .viewer-toolbar a,
+  figcaption a {
+    color: var(--color-semantic-accent);
+  }
+  .viewer-toolbar button {
+    font: inherit;
+    padding: 8px 16px;
+    cursor: pointer;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-semantic-border);
+    background: var(--color-semantic-surface);
+    color: var(--color-semantic-text);
+  }
+  .viewer-caption {
+    font-size: var(--type-scale-step--1);
+  }
+  .viewer-image img {
     display: block;
     width: 100%;
     height: auto;
   }
-  .grid-dot {
-    fill: var(--color-semantic-border);
+  .review-example {
+    padding: clamp(18px, 3vw, 32px);
+    border-radius: var(--radius-lg);
+    background: #151c28;
+    color: #f1f5fb;
+    border: 1px solid #485570;
   }
-  .node {
-    fill: var(--color-semantic-surface);
-    stroke: var(--color-semantic-accent);
-    stroke-width: 1.5;
+  .review-example__label {
+    margin: 0 0 20px;
+    color: #bccbe1;
+    font: 600 12px var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
   }
-  .connector {
-    fill: none;
-    stroke: var(--color-semantic-accent);
-    stroke-width: 2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
+  .review-example__finding,
+  .review-example__revision {
+    padding-left: 16px;
+    border-left: 3px solid #ffc36e;
   }
-  .return-path {
-    stroke-dasharray: 4 5;
+  .review-example__revision {
+    margin-top: 20px;
+    border-color: #79d7be;
   }
-  text {
-    fill: var(--color-semantic-text);
-    font: 600 17px var(--font-heading);
+  .review-example span {
+    color: #bccbe1;
+    font: 600 12px var(--font-mono);
   }
-  figcaption {
-    padding: 0 var(--space-3) var(--space-3);
-    color: var(--color-semantic-text-muted);
-    font-size: var(--type-scale-step--1);
-    line-height: var(--type-line-height-base);
+  .review-example p {
+    line-height: 1.5;
+  }
+  .review-example__finding p,
+  .review-example__revision p {
+    margin: 6px 0 0;
+    font-size: clamp(15px, 1.5vw, 19px);
+  }
+  .review-example__verdict {
+    display: inline-block;
+    margin: 20px 0 0;
+    padding: 6px 12px;
+    border: 1px solid #79d7be;
+    border-radius: 5px;
+    color: #a5efda;
+    font: 600 13px var(--font-mono);
+  }
+  .review-example figcaption {
+    color: #bccbe1;
+  }
+  .review-example a {
+    text-decoration: underline;
+    color: #a5d7ff;
   }
 </style>

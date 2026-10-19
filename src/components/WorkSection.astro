@@ -45,9 +45,9 @@ const caseStudyHrefFor = (slug: string): string | undefined =>
 // preserving export order, so adding one never drops it silently.
 const FLAGSHIP_ORDER = [
   "Alpha4Gate",
-  "void_furnace",
-  "skill-mesh",
   "pta_finance",
+  "skill-mesh",
+  "void_furnace",
   "dev-observatory",
 ];
 const flagshipRank = (slug: string): number => {
@@ -288,7 +288,7 @@ const repoHref = (project: PortfolioProject): string | undefined =>
   /* Flagship cards carry more text, so give them a wider minimum track (fewer,
    * larger tracks) than the compact Fun/Professional grids. */
   .card-grid--flagship {
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr));
+    grid-template-columns: minmax(0, 1fr);
   }
 
   /* Tables scroll inside their own container so 3 columns never force the page
