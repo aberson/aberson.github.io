@@ -13,6 +13,7 @@ const visuals: Record<
     width: number;
     height: number;
     kind?: string;
+    disclosure?: string;
   }
 > = {
   Alpha4Gate: {
@@ -52,11 +53,13 @@ const galleries: Record<string, (typeof visuals)[string][]> = {
   pta_finance: [
     {
       ...visuals.pta_finance,
-      caption: "1. Current snapshot. Fictional example data.",
+      caption: "1. Current snapshot",
+      disclosure: "Fictional example data",
     },
     {
       file: "pta-fundraising-summary.png",
-      caption: "2. Fundraising summary. Fictional example data.",
+      caption: "2. Fundraising summary",
+      disclosure: "Fictional example data",
       alt: "Fundraising report with progress toward the goal and income by event.",
       width: 816,
       height: 1056,
@@ -64,8 +67,8 @@ const galleries: Record<string, (typeof visuals)[string][]> = {
     },
     {
       file: "pta-reimbursement-private.png",
-      caption:
-        "3. Private detailed reimbursement report. Anonymized demonstration.",
+      caption: "3. Private reimbursement detail",
+      disclosure: "Anonymized demonstration",
       alt: "Detailed reimbursement review queue with item decisions, payment amounts and outstanding actions.",
       width: 1400,
       height: 1000,
@@ -73,7 +76,8 @@ const galleries: Record<string, (typeof visuals)[string][]> = {
     },
     {
       file: "pta-reimbursement-public.png",
-      caption: "4. Public reimbursement summary. Anonymized demonstration.",
+      caption: "4. Public reimbursement summary",
+      disclosure: "Anonymized demonstration",
       alt: "One-page reimbursement summary with payment totals, status chart and board discussion items.",
       width: 816,
       height: 1056,
@@ -102,15 +106,15 @@ const galleries: Record<string, (typeof visuals)[string][]> = {
     {
       ...visuals.void_furnace,
       caption: "Factory state machine",
-      kind: "report",
+      kind: "factory",
     },
     {
       file: "void-furnace-launcher.png",
       caption: "Launcher",
       alt: "Operator launcher with command categories and controls for factory operations, diagnostics and iterations.",
-      width: 1920,
-      height: 1741,
-      kind: "report",
+      width: 1000,
+      height: 470,
+      kind: "launcher",
     },
   ],
 };
@@ -145,11 +149,36 @@ const gallery = galleries[slug] ?? (visuals[slug] ? [visuals[slug]] : []);
               loading="lazy"
               decoding="async"
             />
-            <span class="project-visual__expand">
-              View full {visual.kind === "diagram" ? "graphic" : "screenshot"}
-            </span>
+            {gallery.length === 1 && (
+              <span class="project-visual__expand">
+                View full {visual.kind === "diagram" ? "graphic" : "screenshot"}
+              </span>
+            )}
           </a>
-          <figcaption>{visual.caption}</figcaption>
+          <figcaption>
+            {gallery.length > 1 ? (
+              <>
+                <div class="caption-row">
+                  <strong>{visual.caption}</strong>
+                  <a
+                    href={src}
+                    data-image-viewer
+                    aria-label={`Expand ${visual.caption}`}
+                  >
+                    Expand <span aria-hidden="true">&#8599;</span>
+                  </a>
+                </div>
+                {visual.disclosure && <small>{visual.disclosure}</small>}
+                {visual.kind === "diagram" && (
+                  <small class="diagram-hint">
+                    Scroll across to follow the pipeline, or expand.
+                  </small>
+                )}
+              </>
+            ) : (
+              visual.caption
+            )}
+          </figcaption>
           <dialog aria-label={`${name}: ${visual.caption}`}>
             <div class="viewer-toolbar">
               <a href={src} target="_blank" rel="noopener noreferrer">
@@ -159,7 +188,10 @@ const gallery = galleries[slug] ?? (visuals[slug] ? [visuals[slug]] : []);
                 Close
               </button>
             </div>
-            <p class="viewer-caption">{visual.caption}</p>
+            <p class="viewer-caption">
+              {visual.caption}
+              {visual.disclosure && ` ? ${visual.disclosure}`}
+            </p>
             <div class="viewer-image">
               <img
                 src={src}
@@ -299,29 +331,84 @@ const gallery = galleries[slug] ?? (visuals[slug] ? [visuals[slug]] : []);
     gap: var(--space-5);
   }
   .project-gallery--grid .project-visual__preview {
-    aspect-ratio: 4 / 3;
-    background: #eef2f3;
+    aspect-ratio: 16 / 9;
+    background: #fff;
   }
   .project-visual__preview.report img {
-    object-fit: contain;
+    height: auto;
+  }
+  .project-gallery--grid .project-visual__preview.factory {
+    aspect-ratio: 707 / 485;
+    background: #101318;
+  }
+  .project-gallery--grid .project-visual__preview.launcher {
+    aspect-ratio: 707 / 485;
+  }
+  .project-visual__preview.launcher img {
+    height: 100%;
+    object-fit: cover;
+    object-position: top left;
   }
   .project-visual__preview.diagram {
     aspect-ratio: auto;
-    background: #fff;
-    padding: 12px 12px 42px;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
   }
   .project-visual__preview.diagram img {
     height: auto;
   }
-  @media (max-width: 540px) {
-    .project-gallery--grid {
-      gap: var(--space-3);
+  .diagram-hint {
+    display: none;
+  }
+  .caption-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: baseline;
+  }
+  .caption-row strong {
+    color: var(--color-semantic-text);
+    font-weight: 600;
+  }
+  .caption-row a {
+    white-space: nowrap;
+    font-size: 12px;
+  }
+  figcaption small {
+    display: block;
+    margin-top: 3px;
+    font-size: 12px;
+  }
+  .project-gallery--stack {
+    gap: 20px;
+  }
+  .project-gallery--stack figcaption {
+    margin-top: 6px;
+  }
+  a:focus-visible {
+    outline: 3px solid var(--color-semantic-accent);
+    outline-offset: 4px;
+  }
+  @media (max-width: 600px) {
+    figcaption .diagram-hint {
+      display: block;
     }
-    .project-gallery--grid .project-visual__expand {
-      right: 4px;
-      bottom: 4px;
-      padding: 4px 6px;
-      font-size: 10px;
+    .project-gallery--grid {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 24px;
+    }
+    .project-visual__preview.diagram {
+      overflow-x: auto;
+    }
+    .project-visual__preview.diagram img {
+      min-width: 700px;
+    }
+    .viewer-image:has(img[src$=".svg"]) {
+      overflow-x: auto;
+    }
+    .viewer-image img[src$=".svg"] {
+      min-width: 900px;
     }
   }
 </style>
