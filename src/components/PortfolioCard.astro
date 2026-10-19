@@ -31,7 +31,17 @@ const body = variant === "flagship" ? (card ?? blurb) : blurb;
 const repoHref = repo_url ? repo_url.replace(/\.git$/, "") : undefined;
 ---
 
-<article class:list={["portfolio-card", `portfolio-card--${variant}`]}>
+<article
+  class:list={[
+    "portfolio-card",
+    `portfolio-card--${variant}`,
+    {
+      "portfolio-card--gallery":
+        variant === "flagship" &&
+        ["pta_finance", "skill-mesh", "void_furnace"].includes(project.slug),
+    },
+  ]}
+>
   <div class="portfolio-card__copy">
     <p class="portfolio-card__tag">{tag}</p>
     <h4 class="portfolio-card__name">{name}</h4>
@@ -101,6 +111,9 @@ const repoHref = repo_url ? repo_url.replace(/\.git$/, "") : undefined;
     align-items: center;
     gap: var(--space-6);
     padding: clamp(20px, 3vw, 36px);
+  }
+  .portfolio-card.portfolio-card--gallery {
+    grid-template-columns: minmax(0, 1fr);
   }
   .portfolio-card--flagship .portfolio-card__name {
     font-size: var(--type-scale-step-2);

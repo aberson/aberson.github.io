@@ -48,90 +48,133 @@ const visuals: Record<
     kind: "timeline",
   },
 };
-const visual = visuals[slug];
-const src = visual ? `${import.meta.env.BASE_URL}projects/${visual.file}` : "";
+const galleries: Record<string, (typeof visuals)[string][]> = {
+  pta_finance: [
+    {
+      ...visuals.pta_finance,
+      caption: "1. Current snapshot. Fictional example data.",
+    },
+    {
+      file: "pta-fundraising-summary.png",
+      caption: "2. Fundraising summary. Fictional example data.",
+      alt: "Fundraising report with progress toward the goal and income by event.",
+      width: 816,
+      height: 1056,
+      kind: "report",
+    },
+    {
+      file: "pta-reimbursement-private.png",
+      caption:
+        "3. Private detailed reimbursement report. Anonymized demonstration.",
+      alt: "Detailed reimbursement review queue with item decisions, payment amounts and outstanding actions.",
+      width: 1400,
+      height: 1000,
+      kind: "report",
+    },
+    {
+      file: "pta-reimbursement-public.png",
+      caption: "4. Public reimbursement summary. Anonymized demonstration.",
+      alt: "One-page reimbursement summary with payment totals, status chart and board discussion items.",
+      width: 816,
+      height: 1056,
+      kind: "report",
+    },
+  ],
+  "skill-mesh": [
+    {
+      file: "skill-mesh-core-pipeline-light.svg",
+      caption: "Build pipeline",
+      alt: "Skill-mesh build pipeline, from planning and review through building, acceptance and repository updates.",
+      width: 1000,
+      height: 214,
+      kind: "diagram",
+    },
+    {
+      file: "skill-mesh-review-gate-light.svg",
+      caption: "Build-step pipeline",
+      alt: "One build step: developer agent, automated gates, independent reviewers, verdict and merge, with revision and blocked paths.",
+      width: 1080,
+      height: 228,
+      kind: "diagram",
+    },
+  ],
+  void_furnace: [
+    {
+      ...visuals.void_furnace,
+      caption: "Factory state machine",
+      kind: "report",
+    },
+    {
+      file: "void-furnace-launcher.png",
+      caption: "Launcher",
+      alt: "Operator launcher with command categories and controls for factory operations, diagnostics and iterations.",
+      width: 1920,
+      height: 1741,
+      kind: "report",
+    },
+  ],
+};
+const gallery = galleries[slug] ?? (visuals[slug] ? [visuals[slug]] : []);
 ---
 
-{
-  slug === "skill-mesh" ? (
-    <figure class="review-example">
-      <p class="review-example__label">Actual plan review / PR #55</p>
-      <div class="review-example__finding">
-        <>
-          <span>01 / Finding</span>
-          <p>
-            The plan backed up untouched private files without helping rollback.
-          </p>
-        </>
-      </div>
-      <div class="review-example__revision">
-        <>
-          <span>02 / Revision</span>
-          <p>
-            Back up only files the transaction changes. Record untouched files
-            by path and hash.
-          </p>
-        </>
-      </div>
-      <p class="review-example__verdict">Re-review: RESOLVED</p>
-      <figcaption>
-        Paraphrased from the public change record. Planning change, before
-        implementation.{" "}
-        <a
-          href="https://github.com/aberson/skill-mesh/commit/8631486bfb7939b1ab58234b2ca972fb06496e47"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Read the review record
-        </a>
-      </figcaption>
-    </figure>
-  ) : (
-    visual && (
-      <figure class="project-visual">
-        <a
-          class:list={["project-visual__preview", visual.kind]}
-          href={src}
-          data-image-viewer
-          aria-label={`View full ${name} screenshot`}
-        >
-          <img
-            src={src}
-            alt={visual.alt}
-            width={visual.width}
-            height={visual.height}
-            loading="lazy"
-            decoding="async"
-          />
-          <span class="project-visual__expand">View full screenshot</span>
-        </a>
-        <figcaption>{visual.caption}</figcaption>
-        <dialog aria-label={`${name} screenshot`}>
-          <div class="viewer-toolbar">
-            <>
-              <a href={src} target="_blank" rel="noopener noreferrer">
-                Open original
-              </a>
-              <button type="button" data-close-viewer>
-                Close
-              </button>
-            </>
-          </div>
-          <p class="viewer-caption">{visual.caption}</p>
-          <div class="viewer-image">
+<div
+  class:list={[
+    "project-gallery",
+    {
+      "project-gallery--grid": gallery.length > 1 && slug !== "skill-mesh",
+      "project-gallery--stack": slug === "skill-mesh",
+    },
+  ]}
+>
+  {
+    gallery.map((visual) => {
+      const src = `${import.meta.env.BASE_URL}projects/${visual.file}`;
+      return (
+        <figure class="project-visual">
+          <a
+            class:list={["project-visual__preview", visual.kind]}
+            href={src}
+            data-image-viewer
+            aria-label={`View full ${name}: ${visual.caption}`}
+          >
             <img
               src={src}
               alt={visual.alt}
               width={visual.width}
               height={visual.height}
               loading="lazy"
+              decoding="async"
             />
-          </div>
-        </dialog>
-      </figure>
-    )
-  )
-}
+            <span class="project-visual__expand">
+              View full {visual.kind === "diagram" ? "graphic" : "screenshot"}
+            </span>
+          </a>
+          <figcaption>{visual.caption}</figcaption>
+          <dialog aria-label={`${name}: ${visual.caption}`}>
+            <div class="viewer-toolbar">
+              <a href={src} target="_blank" rel="noopener noreferrer">
+                Open original
+              </a>
+              <button type="button" data-close-viewer>
+                Close
+              </button>
+            </div>
+            <p class="viewer-caption">{visual.caption}</p>
+            <div class="viewer-image">
+              <img
+                src={src}
+                alt={visual.alt}
+                width={visual.width}
+                height={visual.height}
+                loading="lazy"
+              />
+            </div>
+          </dialog>
+        </figure>
+      );
+    })
+  }
+</div>
 
 <script>
   document
@@ -243,55 +286,42 @@ const src = visual ? `${import.meta.env.BASE_URL}projects/${visual.file}` : "";
     width: 100%;
     height: auto;
   }
-  .review-example {
-    padding: clamp(18px, 3vw, 32px);
-    border-radius: var(--radius-lg);
-    background: #151c28;
-    color: #f1f5fb;
-    border: 1px solid #485570;
+  .project-gallery {
+    min-width: 0;
   }
-  .review-example__label {
-    margin: 0 0 20px;
-    color: #bccbe1;
-    font: 600 12px var(--font-mono);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
+  .project-gallery--grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-5);
   }
-  .review-example__finding,
-  .review-example__revision {
-    padding-left: 16px;
-    border-left: 3px solid #ffc36e;
+  .project-gallery--stack {
+    display: grid;
+    gap: var(--space-5);
   }
-  .review-example__revision {
-    margin-top: 20px;
-    border-color: #79d7be;
+  .project-gallery--grid .project-visual__preview {
+    aspect-ratio: 4 / 3;
+    background: #eef2f3;
   }
-  .review-example span {
-    color: #bccbe1;
-    font: 600 12px var(--font-mono);
+  .project-visual__preview.report img {
+    object-fit: contain;
   }
-  .review-example p {
-    line-height: 1.5;
+  .project-visual__preview.diagram {
+    aspect-ratio: auto;
+    background: #fff;
+    padding: 12px 12px 42px;
   }
-  .review-example__finding p,
-  .review-example__revision p {
-    margin: 6px 0 0;
-    font-size: clamp(15px, 1.5vw, 19px);
+  .project-visual__preview.diagram img {
+    height: auto;
   }
-  .review-example__verdict {
-    display: inline-block;
-    margin: 20px 0 0;
-    padding: 6px 12px;
-    border: 1px solid #79d7be;
-    border-radius: 5px;
-    color: #a5efda;
-    font: 600 13px var(--font-mono);
-  }
-  .review-example figcaption {
-    color: #bccbe1;
-  }
-  .review-example a {
-    text-decoration: underline;
-    color: #a5d7ff;
+  @media (max-width: 540px) {
+    .project-gallery--grid {
+      gap: var(--space-3);
+    }
+    .project-gallery--grid .project-visual__expand {
+      right: 4px;
+      bottom: 4px;
+      padding: 4px 6px;
+      font-size: 10px;
+    }
   }
 </style>
