@@ -1,0 +1,133 @@
+---
+interface Props {
+  slug: string;
+  name: string;
+}
+const { slug, name } = Astro.props;
+const visuals: Record<
+  string,
+  { steps: string[]; caption: string; loop?: boolean }
+> = {
+  Alpha4Gate: {
+    steps: ["Play", "Learn", "Validate"],
+    caption: "Game telemetry becomes tested improvements.",
+    loop: true,
+  },
+  void_furnace: {
+    steps: ["Plan", "Build", "Review"],
+    caption: "An issue becomes code, checked by a held-out critic.",
+  },
+  "skill-mesh": {
+    steps: ["Plan", "Build", "Review", "Ship"],
+    caption: "Reusable skills connect the steps, with quality gates.",
+  },
+  pta_finance: {
+    steps: ["Ledger", "Normalize", "Report"],
+    caption: "One Google Sheet becomes repeatable finance reports.",
+  },
+  "dev-observatory": {
+    steps: ["Projects", "Snapshot", "Dashboard"],
+    caption: "Project status comes together in one workspace view.",
+  },
+};
+const visual = visuals[slug];
+---
+
+{
+  visual && (
+    <figure class="project-visual">
+      <svg
+        viewBox="0 0 480 150"
+        role="img"
+        aria-label={`${name}: ${visual.steps.join(" to ")}. ${visual.caption}`}
+      >
+        <defs>
+          <pattern
+            id={`grid-${slug}`}
+            width="24"
+            height="24"
+            patternUnits="userSpaceOnUse"
+          >
+            <circle cx="1" cy="1" r="1" class="grid-dot" />
+          </pattern>
+        </defs>
+        <rect width="480" height="150" fill={`url(#grid-${slug})`} />
+        {visual.steps.map((step, i) => {
+          const width = 420 / visual.steps.length;
+          const x = 30 + i * width;
+          return (
+            <g>
+              {i < visual.steps.length - 1 && (
+                <path
+                  d={`M ${x + width - 14} 70 h 22 l -5 -5 m 5 5 l -5 5`}
+                  class="connector"
+                />
+              )}
+              <rect
+                x={x}
+                y="40"
+                width={width - 22}
+                height="60"
+                rx="12"
+                class="node"
+              />
+              <text x={x + (width - 22) / 2} y="76" text-anchor="middle">
+                {step}
+              </text>
+            </g>
+          );
+        })}
+        {visual.loop && (
+          <path
+            d="M 379 105 v 20 H 89 v -16 m -5 5 l 5 -5 l 5 5"
+            class="connector return-path"
+          />
+        )}
+      </svg>
+      <figcaption>{visual.caption}</figcaption>
+    </figure>
+  )
+}
+
+<style>
+  .project-visual {
+    margin: 0;
+    overflow: hidden;
+    border: 1px solid var(--color-semantic-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-semantic-code-bg);
+  }
+  svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .grid-dot {
+    fill: var(--color-semantic-border);
+  }
+  .node {
+    fill: var(--color-semantic-surface);
+    stroke: var(--color-semantic-accent);
+    stroke-width: 1.5;
+  }
+  .connector {
+    fill: none;
+    stroke: var(--color-semantic-accent);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .return-path {
+    stroke-dasharray: 4 5;
+  }
+  text {
+    fill: var(--color-semantic-text);
+    font: 600 17px var(--font-heading);
+  }
+  figcaption {
+    padding: 0 var(--space-3) var(--space-3);
+    color: var(--color-semantic-text-muted);
+    font-size: var(--type-scale-step--1);
+    line-height: var(--type-line-height-base);
+  }
+</style>

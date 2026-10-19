@@ -43,7 +43,13 @@ const caseStudyHrefFor = (slug: string): string | undefined =>
 // Flagship is the hero band, so its three cards follow the operator's curated
 // order (the two case-study projects first); any flagship not listed sorts last,
 // preserving export order, so adding one never drops it silently.
-const FLAGSHIP_ORDER = ["Alpha4Gate", "void_furnace", "skill-mesh"];
+const FLAGSHIP_ORDER = [
+  "Alpha4Gate",
+  "void_furnace",
+  "skill-mesh",
+  "pta_finance",
+  "dev-observatory",
+];
 const flagshipRank = (slug: string): number => {
   const i = FLAGSHIP_ORDER.indexOf(slug);
   return i === -1 ? Number.POSITIVE_INFINITY : i;
@@ -55,6 +61,7 @@ const flagship = byGroup("flagship").sort(
 // The remaining groups render in export order (alphabetical) — the observatory is
 // the single source of ordering truth, so the consumer stays dumb here.
 const utility = byGroup("utility");
+const tools = byGroup("tools");
 const fun = byGroup("fun");
 const professional = byGroup("professional");
 const thirdParty = byGroup("third-party");
@@ -138,6 +145,19 @@ const repoHref = (project: PortfolioProject): string | undefined =>
           </tbody>
         </table>
       </div>
+    </div>
+
+    <div class="work-block">
+      <h3 class="work-block__heading">Tools</h3>
+      <ul class="card-grid" role="list">
+        {
+          tools.map((project) => (
+            <li>
+              <PortfolioCard project={project} />
+            </li>
+          ))
+        }
+      </ul>
     </div>
 
     <!-- 3. Fun -->
