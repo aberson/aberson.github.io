@@ -90,13 +90,12 @@ personal project. "Production-grade" here means that rigor — a real suite, str
 typing, hard safety gates, a full audit trail — not a commercial deployment or
 external users. It has neither.
 
-What I set out to prove is a general claim about autonomous decision systems: they
-become trustworthy only when the reviewer is _structurally_ prevented from
-colluding with the producer, and the signal driving the decision is measured on
-the real artifact rather than the producer's account of it. Held-out review, hard
+The design separates the reviewer from the producer and bases review on the
+actual artifact rather than the producer's account of it. That separation and the
+validation gates help expose errors, but they do not make review infallible. Held-out review, hard
 gates, cost ledgers, a full audit trail — that is the same architecture a financial
 decision or governance system wants, and the reason this project matters to me
 beyond shipping a calculator. The transfer is by analogy: there is no finance code
-in the factory. But the shape — independent, incorruptible review over an
+in the factory. But the shape — independent review with a held-out critic over an
 auditable, cost-tracked loop — is exactly what I spent years wanting in finance,
 and what I set out to build here from first principles.

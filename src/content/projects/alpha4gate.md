@@ -132,9 +132,8 @@ a postmortem on the day the evaluator logged a win as a crash, and
 on a second player in the same repo whose local decision graph issues every
 command while a hosted model makes a few strategic calls in real time.
 
-The transferable lesson is the one I set out to prove: a system can improve itself
-safely if — and only if — every self-authored change is forced through a gate
-that a bad change cannot pass by luck, and if the signal driving the decision is
-aggregated until it's actually trustworthy. That pattern — closed-loop learning,
-reliable feedback, hard gates, transparent audit — is what I take from Alpha4Gate
-into the applied-AI systems I want to build next.
+The transferable lesson is that self-authored changes need tests, repeated
+validation, and a record of how promotion decisions were made. These checks reduce
+the risk of accepting a regression, but noisy match outcomes still require care.
+That pattern of closed-loop learning, measured feedback, and transparent review is
+what I take from Alpha4Gate into the applied-AI systems I want to build next.

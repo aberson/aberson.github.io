@@ -14,16 +14,16 @@ import { ANCHORS } from "../consts";
 // <dl> so assistive tech announces term → description pairs.
 const BEATS = [
   {
-    term: "The flagships — the proof systems",
-    body: "The flagship systems each prove a hard claim by building the thing and letting it grade itself only through gates it can't game. Alpha4Gate plays StarCraft II against the game's built-in AI and its own earlier versions, then turns on its own code — drafting, testing, and validating its own fixes to raise its win rate. void-furnace is a dark factory: a planner, a coder, and a critic structurally held out from the coder's own narration turn filed GitHub issues into merged pull requests unattended — and the product it builds, void_furnace_calc (an arbitrary-precision calculator), is the proof the loop actually closes. skill-mesh is the pipeline underneath all of it: reusable agent skills that run plan → build → review → ship behind quality gates, and it's what built the other two.",
+    term: "Five flagship projects",
+    body: "Alpha4Gate explores self-improving game agents. pta_finance turns financial records into reports for a treasurer. skill-mesh provides a reusable planning, building, and review workflow. Void Furnace applies that workflow to autonomous issue-to-PR development. dev-observatory brings project goals, built work, and planned work into a shared view.",
   },
   {
-    term: "The utilities — the leverage layer",
-    body: "Around the flagships sits a layer of small, sharp tools that keep them honest, fast, and observable. dev-observatory watches every project in the workspace from the outside — goal versus built versus planned — without any project depending on it. Three honesty instruments enforce one rule, that no system grades its own work: measure-twice turns “which model for which job” into calibrated, fail-loud measurement; switchboard offloads the cheap judgment calls to a local model but never lets it sit on a correctness gate; citation-needed puts a verified citation trail under the design choices and makes fabricated citations structurally impossible. Seven more one-shot utilities — tripwire, paper-trail, changed-check, heads-up, find-again, same-page, and mesh-lens — are the day-to-day working discipline made executable.",
+    term: "Verification and visibility",
+    body: "The supporting tools make decisions easier to inspect: measure-twice compares model performance, citation-needed verifies quoted evidence against fetched sources, and utilities such as tripwire, paper-trail, and changed-check record decisions and guide validation. These controls help detect errors; they do not guarantee correctness.",
   },
   {
-    term: "The range beyond",
-    body: "The same pipeline builds well past the flagships. A row of for-fun projects — a LEGO build planner, a lost-treasure dossier, a kids' story workshop — and a set of professional tools — a portfolio-forecasting engine, a hands-on learning-ramp generator, a PTA finance toolkit — are built with the same gated discipline. Different domains, one method: prove it through a gate it can't pass by luck.",
+    term: "A wider range of applications",
+    body: "The additional projects apply these methods to forecasting, learning, creative work, and everyday tasks. The common thread is an inspectable process: define the task, build it, check the result, and keep the evidence for review.",
   },
 ];
 ---
@@ -35,11 +35,9 @@ const BEATS = [
 >
   <h2 id="ecosystem-heading">How it all fits together</h2>
   <p class="ecosystem-lede">
-    The projects above aren't separate experiments — they're one system, built
-    and kept honest with a shared discipline: anything that claims to work has
-    to prove it through a gate it can't pass by luck, and no tool grades its own
-    work. It reads in three layers — the flagships that prove the hard claims,
-    the utilities that keep them honest, and the wider range built the same way.
+    These projects connect practical applications with reusable development
+    tools. Planning, independent review, tests, and recorded evidence help me
+    evaluate changes before shipping them.
   </p>
   <dl class="ecosystem-beats">
     {
@@ -59,7 +57,7 @@ const BEATS = [
     margin-inline: auto;
     padding: var(--space-8) var(--space-4);
     /* Offset the sticky header so the anchored heading isn't hidden under it. */
-    scroll-margin-top: 5rem;
+    scroll-margin-top: var(--anchor-offset, 7rem);
     border-top: 1px solid var(--color-semantic-border);
   }
 

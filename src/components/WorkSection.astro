@@ -76,7 +76,7 @@ const repoHref = (project: PortfolioProject): string | undefined =>
     <h2 id="work-heading">Work</h2>
 
     <!-- 1. Flagship -->
-    <div class="work-block">
+    <div class="work-block" id="flagship">
       <h3 class="work-block__heading">Flagship</h3>
       <ul class="card-grid card-grid--flagship" role="list">
         {
@@ -93,156 +93,182 @@ const repoHref = (project: PortfolioProject): string | undefined =>
       </ul>
     </div>
 
-    <!-- 2. Utilities -->
-    <div class="work-block">
-      <h3 class="work-block__heading">Utilities</h3>
-      <div class="table-scroll">
-        <table class="work-table">
-          <thead>
-            <tr>
-              <th scope="col">Category</th>
-              <th scope="col">Name</th>
-              <th scope="col">Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              utility.map((project) => (
-                <tr>
-                  <td class="work-table__tag">{project.tag}</td>
-                  <td class="work-table__name">
-                    {repoHref(project) ? (
-                      <a
-                        href={repoHref(project)}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={`${project.name} source code on GitHub (opens in a new tab)`}
-                      >
-                        {project.name}
-                      </a>
-                    ) : (
-                      project.name
-                    )}
-                    {project.live_url && (
-                      <>
-                        {" "}
+    <details class="more-projects">
+      <summary>More projects</summary>
+      <p class="catalog-intro">
+        Utilities, tools, experiments, professional projects, and third-party
+        contributions.
+      </p>
+      <!-- 2. Utilities -->
+      <div class="work-block">
+        <h3 class="work-block__heading">Utilities</h3>
+        <div class="table-scroll">
+          <table class="work-table">
+            <thead>
+              <tr>
+                <th scope="col">Category</th>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                utility.map((project) => (
+                  <tr>
+                    <td class="work-table__tag">{project.tag}</td>
+                    <td class="work-table__name">
+                      {repoHref(project) ? (
                         <a
-                          class="work-table__live"
-                          href={project.live_url}
+                          href={repoHref(project)}
                           target="_blank"
                           rel="noopener noreferrer"
-                          aria-label={`${project.name} live demo (opens in a new tab)`}
+                          aria-label={`${project.name} source code on GitHub (opens in a new tab)`}
                         >
-                          Live <span aria-hidden="true">↗</span>
+                          {project.name}
                         </a>
-                      </>
-                    )}
-                  </td>
-                  <td>{project.blurb}</td>
-                </tr>
-              ))
-            }
-          </tbody>
-        </table>
+                      ) : (
+                        project.name
+                      )}
+                      {project.live_url && (
+                        <>
+                          {" "}
+                          <a
+                            class="work-table__live"
+                            href={project.live_url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label={`${project.name} live demo (opens in a new tab)`}
+                          >
+                            Live <span aria-hidden="true">↗</span>
+                          </a>
+                        </>
+                      )}
+                    </td>
+                    <td>{project.blurb}</td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
       </div>
-    </div>
 
-    <div class="work-block">
-      <h3 class="work-block__heading">Tools</h3>
-      <ul class="card-grid" role="list">
-        {
-          tools.map((project) => (
-            <li>
-              <PortfolioCard project={project} />
-            </li>
-          ))
-        }
-      </ul>
-    </div>
-
-    <!-- 3. Fun -->
-    <div class="work-block">
-      <h3 class="work-block__heading">Fun</h3>
-      <ul class="card-grid" role="list">
-        {
-          fun.map((project) => (
-            <li>
-              <PortfolioCard project={project} />
-            </li>
-          ))
-        }
-      </ul>
-    </div>
-
-    <!-- 4. Professional -->
-    <div class="work-block">
-      <h3 class="work-block__heading">Professional</h3>
-      <ul class="card-grid" role="list">
-        {
-          professional.map((project) => (
-            <li>
-              <PortfolioCard project={project} />
-            </li>
-          ))
-        }
-      </ul>
-    </div>
-
-    <!-- 5. Third-party contributions -->
-    <div class="work-block">
-      <h3 class="work-block__heading">Third-party contributions</h3>
-      <div class="table-scroll">
-        <table class="work-table">
-          <thead>
-            <tr>
-              <th scope="col">Project</th>
-              <th scope="col">Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              thirdParty.map((project) => (
-                <tr>
-                  <td class="work-table__name">
-                    {repoHref(project) ? (
-                      <a
-                        href={repoHref(project)}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={`${project.name} source code on GitHub (opens in a new tab)`}
-                      >
-                        {project.name}
-                      </a>
-                    ) : (
-                      project.name
-                    )}
-                  </td>
-                  <td>
-                    {project.blurb}
-                    {project.contribution && (
-                      <span class="work-table__contribution">
-                        {" "}
-                        {project.contribution}
-                      </span>
-                    )}
-                  </td>
-                </tr>
-              ))
-            }
-          </tbody>
-        </table>
+      <div class="work-block">
+        <h3 class="work-block__heading">Tools</h3>
+        <ul class="card-grid" role="list">
+          {
+            tools.map((project) => (
+              <li>
+                <PortfolioCard project={project} />
+              </li>
+            ))
+          }
+        </ul>
       </div>
-    </div>
+
+      <!-- 3. Fun -->
+      <div class="work-block">
+        <h3 class="work-block__heading">Fun</h3>
+        <ul class="card-grid" role="list">
+          {
+            fun.map((project) => (
+              <li>
+                <PortfolioCard project={project} />
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <!-- 4. Professional -->
+      <div class="work-block">
+        <h3 class="work-block__heading">Professional</h3>
+        <ul class="card-grid" role="list">
+          {
+            professional.map((project) => (
+              <li>
+                <PortfolioCard project={project} />
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <!-- 5. Third-party contributions -->
+      <div class="work-block">
+        <h3 class="work-block__heading">Third-party contributions</h3>
+        <div class="table-scroll">
+          <table class="work-table">
+            <thead>
+              <tr>
+                <th scope="col">Project</th>
+                <th scope="col">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                thirdParty.map((project) => (
+                  <tr>
+                    <td class="work-table__name">
+                      {repoHref(project) ? (
+                        <a
+                          href={repoHref(project)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`${project.name} source code on GitHub (opens in a new tab)`}
+                        >
+                          {project.name}
+                        </a>
+                      ) : (
+                        project.name
+                      )}
+                    </td>
+                    <td>
+                      {project.blurb}
+                      {project.contribution && (
+                        <span class="work-table__contribution">
+                          {" "}
+                          {project.contribution}
+                        </span>
+                      )}
+                    </td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </details>
   </div>
 </section>
 
 <style>
+  #flagship {
+    scroll-margin-top: var(--anchor-offset, 7rem);
+  }
+  .more-projects {
+    margin-top: var(--space-7);
+    border-top: 1px solid var(--color-semantic-border);
+    padding-top: var(--space-5);
+  }
+  .more-projects > summary {
+    cursor: pointer;
+    color: var(--color-semantic-accent);
+    font-weight: 600;
+    font-size: var(--type-scale-step-1);
+  }
+  .catalog-intro {
+    color: var(--color-semantic-text-muted);
+    margin: var(--space-3) 0 var(--space-6);
+  }
+
   /* The work section spans a wider column than the text stubs so the card grids
    * can reach 3 tracks on desktop, while keeping the same border-top and
    * sticky-header scroll offset as the other sections. */
   .work-section {
     padding: var(--space-8) var(--space-4);
-    scroll-margin-top: 5rem;
+    scroll-margin-top: var(--anchor-offset, 7rem);
     border-top: 1px solid var(--color-semantic-border);
   }
 

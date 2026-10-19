@@ -16,17 +16,114 @@ import { SITE_NAME, NAV_ITEMS } from "../consts";
         {
           NAV_ITEMS.map((item) => (
             <li>
-              <a href={item.href}>{item.label}</a>
+              <a href={`${import.meta.env.BASE_URL}${item.href}`}>
+                {item.label}
+              </a>
             </li>
           ))
         }
       </ul>
     </nav>
-    <SocialLinks />
+    <nav class="mobile-nav" aria-label="Primary mobile">
+      {
+        NAV_ITEMS.filter((item) =>
+          ["Work", "Resume", "Contact"].includes(item.label),
+        ).map((item) => (
+          <a href={`${import.meta.env.BASE_URL}${item.href}`}>{item.label}</a>
+        ))
+      }
+      <details class="mobile-more">
+        <summary>More</summary><div>
+          {
+            NAV_ITEMS.filter(
+              (item) => !["Work", "Resume", "Contact"].includes(item.label),
+            ).map((item) => (
+              <a href={`${import.meta.env.BASE_URL}${item.href}`}>
+                {item.label}
+              </a>
+            ))
+          }
+        </div>
+      </details>
+    </nav>
+    <div class="header-social"><SocialLinks /></div>
   </div>
 </header>
 
+<script>
+  const header = document.querySelector<HTMLElement>(".site-header");
+  if (header) {
+    const updateOffset = () =>
+      document.documentElement.style.setProperty(
+        "--anchor-offset",
+        `${header.getBoundingClientRect().height + 16}px`,
+      );
+    updateOffset();
+    new ResizeObserver(updateOffset).observe(header);
+  }
+  const more = document.querySelector<HTMLDetailsElement>(".mobile-more");
+  more?.querySelectorAll("a").forEach((link) =>
+    link.addEventListener("click", () => {
+      more.open = false;
+    }),
+  );
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && more?.open) {
+      more.open = false;
+      more.querySelector("summary")?.focus();
+    }
+  });
+  document.addEventListener("click", (event) => {
+    if (more?.open && !more.contains(event.target as Node)) more.open = false;
+  });
+</script>
 <style>
+  .mobile-nav {
+    display: none;
+  }
+  @media (max-width: 760px) {
+    .site-nav,
+    .header-social {
+      display: none;
+    }
+    .header-inner {
+      gap: 4px;
+      padding-block: 8px;
+    }
+    .mobile-nav {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .mobile-nav a,
+    .mobile-nav summary {
+      display: block;
+      padding: 8px;
+      color: var(--color-semantic-text);
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .mobile-nav summary {
+      list-style: revert;
+      display: list-item;
+    }
+    .mobile-more {
+      position: relative;
+    }
+    .mobile-more > div {
+      position: absolute;
+      right: 0;
+      top: 100%;
+      min-width: 150px;
+      padding: 8px;
+      border: 1px solid var(--color-semantic-border);
+      border-radius: var(--radius-md);
+      background: var(--color-semantic-surface);
+      box-shadow: var(--shadow-elevation-1);
+    }
+  }
+
   .site-header {
     position: sticky;
     top: 0;

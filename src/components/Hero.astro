@@ -14,9 +14,13 @@ import { SITE_NAME, VALUE_PROP, LOCATION, ANCHORS } from "../consts";
     <p class="hero-lede">{VALUE_PROP}</p>
     <p class="hero-location">{LOCATION}</p>
     <div class="hero-actions">
-      <a class="cta-primary" href={`#${ANCHORS.work}`}>See my work</a>
+      <a
+        class="cta-primary"
+        href={`${import.meta.env.BASE_URL}resume.pdf`}
+        download>Download résumé</a
+      >
       <div class="hero-secondary">
-        <a class="cta-secondary" href={`#${ANCHORS.resume}`}>Resume</a>
+        <a class="cta-secondary" href="#flagship">Explore projects</a>
         <a class="cta-secondary" href={`#${ANCHORS.contact}`}>Contact</a>
         <SocialLinks />
       </div>
