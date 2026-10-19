@@ -18,7 +18,7 @@ const visuals: Record<
 > = {
   Alpha4Gate: {
     file: "alpha4gate-gameplay.jpg",
-    caption: "Gameplay alongside the agent's decision graph.",
+    caption: "Gameplay and decision graph",
     alt: "StarCraft II gameplay on the left and a colorful branching decision graph on the right.",
     width: 1080,
     height: 600,
@@ -41,8 +41,9 @@ const visuals: Record<
   },
   "dev-observatory": {
     file: "observatory-timeline.png",
-    caption:
-      "Historical execution observations. Expand for the full dashboard, including its separate planning views.",
+    caption: "Historical execution timeline",
+    disclosure:
+      "Historical capture. Full dashboard also includes planning views.",
     alt: "Observed timeline section of a saved workspace dashboard, with horizontal bars for recorded processes.",
     width: 1440,
     height: 3819,
@@ -131,7 +132,7 @@ const gallery = galleries[slug] ?? (visuals[slug] ? [visuals[slug]] : []);
             class:list={["project-visual__preview", visual.kind]}
             href={src}
             data-image-viewer
-            aria-label={`View full ${name}: ${visual.caption}`}
+            aria-label={`Expand ${name}: ${visual.caption}`}
           >
             <img
               src={src}
@@ -141,34 +142,23 @@ const gallery = galleries[slug] ?? (visuals[slug] ? [visuals[slug]] : []);
               loading="lazy"
               decoding="async"
             />
-            {gallery.length === 1 && slug !== "void_furnace" && (
-              <span class="project-visual__expand">
-                View full {visual.kind === "diagram" ? "graphic" : "screenshot"}
-              </span>
-            )}
           </a>
           <figcaption>
-            {gallery.length > 1 || slug === "void_furnace" ? (
-              <>
-                <div class="caption-row">
-                  <strong>{visual.caption}</strong>
-                  <a
-                    href={src}
-                    data-image-viewer
-                    aria-label={`Expand ${visual.caption}`}
-                  >
-                    Expand <span aria-hidden="true">&#8599;</span>
-                  </a>
-                </div>
-                {visual.disclosure && <small>{visual.disclosure}</small>}
-                {visual.kind === "diagram" && (
-                  <small class="diagram-hint">
-                    Scroll across to follow the pipeline, or expand.
-                  </small>
-                )}
-              </>
-            ) : (
-              visual.caption
+            <div class="caption-row">
+              <strong>{visual.caption}</strong>
+              <a
+                href={src}
+                data-image-viewer
+                aria-label={`Expand ${name}: ${visual.caption}`}
+              >
+                Expand image
+              </a>
+            </div>
+            {visual.disclosure && <small>{visual.disclosure}</small>}
+            {visual.kind === "diagram" && (
+              <small class="diagram-hint">
+                Scroll across to follow the pipeline, or expand.
+              </small>
             )}
           </figcaption>
           <dialog aria-label={`${name}: ${visual.caption}`}>
@@ -182,7 +172,7 @@ const gallery = galleries[slug] ?? (visuals[slug] ? [visuals[slug]] : []);
             </div>
             <p class="viewer-caption">
               {visual.caption}
-              {visual.disclosure && ` ? ${visual.disclosure}`}
+              {visual.disclosure && ` — ${visual.disclosure}`}
             </p>
             <div class="viewer-image">
               <img
@@ -253,16 +243,6 @@ const gallery = galleries[slug] ?? (visuals[slug] ? [visuals[slug]] : []);
   .project-visual__preview.timeline img {
     height: auto;
     transform: translateY(-63%);
-  }
-  .project-visual__expand {
-    position: absolute;
-    right: 10px;
-    bottom: 10px;
-    padding: 7px 12px;
-    border-radius: 6px;
-    background: #101318;
-    color: #fff;
-    font-size: 12px;
   }
   figcaption {
     margin-top: var(--space-3);
@@ -366,9 +346,6 @@ const gallery = galleries[slug] ?? (visuals[slug] ? [visuals[slug]] : []);
   }
   .project-gallery--stack {
     gap: 20px;
-  }
-  .project-gallery--stack figcaption {
-    margin-top: 6px;
   }
   a:focus-visible {
     outline: 3px solid var(--color-semantic-accent);

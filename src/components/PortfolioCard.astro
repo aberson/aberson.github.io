@@ -24,6 +24,7 @@ const { project, variant = "compact", caseStudyHref } = Astro.props;
 const { name, tag, blurb, card, repo_url, live_url } = project;
 
 // Flagship cards show the long `card` paragraph; everything else shows the blurb.
+const Heading = variant === "flagship" ? "h3" : "h4";
 const body = variant === "flagship" ? (card ?? blurb) : blurb;
 
 // GitHub `.git` clone URLs redirect in a browser but read as clone URLs and can
@@ -43,7 +44,7 @@ const repoHref = repo_url ? repo_url.replace(/\.git$/, "") : undefined;
 >
   <div class="portfolio-card__copy">
     <p class="portfolio-card__tag">{tag}</p>
-    <h4 class="portfolio-card__name">{name}</h4>
+    <Heading class="portfolio-card__name">{name}</Heading>
     <p class="portfolio-card__body">{variant === "flagship" ? blurb : body}</p>
     {
       variant === "flagship" && card && (
