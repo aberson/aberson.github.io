@@ -25,6 +25,7 @@ import portfolioData from "./portfolio.json";
 export const GROUPS = [
   "flagship",
   "utility",
+  "tools",
   "fun",
   "professional",
   "third-party",
@@ -61,7 +62,8 @@ const projectSchema = z.object({
   card: z.string().nullable(),
   proofs: z.array(z.string()),
   relates: z.array(relatedSchema),
-  try_it: z.string(),
+  // The exporter drops local-only or redacted launch commands to null.
+  try_it: z.string().nullable(),
   repo_url: z.string().nullable(),
   live_url: z.string().nullable(),
   contribution: z.string().nullable(),
@@ -106,10 +108,11 @@ export function byGroup(group: Group): PortfolioProject[] {
  * registry change that moved a project in or out of the public export.
  */
 export const EXPECTED_GROUP_COUNTS: Record<Group, number> = {
-  flagship: 3,
-  utility: 13,
+  flagship: 5,
+  utility: 8,
+  tools: 4,
   fun: 6,
-  professional: 3,
+  professional: 2,
   "third-party": 2,
 };
 

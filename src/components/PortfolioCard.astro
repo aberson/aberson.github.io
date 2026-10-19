@@ -11,6 +11,7 @@
 // the utility table's linkless-name rule. All colours/spacing/type resolve from
 // the brand semantic tokens, so it reads intentionally in BOTH light and dark.
 import type { PortfolioProject } from "../data/portfolio.ts";
+import ProjectVisual from "./ProjectVisual.astro";
 
 interface Props {
   project: PortfolioProject;
@@ -33,6 +34,7 @@ const repoHref = repo_url ? repo_url.replace(/\.git$/, "") : undefined;
 <article class:list={["portfolio-card", `portfolio-card--${variant}`]}>
   <p class="portfolio-card__tag">{tag}</p>
   <h4 class="portfolio-card__name">{name}</h4>
+  {variant === "flagship" && <ProjectVisual slug={project.slug} name={name} />}
   <p class="portfolio-card__body">{body}</p>
   {
     (caseStudyHref || repoHref || live_url) && (
