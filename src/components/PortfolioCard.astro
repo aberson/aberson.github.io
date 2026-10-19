@@ -37,8 +37,7 @@ const repoHref = repo_url ? repo_url.replace(/\.git$/, "") : undefined;
     `portfolio-card--${variant}`,
     {
       "portfolio-card--gallery":
-        variant === "flagship" &&
-        ["pta_finance", "skill-mesh", "void_furnace"].includes(project.slug),
+        variant === "flagship" && project.slug === "pta_finance",
     },
   ]}
 >

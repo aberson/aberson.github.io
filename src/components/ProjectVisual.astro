@@ -108,14 +108,6 @@ const galleries: Record<string, (typeof visuals)[string][]> = {
       caption: "Factory state machine",
       kind: "factory",
     },
-    {
-      file: "void-furnace-launcher.png",
-      caption: "Launcher",
-      alt: "Operator launcher with command categories and controls for factory operations, diagnostics and iterations.",
-      width: 1000,
-      height: 470,
-      kind: "launcher",
-    },
   ],
 };
 const gallery = galleries[slug] ?? (visuals[slug] ? [visuals[slug]] : []);
@@ -149,14 +141,14 @@ const gallery = galleries[slug] ?? (visuals[slug] ? [visuals[slug]] : []);
               loading="lazy"
               decoding="async"
             />
-            {gallery.length === 1 && (
+            {gallery.length === 1 && slug !== "void_furnace" && (
               <span class="project-visual__expand">
                 View full {visual.kind === "diagram" ? "graphic" : "screenshot"}
               </span>
             )}
           </a>
           <figcaption>
-            {gallery.length > 1 ? (
+            {gallery.length > 1 || slug === "void_furnace" ? (
               <>
                 <div class="caption-row">
                   <strong>{visual.caption}</strong>
@@ -341,14 +333,6 @@ const gallery = galleries[slug] ?? (visuals[slug] ? [visuals[slug]] : []);
     aspect-ratio: 707 / 485;
     background: #101318;
   }
-  .project-gallery--grid .project-visual__preview.launcher {
-    aspect-ratio: 707 / 485;
-  }
-  .project-visual__preview.launcher img {
-    height: 100%;
-    object-fit: cover;
-    object-position: top left;
-  }
   .project-visual__preview.diagram {
     aspect-ratio: auto;
     background: transparent;
@@ -358,7 +342,7 @@ const gallery = galleries[slug] ?? (visuals[slug] ? [visuals[slug]] : []);
   .project-visual__preview.diagram img {
     height: auto;
   }
-  .diagram-hint {
+  figcaption .diagram-hint {
     display: none;
   }
   .caption-row {
