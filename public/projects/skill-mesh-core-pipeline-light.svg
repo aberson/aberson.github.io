@@ -13,7 +13,20 @@
     .ps{fill:#6E778C;font-size:10.5px}
     .lbl{fill:#6E778C;font-size:11px;letter-spacing:.12em;font-weight:600}
     .cap{fill:#6E778C;font-size:10.5px}
-  </style>
+  @media (prefers-color-scheme: dark) {
+
+    .bg{fill:#161C26;stroke:#29313F;stroke-width:1.5}
+    .lnk{fill:none;stroke:#384153;stroke-width:1.7}
+    .spine{fill:none;stroke:#6E9BFF;stroke-width:2.4}
+    .node rect{fill:#161C26;stroke:#384153;stroke-width:1.4;filter:url(#sh-light)}
+    .pn{fill:#6E9BFF;font-size:13px;font-weight:600}
+    .ps{fill:#9AA5B8;font-size:10.5px}
+    .lbl{fill:#9AA5B8;font-size:11px;letter-spacing:.12em;font-weight:600}
+    .cap{fill:#9AA5B8;font-size:10.5px}
+
+#ar-light path {fill:#384153} #ar-s-light path {fill:#6E9BFF}
+}
+</style>
   <rect class="bg" x="6" y="6" width="988" height="202" rx="16"/>
   <text class="lbl" x="24" y="32">PLAN</text>
   <text class="lbl" x="280" y="32">SYNC → GITHUB</text>
@@ -24,7 +37,7 @@
   <path class="spine" marker-end="url(#ar-s-light)" d="M736,112 L792,112"/>
   <g class="node"><rect x="24" y="46" width="200" height="46" rx="10"/><text class="pn" x="38" y="67">plan-init · plan-feature</text><text class="ps" x="38" y="84">new · existing</text></g>
   <path class="lnk" marker-end="url(#ar-light)" d="M124,92 L124,106"/>
-  <g class="node"><rect x="24" y="106" width="200" height="34" rx="10"/><text class="pn" x="38" y="127">plan-review</text></g>
+  <g class="node"><rect x="24" y="106" width="200" height="34" rx="10"/><text class="pn" x="38" y="127" style="font-size:11px">plan-review + plan-redline</text></g>
   <path class="lnk" marker-end="url(#ar-light)" d="M124,140 L124,154"/>
   <g class="node"><rect x="24" y="154" width="200" height="34" rx="10"/><text class="pn" x="38" y="175">plan-wrap</text></g>
   <g class="node"><rect x="280" y="90" width="200" height="46" rx="10"/><text class="pn" x="294" y="111">repo-sync</text><text class="ps" x="294" y="128">first run: repo-init</text></g>

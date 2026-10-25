@@ -13,7 +13,20 @@
     .ps{fill:#6E778C;font-size:10.5px}
     .lbl{fill:#6E778C;font-size:11px;letter-spacing:.12em;font-weight:600}
     .cap{fill:#6E778C;font-size:10.5px}
-  </style>
+  @media (prefers-color-scheme: dark) {
+
+    .bg{fill:#161C26;stroke:#29313F;stroke-width:1.5}
+    .lnk{fill:none;stroke:#384153;stroke-width:1.7}
+    .spine{fill:none;stroke:#6E9BFF;stroke-width:2.4}
+    .node rect{fill:#161C26;stroke:#384153;stroke-width:1.4;filter:url(#sh-light)}
+    .pn{fill:#6E9BFF;font-size:13px;font-weight:600}
+    .ps{fill:#9AA5B8;font-size:10.5px}
+    .lbl{fill:#9AA5B8;font-size:11px;letter-spacing:.12em;font-weight:600}
+    .cap{fill:#9AA5B8;font-size:10.5px}
+
+#ar-light path {fill:#384153} #ar-s-light path {fill:#6E9BFF}
+}
+</style>
   <rect class="bg" x="6" y="6" width="1068" height="216" rx="16"/>
   <text class="lbl" x="24" y="28">ONE BUILD STEP</text>
 
