@@ -22,8 +22,7 @@ import PortfolioCard from "./PortfolioCard.astro";
 // id ("alpha4gate", "void-furnace") differ in case and separator. Normalising the
 // portfolio slug (lowercase, "_"→"-") bridges the two so a flagship card can find
 // its case-study route. Only featured + non-hidden entries get a /work/<slug>
-// route (see work/[slug].astro), so only they land in this map — skill-mesh
-// (featured: false) correctly resolves to no case study.
+// route (see work/[slug].astro), so only they land in this map.
 const normalizeSlug = (slug: string): string =>
   slug.toLowerCase().replace(/_/g, "-");
 
