@@ -420,26 +420,26 @@
       }
     },
     {
-      "slug": "pta_finance",
-      "name": "pta_finance",
+      "slug": "np-finance",
+      "name": "np-finance",
       "group": "flagship",
       "tag": "Finance",
-      "blurb": "A reusable Python CLI finance toolkit for a PTA/booster club that treats a Google Sheet as its database and generates monthly HTML reports.",
+      "blurb": "Finance toolkit for non-profits: Google Sheets budgets, reimbursement review, and a coordinated five-report set.",
       "card": null,
       "proofs": [
         "One source of truth for schema + IDs -- column lists and ID formats live in modules every consumer imports",
         "Stable, human-readable, fiscal-year-scoped IDs -- assigned once, never rewritten",
-        "Reports never enter this public repo -- written to a private Drive folder + an ephemeral CI artifact"
+        "Reports never enter this public repo -- written locally under reports/output; monthly CI reports use an ephemeral artifact"
       ],
       "relates": [],
-      "try_it": "uv run pta-finance report-reimbursements",
-      "repo_url": "https://github.com/aberson/pta_finance.git",
+      "try_it": "uv run np-finance end-to-end-run --as-of (Get-Date -Format yyyy-MM-dd) --dry-run",
+      "repo_url": "https://github.com/aberson/np-finance.git",
       "live_url": null,
       "contribution": null,
       "stats": {
         "gap": "8/76 built",
         "tests": 1319,
-        "last_commit_days": 1
+        "last_commit_days": 0
       }
     },
     {

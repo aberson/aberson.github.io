@@ -23,8 +23,8 @@ const visuals: Record<
     width: 1080,
     height: 600,
   },
-  pta_finance: {
-    file: "pta-finance-snapshot.png",
+  "np-finance": {
+    file: "np-finance-snapshot.png",
     caption: "A financial snapshot for a treasurer. Fictional example data.",
     alt: "Example treasurer report showing cash balances, fundraising, spending and budget progress.",
     width: 1600,
@@ -51,37 +51,28 @@ const visuals: Record<
   },
 };
 const galleries: Record<string, (typeof visuals)[string][]> = {
-  pta_finance: [
+  "np-finance": [
     {
-      ...visuals.pta_finance,
-      caption: "1. Current snapshot",
+      ...visuals["np-finance"],
+      caption: "1. Treasurer snapshot",
       disclosure: "Fictional example data",
     },
     {
-      file: "pta-fundraising-summary.png",
-      caption: "2. Fundraising summary",
+      file: "np-finance-reimbursement-queue.png",
+      caption: "2. Reimbursement review queue",
       disclosure: "Fictional example data",
-      alt: "Fundraising report with progress toward the goal and income by event.",
-      width: 816,
-      height: 1056,
+      alt: "Non-profit reimbursement queue with review status and payment decisions.",
+      width: 1440,
+      height: 917,
       kind: "report",
     },
     {
-      file: "pta-reimbursement-private.png",
-      caption: "3. Private reimbursement detail",
-      disclosure: "Anonymized demonstration",
-      alt: "Detailed reimbursement review queue with item decisions, payment amounts and outstanding actions.",
-      width: 1400,
-      height: 1000,
-      kind: "report",
-    },
-    {
-      file: "pta-reimbursement-public.png",
-      caption: "4. Public reimbursement summary",
-      disclosure: "Anonymized demonstration",
-      alt: "One-page reimbursement summary with payment totals, status chart and board discussion items.",
-      width: 816,
-      height: 1056,
+      file: "np-finance-reimbursement-detail.png",
+      caption: "3. Reimbursement detail",
+      disclosure: "Fictional example data",
+      alt: "Expanded fictional reimbursement request and its item review details.",
+      width: 1144,
+      height: 633,
       kind: "report",
     },
   ],
@@ -172,7 +163,7 @@ const gallery = galleries[slug] ?? (visuals[slug] ? [visuals[slug]] : []);
             </div>
             <p class="viewer-caption">
               {visual.caption}
-              {visual.disclosure && ` — ${visual.disclosure}`}
+              {visual.disclosure && ` â€” ${visual.disclosure}`}
             </p>
             <div class="viewer-image">
               <img
