@@ -1,16 +1,16 @@
 ---
-title: "Skill Mesh v2"
-blurb: "57 agent skills for Claude Code, with 54 also packaged for GitHub Copilot and OpenAI Codex: shared workflows for planning, building, reviewing, and shipping."
-tech: ["Claude Code", "GitHub Copilot", "OpenAI Codex", "PowerShell", "Python"]
+title: "Skill Mesh v3"
+blurb: "50 agent skills for Claude Code, with 48 also packaged for OpenAI Codex: shared workflows for planning, building, independent review, and shipping."
+tech: ["Claude Code", "OpenAI Codex", "PowerShell", "Python"]
 repo: "https://github.com/aberson/skill-mesh"
 order: 3
 featured: true
 ---
 
-**[Skill Mesh v2.0.0 is released](https://github.com/aberson/skill-mesh/releases/tag/v2.0.0).**
+**[Skill Mesh v3.0.2 is released](https://github.com/aberson/skill-mesh/releases/tag/v3.0.2).**
 [Install the release](https://github.com/aberson/skill-mesh#install-or-upgrade),
 browse the [complete skill reference](https://github.com/aberson/skill-mesh/blob/main/documentation/skill-reference.md),
-or explore [all 57 workflow diagrams](https://github.com/aberson/skill-mesh/tree/main/docs/workflows).
+or explore [all 50 workflow diagrams](https://github.com/aberson/skill-mesh/tree/main/docs/workflows).
 
 ## Problem
 
@@ -24,8 +24,8 @@ explicit, and package the same portable workflows for different agent hosts.
 
 ## Approach
 
-Each portable skill has one behavior contract and a thin adapter for Claude Code,
-GitHub Copilot, or OpenAI Codex. The builder generates host-native packages;
+Each portable skill has one behavior contract and a thin adapter for Claude Code
+or OpenAI Codex. The builder generates host-native packages;
 the installer records ownership so upgrades and removal can distinguish managed
 files from unrelated user content.
 
@@ -42,6 +42,8 @@ host capabilities produce explicit holds rather than weaker substitute checks.
 - **dev-observatory** supplies portfolio validation and static launcher diagnostics.
 - **Citation Needed** owns evidence records and scoring while review skills
   coordinate independent judges.
+- **Passing Notes** carries notes between windows that each own a lane of a
+  project's work, so parallel sessions coordinate without the operator relaying.
 - **Show Your Work** validates the source-linked Mermaid diagrams and generates
   the documentation index.
 
@@ -52,17 +54,21 @@ hookups remain deferred.
 
 ## Outcome
 
-Version 2 includes **57 Claude skills and 54 portable skills each for Copilot and
-Codex**, reconciling 15 retained candidates and completing 42 rebuilds. The exact
-release candidate passed its full repository suite and all three profiles passed
-disposable-home installation, upgrade, uninstall, and preserved-profile restoration.
-The published archive was downloaded again and its checksum verified.
+Version 3 includes **50 Claude skills, 48 of them also packaged for Codex**. It
+retired, folded or moved eleven little-used skills, rebuilt the project-status skill
+around verified facts, a routed board and lanes, and made reviews fail only on real
+defects instead of style notes. Tests are now sized to the change: the one full
+repository run per release dropped from about 3 h 46 min to about 1 h 05 min. Every
+v3 release passed that run after install, and the installed files were checked
+byte for byte against the published archive, after the check was shown to catch a
+planted defect.
 
-The release also includes a complete skill reference and 57 source-linked workflow
-diagrams. Qualification is scoped: it does not claim every workflow was live-tested
-on every host. Lesson harvesting remains preview-only, Observatory diagnostics are
-static-only, and the [release notes](https://github.com/aberson/skill-mesh/releases/tag/v2.0.0)
-retain native-host and presentation limitations.
+GitHub Copilot is no longer supported; its old profile is removed in v4. The release
+includes a complete skill reference and 50 source-linked workflow diagrams.
+Qualification is scoped: it does not claim every workflow was live-tested on every
+host. Lesson harvesting remains preview-only, and the
+[release notes](https://github.com/aberson/skill-mesh/releases/tag/v3.0.2) record
+the checks that ran and installation limits.
 
 The practical result is a versioned toolkit with inspectable workflows, documented
 dependencies, and an installation path that can be checked and reversed.
