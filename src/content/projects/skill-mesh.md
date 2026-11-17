@@ -1,6 +1,6 @@
 ---
 title: "Skill Mesh v3"
-blurb: "50 agent skills for Claude Code, with 48 also packaged for OpenAI Codex: shared workflows for planning, building, independent review, and shipping."
+blurb: "46 agent skills for Claude Code, with 44 also packaged for OpenAI Codex: shared workflows for planning, building, independent review, and shipping."
 tech: ["Claude Code", "OpenAI Codex", "PowerShell", "Python"]
 repo: "https://github.com/aberson/skill-mesh"
 order: 3
@@ -10,7 +10,7 @@ featured: true
 **[Skill Mesh v3.0.2 is released](https://github.com/aberson/skill-mesh/releases/tag/v3.0.2).**
 [Install the release](https://github.com/aberson/skill-mesh#install-or-upgrade),
 browse the [complete skill reference](https://github.com/aberson/skill-mesh/blob/main/documentation/skill-reference.md),
-or explore [all 50 workflow diagrams](https://github.com/aberson/skill-mesh/tree/main/docs/workflows).
+or explore [all 46 workflow diagrams](https://github.com/aberson/skill-mesh/tree/main/docs/workflows).
 
 ## Problem
 
@@ -40,8 +40,8 @@ host capabilities produce explicit holds rather than weaker substitute checks.
   fall back to private session state when the utility is unavailable.
 - **Find Again** offers optional prior-work retrieval during feature planning.
 - **dev-observatory** supplies portfolio validation and static launcher diagnostics.
-- **Citation Needed** owns evidence records and scoring while review skills
-  coordinate independent judges.
+- **Citation Needed** owns evidence records and scoring; its own review skills,
+  now shipped from that project, coordinate independent judges.
 - **Passing Notes** carries notes between windows that each own a lane of a
   project's work, so parallel sessions coordinate without the operator relaying.
 - **Show Your Work** validates the source-linked Mermaid diagrams and generates
@@ -54,7 +54,7 @@ hookups remain deferred.
 
 ## Outcome
 
-Version 3 includes **50 Claude skills, 48 of them also packaged for Codex**. It
+The catalog now holds **46 Claude skills, 44 of them also packaged for Codex**. Version 3
 retired, folded or moved eleven little-used skills, rebuilt the project-status skill
 around verified facts, a routed board and lanes, and made reviews fail only on real
 defects instead of style notes. Tests are now sized to the change: the one full
@@ -64,7 +64,7 @@ byte for byte against the published archive, after the check was shown to catch 
 planted defect.
 
 GitHub Copilot is no longer supported; its old profile is removed in v4. The release
-includes a complete skill reference and 50 source-linked workflow diagrams.
+includes a complete skill reference and 46 source-linked workflow diagrams.
 Qualification is scoped: it does not claim every workflow was live-tested on every
 host. Lesson harvesting remains preview-only, and the
 [release notes](https://github.com/aberson/skill-mesh/releases/tag/v3.0.2) record

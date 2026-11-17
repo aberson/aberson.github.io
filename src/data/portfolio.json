@@ -492,12 +492,12 @@
       "name": "skill-mesh",
       "group": "flagship",
       "tag": "Agent workflows",
-      "blurb": "Skill Mesh v3: 50 Claude skills, 48 of them also for Codex, connecting planning, building, independent review, and shipping.",
-      "card": "Skill Mesh turns shared behavior contracts into host-native packages for Claude Code and OpenAI Codex. The v3 catalog holds 50 skills, 48 portable to both hosts, with explicit capability gates, independent review that fails only on real defects, and ownership-aware installation. Separate utilities support intent tracking, retrieval, evidence and coordination between parallel sessions. A complete skill reference and 50 source-linked workflow diagrams make the process inspectable. GitHub Copilot is no longer supported.",
+      "blurb": "Skill Mesh v3: 46 Claude skills, 44 of them also for Codex, connecting planning, building, independent review, and shipping.",
+      "card": "Skill Mesh turns shared behavior contracts into host-native packages for Claude Code and OpenAI Codex. The catalog holds 46 skills, 44 portable to both hosts, with explicit capability gates, independent review that fails only on real defects, and ownership-aware installation. Separate utilities support intent tracking, retrieval, evidence and coordination between parallel sessions. A complete skill reference and 46 source-linked workflow diagrams make the process inspectable. GitHub Copilot is no longer supported.",
       "proofs": [
         "v3.0.2 published; every v3 release passed its full test run after install, and installed files match the archive byte for byte",
-        "50 Claude skills; 48 portable skills for OpenAI Codex",
-        "50 source-linked workflow diagrams generated and checked with Show Your Work"
+        "46 Claude skills; 44 portable skills for OpenAI Codex",
+        "46 source-linked workflow diagrams generated and checked with Show Your Work"
       ],
       "relates": [
         {
