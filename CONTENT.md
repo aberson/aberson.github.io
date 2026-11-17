@@ -161,8 +161,9 @@ Bump `LAST_UPDATED` (ISO `YYYY-MM-DD`) whenever you refresh the content.
 ## Replace the résumé
 
 The résumé is served from `public/resume.pdf` and linked from the Resume section.
-The committed file is a **placeholder** — drop your real PDF at `public/resume.pdf`
-(same filename, replacing it) and push. No config change needed.
+The committed file is the real career-ops CV export. To refresh it, regenerate the
+CV in career-ops, replace `public/resume.pdf`, update `LAST_UPDATED`, and follow the
+normal reviewed publishing flow. No config change is needed.
 
 ---
 

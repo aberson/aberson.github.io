@@ -1,0 +1,37 @@
+{
+  "sources": [
+    {
+      "from": "plan.md",
+      "to": "docs/archived-plans/plan.md",
+      "sha256": "f3bc16ef3b09f99e15f6b372c79b53e877f4bcaeb834263c41db8cb76590a79e"
+    },
+    {
+      "from": "documentation/portfolio-refresh-plan.md",
+      "to": "docs/archived-plans/documentation/portfolio-refresh-plan.md",
+      "sha256": "21c44cb04ffe1b5b8c7d4bb81565c47b417e658ca3e5e643ad5629bb8d12a220"
+    }
+  ],
+  "status_before": [
+    {
+      "path": "plan.md",
+      "status": "",
+      "tracked": true
+    },
+    {
+      "path": "documentation/portfolio-refresh-plan.md",
+      "status": "",
+      "tracked": true
+    }
+  ],
+  "reference_files": ["README.md", "CLAUDE.md", "brand/modes.dark.json"],
+  "moves": [
+    {
+      "from": "plan.md",
+      "to": "docs/archived-plans/plan.md"
+    },
+    {
+      "from": "documentation/portfolio-refresh-plan.md",
+      "to": "docs/archived-plans/documentation/portfolio-refresh-plan.md"
+    }
+  ]
+}

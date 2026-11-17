@@ -5,3 +5,7 @@
 
 # Generated lockfile — don't diff it in reviews.
 package-lock.json -diff
+
+# Exact plan originals: preserve bytes across Windows checkouts.
+/docs/archived-plans/** -text
+/docs/completed/** -text
