@@ -1,0 +1,140 @@
+{
+  "schema_version": 1,
+  "project": "aberson.github.io",
+  "estimates": [
+    {
+      "step_id": "M2",
+      "worker_hours": {
+        "low": 0.1,
+        "high": 0.5
+      },
+      "attention_hours": {
+        "low": 0.25,
+        "high": 1.0
+      },
+      "basis": "model",
+      "model_id": "Codex session; runtime model not exposed",
+      "estimated_at": "2026-10-14T17:29:18.389909Z",
+      "confidence": 0.6,
+      "rationale": "Operator settings and private history review; remediation scope, if found, is separately planned.",
+      "enabled": true,
+      "hold_reason": "",
+      "work_id": "work_73e333c460bf0a6d709b47913fb6354d80a4b8e7520c3972a135669b7e7031df",
+      "source_digest": "836c7272b5ee788f0a0e95cef7177b5651e2045929688171e716023c2766d2a9",
+      "title": "Account-security checklist",
+      "plan_path": "docs/plans/master_plan.md",
+      "dependencies": [
+        "work_00e99216d8618d5febdd1f1a624282541306f8263a54a53553fc7687f355a0c7"
+      ],
+      "unresolved_dependencies": [],
+      "source_ref": {
+        "source_id": "src_603bf3fe1418f62e74d7746c5d4bfcf4760b6e80d5138337f2f728f80f651536",
+        "locator": "aberson.github.io/docs/plans/master_plan.md",
+        "digest": "0424167616b0980df87e534912b8ad18f24b79d33401b7606d39e0d209f2257a",
+        "line_start": 173,
+        "line_end": 186
+      }
+    },
+    {
+      "step_id": "M3",
+      "worker_hours": {
+        "low": 0.1,
+        "high": 0.5
+      },
+      "attention_hours": {
+        "low": 0.5,
+        "high": 2.0
+      },
+      "basis": "model",
+      "model_id": "Codex session; runtime model not exposed",
+      "estimated_at": "2026-10-14T17:29:18.389928Z",
+      "confidence": 0.3,
+      "rationale": "Optional registrar/DNS/security/analytics selection and acceptance; external propagation waits excluded.",
+      "enabled": false,
+      "hold_reason": "Optional scope not selected.",
+      "work_id": "work_4f2298bec574cb8b1f55b9c397e5a37362ce7f1ca96aa554f98ba702eac9c3ed",
+      "source_digest": "f0eeb9ed61de44c220a3b41b3251884b551c5b5f73e6c1d4ca9537513f8f4892",
+      "title": "Optional domain and analytics selection / acceptance",
+      "plan_path": "docs/plans/master_plan.md",
+      "dependencies": [],
+      "unresolved_dependencies": [],
+      "source_ref": {
+        "source_id": "src_603bf3fe1418f62e74d7746c5d4bfcf4760b6e80d5138337f2f728f80f651536",
+        "locator": "aberson.github.io/docs/plans/master_plan.md",
+        "digest": "0424167616b0980df87e534912b8ad18f24b79d33401b7606d39e0d209f2257a",
+        "line_start": 187,
+        "line_end": 202
+      }
+    },
+    {
+      "step_id": "M3A",
+      "worker_hours": {
+        "low": 1.0,
+        "high": 4.0
+      },
+      "attention_hours": {
+        "low": 0.25,
+        "high": 0.75
+      },
+      "basis": "model",
+      "model_id": "Codex session; runtime model not exposed",
+      "estimated_at": "2026-10-14T17:29:18.389934Z",
+      "confidence": 0.4,
+      "rationale": "Optional site URL/CNAME, chosen analytics and build/preview/deployment verification; no backend expansion.",
+      "enabled": false,
+      "hold_reason": "Optional scope not selected.",
+      "work_id": "work_177a8b8b7b660d94f0a354d31344dd92d61bf7144a6519bc1b96731cb425ef6c",
+      "source_digest": "317058d10a0ee69cd80431ee32cc1f16225c6f1f1777ffc58d66e6793eb44765",
+      "title": "Optional domain / analytics site configuration",
+      "plan_path": "docs/plans/master_plan.md",
+      "dependencies": [],
+      "unresolved_dependencies": [],
+      "source_ref": {
+        "source_id": "src_603bf3fe1418f62e74d7746c5d4bfcf4760b6e80d5138337f2f728f80f651536",
+        "locator": "aberson.github.io/docs/plans/master_plan.md",
+        "digest": "0424167616b0980df87e534912b8ad18f24b79d33401b7606d39e0d209f2257a",
+        "line_start": 203,
+        "line_end": 215
+      }
+    },
+    {
+      "step_id": "M4",
+      "worker_hours": {
+        "low": 0.1,
+        "high": 0.5
+      },
+      "attention_hours": {
+        "low": 0.5,
+        "high": 1.5
+      },
+      "basis": "model",
+      "model_id": "Codex session; runtime model not exposed",
+      "estimated_at": "2026-10-14T17:29:18.389938Z",
+      "confidence": 0.65,
+      "rationale": "Attended dual-theme/mobile visual and narrative acceptance across all five groups and linked pages.",
+      "enabled": true,
+      "hold_reason": "",
+      "work_id": "work_5b823da9395c0a97ad100967b27c197d741e85c51eb535a53dd0f5a98d4e24d6",
+      "source_digest": "1e641409c2b0165f0a9f8b53fc0b8a047c3ef516e3ccdab847fd4c0d5825295b",
+      "title": "Human visual acceptance of the refresh",
+      "plan_path": "docs/plans/master_plan.md",
+      "dependencies": [
+        "work_c81be729c809aff51ba95782fdba86a175a172cb611e426a7b58efa72e1e6a64"
+      ],
+      "unresolved_dependencies": [],
+      "source_ref": {
+        "source_id": "src_603bf3fe1418f62e74d7746c5d4bfcf4760b6e80d5138337f2f728f80f651536",
+        "locator": "aberson.github.io/docs/plans/master_plan.md",
+        "digest": "0424167616b0980df87e534912b8ad18f24b79d33401b7606d39e0d209f2257a",
+        "line_start": 216,
+        "line_end": 277
+      }
+    }
+  ],
+  "plan_path": "docs/plans/master_plan.md",
+  "plan_sha256": "0424167616b0980df87e534912b8ad18f24b79d33401b7606d39e0d209f2257a",
+  "identity_note": "work_id and source_digest come from Observatory normalization and forecast.fingerprint; raw plan SHA is separate.",
+  "compatibility": "Rows validate as ForecastEstimate. Portable worksheet only: production ForecastConfig is currently restricted to dev-observatory and 100 estimates; no saved forecast was modified.",
+  "assumptions": "Forward remaining effort in hours, including implementation and its checks/review. Operator attention is separate. Elapsed waits, service quotas and hardware availability are not labor. These are model forecasts, not measured history. Held rows remain disabled.",
+  "validated_at": "2026-10-14T17:53:49.758297Z"
+}

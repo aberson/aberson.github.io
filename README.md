@@ -83,5 +83,5 @@ src/
 ## More
 
 - Content runbook: [`CONTENT.md`](CONTENT.md)
-- Full plan & design decisions: [`plan.md`](plan.md)
+- Full plan & design decisions: [`docs/plans/master_plan.md`](docs/plans/master_plan.md)
 - Working notes for agents: [`CLAUDE.md`](CLAUDE.md)
